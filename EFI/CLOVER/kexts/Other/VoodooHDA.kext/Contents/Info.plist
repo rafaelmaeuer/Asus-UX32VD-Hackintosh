@@ -63,13 +63,13 @@
 			<key>MixerValues</key>
 			<dict>
 				<key>PCM</key>
-				<integer>90</integer>
+				<integer>100</integer>
 				<key>Rec</key>
-				<integer>90</integer>
+				<integer>100</integer>
 				<key>iGain</key>
-				<integer>90</integer>
+				<integer>100</integer>
 				<key>iMix</key>
-				<integer>90</integer>
+				<integer>100</integer>
 			</dict>
 			<key>NodesToPatch</key>
 			<array>
@@ -117,7 +117,7 @@
 			<key>VoodooHDAEnableHalfMicVolumeFix</key>
 			<false/>
 			<key>VoodooHDAEnableHalfVolumeFix</key>
-			<false/>
+			<true/>
 			<key>VoodooHDAEnableMuteFix</key>
 			<false/>
 			<key>VoodooHDAEnableVolumeChangeFix</key>
