@@ -10,28 +10,59 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 
 ### Install High Sierra
 
-Make Clover USB Stick:
-- Format USB-Stick with MBR and FAT
+#### 1. Make Clover USB Stick
+
+##### a) Preparation
+- Format USB-Stick with GUID and HFS+
+	- Find the correct disk number of USB-Stick:
+	```
+	diskutil list
+	```
+	- Replace {#} with corresponding disk number and {Volume} with desired Name:
+	```
+	diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
+	```
 - Download Clover: https://sourceforge.net/projects/cloverefiboot/
-- Install Clover r4318
-    - Select all Drivers in Setup (Drivers64 and Drivers64UEFI)
-- Copy High Sierra compatible kexts to EFI/CLOVER/kexts/other/
-- Copy DSDT.aml and SSDT.aml to EFI/CLOVER/ACPI/patched/
-- Copy config.plist to EFI/CLOVER/
+
+##### b) Clover Install
+- Install Clover r4497
+	- Select USB-Stick as install target
+	- Open custom install settings
+		- Select `Install Clover in ESP`
+		- As Bootloader select `Install boot0ss in MBR`
+    	- Select Drivers64
+    	- Select Drivers64UEFI
+	- Install
+
+##### c) Post Install
+- Copy DSDT.aml and SSDT.aml from/to `EFI/CLOVER/ACPI/patched/`
+- Rename existing config.plist to config-org.plist in `EFI/CLOVER/`
+- Copy config.plist from/to `EFI/CLOVER/`
+- Copy only missing drivers from/to `EFI/CLOVER/drivers64/`
+- Copy only missing drivers from/to `EFI/CLOVER/drivers64UEFI/` (apfs.efi is important!!!)
+- Delete all 10.X folders from `EFI/CLOVER/kexts/`
+- Copy High Sierra compatible kexts from/to `EFI/CLOVER/kexts/other/`
 - Download High-Sierra-Boot-Theme: https://github.com/hirakujira/High-Sierra-Boot-Theme
-- Copy copy High Sierra Theme to EFI/CLOVER/themes/
+- Copy High Sierra Theme to `EFI/CLOVER/themes/`
 
-Make APFS Partition Bootable:
-- mount /Applications/Install\ macOS\ High\ Sierra.app/Contents/SharedSupport/BaseSystem.dmg
-- copy /Volumes/OS\ X\ Base\ System/usr/standalone/i386/apfs.efi to EFI/CLOVER/drivers64UEFI/
 
-Make High Sierra USB Stick:
+#### 2. Make High Sierra USB Stick
 - Download UniBeast 8.1.0: https://www.tonymacx86.com/resources/unibeast-8-1-0.353/ 
 - UniBeast: Install macOS High Sierra on Any Supported Intel-based PC: https://www.tonymacx86.com/threads/unibeast-install-macos-high-sierra-on-any-supported-intel-based-pc.235474/
 - Change System Language to English
-- Format USB Stick with
-	sudo diskutil partitionDisk {/dev/disk2} GPT JHFS+ {Volume} R
-- Install with UniBeast 8.1.0
+- Format USB-Stick with GUID and HFS+ Journaled
+	- Find the correct disk number of USB-Stick:
+	```
+	diskutil list
+	```
+	- Replace {#} with corresponding disk number and {Volume} with desired Name:
+	```
+	sudo diskutil partitionDisk /dev/disk{#} GPT JHFS+ {Volume} R
+	```
+- Make Install with UniBeast 8.1.0
+
+#### 3. Install Clover in EFI partition on High Sierra
+- Repeat steps 1b - 1c but with High Sierra disk as target
 
 ### Post Install
 
