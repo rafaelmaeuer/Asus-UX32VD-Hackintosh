@@ -10,7 +10,7 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 
 ### Install High Sierra
 
-#### 1. Make Clover USB Stick
+#### 1. Make Clover USB-Stick
 
 ##### a) Preparation
 - Format USB-Stick with GUID and HFS+
@@ -45,8 +45,7 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 - Download High-Sierra-Boot-Theme: https://github.com/hirakujira/High-Sierra-Boot-Theme
 - Copy High Sierra Theme to `EFI/CLOVER/themes/`
 
-
-#### 2. Make High Sierra USB Stick
+#### 2. Make High Sierra USB-Stick
 - Download UniBeast 8.1.0: https://www.tonymacx86.com/resources/unibeast-8-1-0.353/ 
 - UniBeast: Install macOS High Sierra on Any Supported Intel-based PC: https://www.tonymacx86.com/threads/unibeast-install-macos-high-sierra-on-any-supported-intel-based-pc.235474/
 - Change System Language to English
@@ -59,10 +58,34 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 	```
 	sudo diskutil partitionDisk /dev/disk{#} GPT JHFS+ {Volume} R
 	```
-- Make Install with UniBeast 8.1.0
+- Perform install with UniBeast 8.1.0
 
 #### 3. Install Clover in EFI partition on High Sierra
 - Repeat steps 1b - 1c but with High Sierra disk as target
+
+
+### Update High Sierra
+- Make a full backup
+- Check https://hackintosher.com/guides/ for the latest OS X Update Guide
+- Check all kexts for updates
+- Make a new Clover USB-Stick for testing purpose
+	- Use updated kexts and drivers in post install (apfs.efi and lilu.kext)
+- Boot from new Clover USB-Stick
+- If system boots
+	- Mount High Sierra EFI partition
+	- Backup `EFI` to `EFI-Backups`
+	- Install new Clover version to EFI partition
+	- Copy updated kexts and drivers during post install
+	- Don't forget to copy `Microsoft` folder (it contains the windows bootloader)
+- Eject USB-Stick and reboot
+- If system boots
+	- Start High Sierra Update
+	- On restart select newly added `Install OS X ...` partition
+	- After reboot select normal High Sierra partition
+- If system boots
+	- Be happy and enjoy the new update
+- If system doesn't boot on one of these steps 
+	- Try to fix the problem or revert to the latest backup
 
 ### Post Install
 
