@@ -228,6 +228,10 @@
 				<string>Cpu0Ist</string>
 			</dict>
 		</array>
+		<key>FixHeaders</key>
+		<true/>
+		<key>FixMCFG</key>
+		<true/>
 		<key>HaltEnabler</key>
 		<true/>
 		<key>SSDT</key>
@@ -300,6 +304,8 @@
 		<key>NeverDoRecovery</key>
 		<true/>
 		<key>NeverHibernate</key>
+		<false/>
+		<key>RtcHibernateAware</key>
 		<false/>
 		<key>SignatureFixup</key>
 		<false/>
@@ -708,7 +714,7 @@
 		<key>ShowOptimus</key>
 		<false/>
 		<key>Theme</key>
-		<string>embedded</string>
+		<string>random</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -771,12 +777,16 @@
 			HzAgIFYAS88QAAAAAAAA/gBXNjU3RwAxNTRXUDEKAAAA/gAjMz1I
 			ZYSq/wIBCiAgAJo=
 			</data>
+			<key>#HorizontalSyncPulseWidth</key>
+			<string>0x11</string>
 			<key>#Inject</key>
 			<true/>
 			<key>#ProductID</key>
 			<string>0x9221</string>
 			<key>#VendorID</key>
 			<string>0x1006</string>
+			<key>#VideoInputSignal</key>
+			<string>0xA1</string>
 		</dict>
 	</dict>
 	<key>KernelAndKextPatches</key>
@@ -812,6 +822,25 @@
 		<array>
 			<string>\System\Library\Extensions\AMD6000Controller.kext</string>
 			<string>\System\Library\Extensions\AMDFramebuffer.kext</string>
+		</array>
+		<key>#KernelToPatch</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>Infinite loop at wake</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Find</key>
+				<data>
+				TIn/6PXb/v8=
+				</data>
+				<key>MatchOS</key>
+				<string>10.11</string>
+				<key>Replace</key>
+				<data>
+				6/7/6PXb/v8=
+				</data>
+			</dict>
 		</array>
 		<key>#KextsToPatch</key>
 		<array>
@@ -1056,6 +1085,8 @@
 		<string>0x0501</string>
 		<key>#CustomUUID</key>
 		<string>511CE201-1000-4000-9999-010203040506</string>
+		<key>#NoCaches</key>
+		<false/>
 		<key>#NvidiaWeb</key>
 		<false/>
 		<key>InjectKexts</key>
