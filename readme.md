@@ -25,10 +25,11 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 - Download Clover: https://sourceforge.net/projects/cloverefiboot/
 
 ##### b) Clover Install
+https://clover-wiki.zetam.org/Installation
 - Install Clover r4497
 	- Select USB-Stick as install target
 	- Open custom install settings
-		- Select `Install Clover in ESP`
+		- Select `Install Clover in the ESP`
 		- As Bootloader select `Install boot0ss in MBR`
     	- Select Drivers64
     	- Select Drivers64UEFI
@@ -81,6 +82,7 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 - If system boots
 	- Start High Sierra Update
 	- On restart select newly added `Install OS X ...` partition
+	- Disable all BCRM kexts to prevent loop at the end of boot
 	- After reboot select normal High Sierra partition
 - If system boots
 	- Be happy and enjoy the new update
@@ -94,6 +96,17 @@ http://mackie100projects.altervista.org/download-clover-configurator/
 
 #### Download Kext Utility:
 http://cvad-mac.narod.ru/index/0-4
+
+
+### SSDT
+Generate your SSDT with ssdtPRGen https://github.com/Piker-Alpha/ssdtPRGen.sh
+-x 1 is for SandyBridge CPU
+-lmf 900 sets lowest idle frequency to 900 mhz
+```
+./ssdtPRGen.sh -x 1 -lfm 900
+```
+Copy `/Users/{Name}/Library/ssdtPRGen/ssdt.aml` to `EFI/CLOVER/ACPI/patched/`
+Replace existing file, rename it to `SSDT.aml`
 
 ### Kexts
 
