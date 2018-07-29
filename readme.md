@@ -2,19 +2,17 @@
 
 ### Info
 
-#### Common Problems in 10.13 High Sierra:
-https://www.tonymacx86.com/threads/readme-common-problems-in-10-13-high-sierra.233582/
+#### Common Problems in 10.13 High Sierra: [tonymacx86.com](https://www.tonymacx86.com/threads/readme-common-problems-in-10-13-high-sierra.233582/)
 
-#### Laptop Frequent Questions:
-https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/
+#### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
 
 ### Install High Sierra
 
-#### 1. Make Clover USB-Stick
+#### 1. Make Clover USB-Drive
 
 ##### a) Preparation
-- Format USB-Stick with GUID and HFS+
-	- Find the correct disk number of USB-Stick:
+- Format USB-Drive with GUID and HFS+
+	- Find the correct disk number of USB-Drive:
 	```
 	diskutil list
 	```
@@ -22,12 +20,11 @@ https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.1649
 	```
 	diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
 	```
-- Download Clover: https://sourceforge.net/projects/cloverefiboot/
+- Download Clover: [sourceforge.net](https://sourceforge.net/projects/cloverefiboot/)
 
-##### b) Clover Install
-https://clover-wiki.zetam.org/Installation
+##### b) Clover Install [clover-wiki](https://clover-wiki.zetam.org/Installation)
 - Install Clover r4497
-	- Select USB-Stick as install target
+	- Select USB-Drive as install target
 	- Open custom install settings
 		- Select `Install Clover in the ESP`
 		- As Bootloader select `Install boot0ss in MBR`
@@ -43,15 +40,15 @@ https://clover-wiki.zetam.org/Installation
 - Copy only missing drivers from/to `EFI/CLOVER/drivers64UEFI/` (apfs.efi is important!!!)
 - Delete all 10.X folders from `EFI/CLOVER/kexts/`
 - Copy High Sierra compatible kexts from/to `EFI/CLOVER/kexts/other/`
-- Download High-Sierra-Boot-Theme: https://github.com/hirakujira/High-Sierra-Boot-Theme
+- Download High-Sierra-Boot-Theme: [github.com/hirakujira](https://github.com/hirakujira/High-Sierra-Boot-Theme)
 - Copy High Sierra Theme to `EFI/CLOVER/themes/`
 
-#### 2. Make High Sierra USB-Stick
-- Download UniBeast 8.1.0: https://www.tonymacx86.com/resources/unibeast-8-1-0.353/ 
-- UniBeast: Install macOS High Sierra on Any Supported Intel-based PC: https://www.tonymacx86.com/threads/unibeast-install-macos-high-sierra-on-any-supported-intel-based-pc.235474/
+#### 2. Make High Sierra USB-Drive
+- Download UniBeast 8.1.0: [tonymacx86.com](https://www.tonymacx86.com/resources/unibeast-8-1-0.353/)
+- UniBeast: Install macOS High Sierra on Any Supported Intel-based PC: [tonymacx86.com](https://www.tonymacx86.com/threads/unibeast-install-macos-high-sierra-on-any-supported-intel-based-pc.235474/)
 - Change System Language to English
-- Format USB-Stick with GUID and HFS+ Journaled
-	- Find the correct disk number of USB-Stick:
+- Format USB-Drive with GUID and HFS+ Journaled
+	- Find the correct disk number of USB-Drive:
 	```
 	diskutil list
 	```
@@ -67,18 +64,18 @@ https://clover-wiki.zetam.org/Installation
 
 ### Update High Sierra
 - Make a full backup
-- Check https://hackintosher.com/guides/ for the latest OS X Update Guide
+- Check [hackintosher.com](https://hackintosher.com/guides/) for the latest OS X Update Guide
 - Check all kexts for updates
-- Make a new Clover USB-Stick for testing purpose
+- Make a new Clover USB-Drive for testing purpose
 	- Use updated kexts and drivers in post install (apfs.efi and lilu.kext)
-- Boot from new Clover USB-Stick
+- Boot from new Clover USB-Drive
 - If system boots
 	- Mount High Sierra EFI partition
 	- Backup `EFI` to `EFI-Backups`
 	- Install new Clover version to EFI partition
 	- Copy updated kexts and drivers during post install
 	- Don't forget to copy `Microsoft` folder (it contains the windows bootloader)
-- Eject USB-Stick and reboot
+- Eject USB-Drive and reboot
 - If system boots
 	- Start High Sierra Update
 	- On restart select newly added `Install OS X ...` partition
@@ -91,17 +88,15 @@ https://clover-wiki.zetam.org/Installation
 
 ### Post Install
 
-#### Download Clover Configurator:
-http://mackie100projects.altervista.org/download-clover-configurator/
+#### Download Clover Configurator: [Link](http://mackie100projects.altervista.org/download-clover-configurator/)
 
-#### Download Kext Utility:
-http://cvad-mac.narod.ru/index/0-4
+#### Download Kext Utility: [Link](http://cvad-mac.narod.ru/index/0-4)
 
 
 ### SSDT
-Generate your SSDT with ssdtPRGen https://github.com/Piker-Alpha/ssdtPRGen.sh
--x 1 is for SandyBridge CPU
--lmf 900 sets lowest idle frequency to 900 mhz
+Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)
+<br>-x 1 is for SandyBridge CPU
+<br>-lmf 900 sets lowest idle frequency to 900 mhz
 ```
 ./ssdtPRGen.sh -x 1 -lfm 900
 ```
@@ -110,15 +105,12 @@ Replace existing file, rename it to `SSDT.aml`
 
 ### Kexts
 
-#### AzureWave Broadcom BCM94352HMB/BCM94352 WLAN+BT4.0 macOS Sierra 10.12.1:
-http://forum.osxlatitude.com/index.php?/topic/9414-azurewave-broadcom-bcm94352hmbbcm94352-wlanbt40-macos-sierra-10121/
+#### AzureWave Broadcom BCM94352HMB/BCM94352 WLAN+BT4.0 macOS Sierra 10.12.1: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/9414-azurewave-broadcom-bcm94352hmbbcm94352-wlanbt40-macos-sierra-10121/)
 
 #### WiFi:
-Copy latest LiLu.kext (requires v1.2.0) to EFI/CLOVER/kexts/other:
-https://github.com/vit9696/Lilu/releases
+Copy latest LiLu.kext (requires v1.2.0) to EFI/CLOVER/kexts/other: [github.com](https://github.com/vit9696/Lilu/releases)
 
-Copy AirportBrcmFixup.kext to kexts folder:
-https://sourceforge.net/projects/airportbrcmfixup/files/
+Copy AirportBrcmFixup.kext to kexts folder: [sourceforge.net](https://sourceforge.net/projects/airportbrcmfixup/files/)
 
 Add following entries to EFI/CLOVER/config.plist:
 - ACPI > Fixes > AddDTGP
@@ -126,47 +118,33 @@ Add following entries to EFI/CLOVER/config.plist:
 - Devices > Fake ID > WIFI =  0x43a014E4
 
 #### Bluetooth:
-Copy BrcmFirmwareRepo.kext and BrcmPatchRAM2.kext to EFI/CLOVER/kexts/other:
-http://forum.osxlatitude.com/index.php?app=core&module=attach&section=attach&attach_id=12117
+Copy BrcmFirmwareRepo.kext and BrcmPatchRAM2.kext to EFI/CLOVER/kexts/other: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?app=core&module=attach&section=attach&attach_id=12117)
 
 
 ### Kext Ressources:
 
-Broadcom BCM4352 802.11 ac wifi and bluetooth combo card
-http://forum.osxlatitude.com/index.php?/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/
+Broadcom BCM4352 802.11 ac wifi and bluetooth combo card: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/)
 
-ACPIBatteryManager.kext
-https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/
+ACPIBatteryManager.kext: [bitbucket.org/RehabMan](https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/)
 
-Needed? AppleIntelE1000e.kext
-https://sourceforge.net/projects/osx86drivers/
+*Needed?* AppleIntelE1000e.kext: [sourceforge.net](https://sourceforge.net/projects/osx86drivers/)
 
-ApplePS2SmartTouchPad.kext
-http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/
+ApplePS2SmartTouchPad.kext: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/)
 
-AsusNBFnKeys.kext
-http://forum.osxlatitude.com/index.php?/topic/1968-fn-hotkey-and-als-sensor-driver-for-asus-notebooks/
+AsusNBFnKeys.kext: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/1968-fn-hotkey-and-als-sensor-driver-for-asus-notebooks/)
 
-AtherosE2200Ethernet.kext
-http://www.insanelymac.com/forum/files/file/313-atherose2200ethernet/
+AtherosE2200Ethernet.kext: [insanelymac.com](http://www.insanelymac.com/forum/files/file/313-atherose2200ethernet/)
 
-FakeSMC
-https://bitbucket.org/RehabMan/os-x-fakesmc-kozlek/downloads/
+FakeSMC: [bitbucket.org/RehabMan](https://bitbucket.org/RehabMan/os-x-fakesmc-kozlek/downloads/)
 
-NullCPUPowerManagement.kext
-https://www.tonymacx86.com/resources/nullcpupowermanagement.268/
+NullCPUPowerManagement.kext: [tonymacx86.com](https://www.tonymacx86.com/resources/nullcpupowermanagement.268/)
 
-Needed? RealtekRTL8111.kext
-https://bitbucket.org/RehabMan/os-x-realtek-network/downloads/
+*Needed?* RealtekRTL8111.kext: [bitbucket.org/RehabMan](https://bitbucket.org/RehabMan/os-x-realtek-network/downloads/)
 
-VoodooHDA + AppleHDADisabler
-https://sourceforge.net/projects/voodoohda/files/
-https://www.hackintosh.zone/file/1023-voodoohda-290d10/
+VoodooHDA + AppleHDADisabler: [sourceforge.net](https://sourceforge.net/projects/voodoohda/files/), [hackintosh.zone](https://www.hackintosh.zone/file/1023-voodoohda-290d10/)
 
 Deprecated:
 
-BTFirmwareUploader.kext
-http://forum.osxlatitude.com/index.php?/topic/2925-bluetooth-firmware-uploader/
+BTFirmwareUploader.kext: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/2925-bluetooth-firmware-uploader/)
 
-KextToPatch Einträge für High Sierra:
-https://www.hackintosh-forum.de/index.php/Thread/28676-Neue-Clover-KextsToPatch-Eintr%C3%A4ge-f%C3%BCr-Sierra-High-Sierra/
+KextToPatch Einträge für High Sierra: [hackintosh-forum.de](https://www.hackintosh-forum.de/index.php/Thread/28676-Neue-Clover-KextsToPatch-Eintr%C3%A4ge-f%C3%BCr-Sierra-High-Sierra/)
