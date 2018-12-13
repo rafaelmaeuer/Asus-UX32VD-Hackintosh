@@ -2,7 +2,59 @@
 
 ### Info
 
+Guide how to install OS X Mojave on ASUS UX32VD
+
 #### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
+
+---
+
+#### BIOS
+
+- Use version 214
+- Check for correct settings
+
+```sh
+Basic
+- Intel Virtualization Technology [Enabled]
+- Intel AES-NI [Enabled]
+- VT-d [Enabled]
+
+SATA
+- SATA Mode Selection [AHCI]
+
+Graphics
+- DVMT Pre-Allocated [64M]
+
+Intel
+- Intel(R) Anti-Theft Technology [Enabled]
+
+USB
+- Legacy USB Support [Enabled]
+- XHCI Pre-Boot Mode [Disabled]
+
+Network
+- Network Stack [Disabled]
+```
+
+#### Hardware
+
+This Hackintosh is based on an ASUS UX32VD-R4002V Laptop, with an Intel Core i7-3517U Processor and a NVIDIA GeForce GT 620M graphics card.
+
+##### RAM
+
+The default 2GB RAM module was replaced with an equivalent 8GB module to get 10GB of RAM.
+
+##### WIFI
+
+As the default Wifi card is not supported by OS X, it was replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).
+<br>Notice that you need antenna-adapters when replacing the default card due to different connector sizes ([link](http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/)).
+
+##### Ethernet
+
+The default USB-ethernet adapter was replaced with a [UGREEN 20256 Adapter](https://www.ugreen.com/product/UGREEN_Network_Adapter_USB_to_Ethernet_RJ45_Lan_Gigabit_Adapter_for_Ethernet_Black-en.html) after it stopped working.
+Benefits of the new adapter are USB3 and Gigabit speed.
+
+---
 
 ### Install OS X Mojave
 
@@ -53,6 +105,8 @@
 
 - Repeat steps 1b - 1c but with Mojave disk as target
 
+---
+
 ### Update Mojave
 
 - Make a full backup
@@ -78,16 +132,12 @@
 - If system doesn't boot on one of these steps
   - Try to fix the problem or revert to the latest backup
 
-### Post Install
-
-#### Download Clover Configurator: [Link](http://mackie100projects.altervista.org/download-clover-configurator/)
-
-#### Download Kext Utility: [Link](http://cvad-mac.narod.ru/index/0-4)
+---
 
 ### SSDT
 
 Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)
-<br>-x 1 is for SandyBridge CPU
+<br>-x 1 is for Ivy Bridge CPU
 <br>-lmf 900 sets lowest idle frequency to 900 mhz
 
 ```sh
@@ -97,35 +147,33 @@ Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.
 Copy `/Users/{Name}/Library/ssdtPRGen/ssdt.aml` to `EFI/CLOVER/ACPI/patched/`
 Replace existing file, rename it to `SSDT.aml`
 
+### DSDT
+
+Generation of DSDT is not part of this tutorial, have a look at this repository: [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh/tree/master/src/DSDT)
+
+---
+
 ### Kexts
 
-#### Patch
+#### Kext Patch: [acidanthera/Lilu](https://github.com/acidanthera/Lilu/releases)
 
 - Lilu.kext
 
-[acidanthera/Lilu](https://github.com/acidanthera/Lilu/releases)
-
-#### WiFi
+#### WiFi: [RehabMan/OS-X-Fake-PCI-ID](https://bitbucket.org/RehabMan/os-x-fake-pci-id/downloads/)
 
 - FakePCIID.kext
 - FakePCIID_Broadcom_WiFi.kext
 
-[RehabMan/OS-X-Fake-PCI-ID](https://bitbucket.org/RehabMan/os-x-fake-pci-id/downloads/)
-
-#### Bluetooth
+#### Bluetooth: [RehabMan/OS-X-BrcmPatchRAM](https://bitbucket.org/RehabMan/os-x-brcmpatchram/downloads/)
 
 - BrcmFirmwareRepo.kext
 - BrcmPatchRAM2.kext
 
-[RehabMan/OS-X-BrcmPatchRAM](https://bitbucket.org/RehabMan/os-x-brcmpatchram/downloads/)
-
-#### Battery
+#### Battery: [RehabMan/OS-X-ACPI-Battery-Driver](https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/)
 
 - ACPIBatteryManager.kext
 
-[RehabMan/OS-X-ACPI-Battery-Driver](https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/)
-
-#### Sensors
+#### Sensors: [RehabMan/OS-X-FakeSMC-kozlek](https://bitbucket.org/RehabMan/os-x-fakesmc-kozlek/downloads/)
 
 - FakeSMC.kext
 - FakeSMC_ACPISensors.kext
@@ -134,28 +182,25 @@ Replace existing file, rename it to `SSDT.aml`
 - FakeSMC_LPCSensors.kext
 - FakeSMC_SMMSensors.kext
 
-[RehabMan/OS-X-FakeSMC-kozlek](https://bitbucket.org/RehabMan/os-x-fakesmc-kozlek/downloads/)
-
-### CPU
+#### CPU: [tonymacx86/NullCPUPowerManagement](https://www.tonymacx86.com/resources/nullcpupowermanagement.268/)
 
 - NullCPUPowerManagement.kext
 
-[tonymacx86/NullCPUPowerManagement](https://www.tonymacx86.com/resources/nullcpupowermanagement.268/)
-
-#### Audio
+#### Audio: [SourceForge/VoodooHDA](https://sourceforge.net/projects/voodoohda/)
 
 - VoodooHDA.kext
 
-[SourceForge/VoodooHDA](https://sourceforge.net/projects/voodoohda/)
-
-#### TouchPad
+#### TouchPad: [EMlyDinEsH/Smart-Touchpad-Driver](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/)
 
 - ApplePS2SmartTouchPad.kext
 
-[EMlyDinEsH/Smart-Touchpad-Driver](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/)
-
-#### FN-Keys
+#### FN-Keys: [EMlyDinEsH/ASUS-FN-ALS-Sensor-Driver](http://forum.osxlatitude.com/index.php?/topic/1968-fn-hotkey-and-als-sensor-driver-for-asus-notebooks/)
 
 - AsusNBFnKeys.kext
 
-[EMlyDinEsH/ASUS-FN-ALS-Sensor-Driver](http://forum.osxlatitude.com/index.php?/topic/1968-fn-hotkey-and-als-sensor-driver-for-asus-notebooks/)
+---
+
+### Tools
+
+- Clover Configurator: [Link](http://mackie100projects.altervista.org/download-clover-configurator/)
+- Kext Utility: [Link](http://cvad-mac.narod.ru/index/0-4)
