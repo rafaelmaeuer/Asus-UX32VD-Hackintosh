@@ -10,6 +10,13 @@
 			<false/>
 			<key>DropOEM_DSM</key>
 			<false/>
+			<key>Fixes</key>
+			<dict>
+				<key>AddDTGP</key>
+				<false/>
+				<key>FixAirport</key>
+				<false/>
+			</dict>
 			<key>Name</key>
 			<string>DSDT.aml</string>
 			<key>ReuseFFFF</key>
@@ -44,7 +51,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>-v</string>
+		<string>-v kext-dev-mode=1</string>
 		<key>Debug</key>
 		<false/>
 		<key>DefaultVolume</key>
@@ -63,7 +70,7 @@
 		<key>Audio</key>
 		<dict>
 			<key>Inject</key>
-			<string>1</string>
+			<integer>1</integer>
 		</dict>
 		<key>FakeID</key>
 		<dict>
@@ -172,8 +179,6 @@
 		</dict>
 		<key>ScreenResolution</key>
 		<string>1920x1080</string>
-		<key>Theme</key>
-		<string>HighSierra</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -211,11 +216,13 @@
 				<key>Comment</key>
 				<string>External icons patch</string>
 				<key>Disabled</key>
-				<false/>
+				<true/>
 				<key>Find</key>
 				<data>
 				RXh0ZXJuYWw=
 				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
 				<key>Name</key>
 				<string>AppleAHCIPort</string>
 				<key>Replace</key>
@@ -227,11 +234,13 @@
 				<key>Comment</key>
 				<string>BCM4352-fvco, (credit Sherlocks based on the-darkvoid original)</string>
 				<key>Disabled</key>
-				<false/>
+				<true/>
 				<key>Find</key>
 				<data>
 				gf9SqgAAdMQ=
 				</data>
+				<key>InfoPlistPatch</key>
+				<false/>
 				<key>Name</key>
 				<string>com.apple.driver.AirPort.BrcmNIC-MFG</string>
 				<key>Replace</key>
@@ -256,7 +265,7 @@
 	<key>SystemParameters</key>
 	<dict>
 		<key>InjectKexts</key>
-		<string>Detect</string>
+		<string>Yes</string>
 		<key>InjectSystemID</key>
 		<true/>
 	</dict>

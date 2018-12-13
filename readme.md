@@ -11,28 +11,36 @@
 #### 1. Make Clover USB-Drive
 
 ##### a) Preparation
+
 - Format USB-Drive with GUID and HFS+
-	- Find the correct disk number of USB-Drive:
-	```
-	diskutil list
-	```
-	- Replace {#} with corresponding disk number and {Volume} with desired Name:
-	```
-	diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
-	```
+  - Find the correct disk number of USB-Drive:
+
+  ```sh
+  diskutil list
+  ```
+
+  - Replace {#} with corresponding disk number and {Volume} with desired Name:
+
+  ```sh
+  diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
+  ```
+
 - Download Clover: [sourceforge.net](https://sourceforge.net/projects/cloverefiboot/)
 
 ##### b) Clover Install [clover-wiki](https://clover-wiki.zetam.org/Installation)
-- Install Clover r4497
-	- Select USB-Drive as install target
-	- Open custom install settings
-		- Select `Install Clover in the ESP`
-		- As Bootloader select `Install boot0ss in MBR`
-    	- Select Drivers64
-    	- Select Drivers64UEFI
-	- Install
+
+- Install Clover r4798
+  - Select USB-Drive as install target
+  - Open custom install settings
+    - Select `Install Clover in the ESP`
+    - At Boot Sectors select `Install boot0ss in MBR`
+    - Select `Clover for BIOS (legacy) booting`
+    - Select `BIOS Drivers, 64 bit`
+    - Select `UEFI Drivers`
+  - Install
 
 ##### c) Post Install
+
 - Copy DSDT.aml and SSDT.aml from/to `EFI/CLOVER/ACPI/patched/`
 - Rename existing config.plist to config-org.plist in `EFI/CLOVER/`
 - Copy config.plist from/to `EFI/CLOVER/`
@@ -44,47 +52,53 @@
 - Copy High Sierra Theme to `EFI/CLOVER/themes/`
 
 #### 2. Make High Sierra USB-Drive
+
 - Download UniBeast 8.1.0: [tonymacx86.com](https://www.tonymacx86.com/resources/unibeast-8-1-0.353/)
 - UniBeast: Install macOS High Sierra on Any Supported Intel-based PC: [tonymacx86.com](https://www.tonymacx86.com/threads/unibeast-install-macos-high-sierra-on-any-supported-intel-based-pc.235474/)
 - Change System Language to English
 - Format USB-Drive with GUID and HFS+ Journaled
-	- Find the correct disk number of USB-Drive:
-	```
-	diskutil list
-	```
-	- Replace {#} with corresponding disk number and {Volume} with desired Name:
-	```
-	sudo diskutil partitionDisk /dev/disk{#} GPT JHFS+ {Volume} R
-	```
+  - Find the correct disk number of USB-Drive:
+
+  ```sh
+  diskutil list
+  ```
+
+  - Replace {#} with corresponding disk number and {Volume} with desired Name:
+
+  ```sh
+  sudo diskutil partitionDisk /dev/disk{#} GPT JHFS+ {Volume} R
+  ```
+
 - Perform install with UniBeast 8.1.0
 
 #### 3. Install Clover in EFI partition on High Sierra
+
 - Repeat steps 1b - 1c but with High Sierra disk as target
 
-
 ### Update High Sierra
+
 - Make a full backup
 - Check [hackintosher.com](https://hackintosher.com/guides/) for the latest OS X Update Guide
 - Check all kexts for updates
 - Make a new Clover USB-Drive for testing purpose
-	- Use updated kexts and drivers in post install (apfs.efi and lilu.kext)
+  - Use updated kexts and drivers in post install (apfs.efi and lilu.kext)
 - Boot from new Clover USB-Drive
 - If system boots
-	- Mount High Sierra EFI partition
-	- Backup `EFI` to `EFI-Backups`
-	- Install new Clover version to EFI partition
-	- Copy updated kexts and drivers during post install
-	- Don't forget to copy `Microsoft` folder (it contains the windows bootloader)
+  - Mount High Sierra EFI partition
+  - Backup `EFI` to `EFI-Backups`
+  - Install new Clover version to EFI partition
+  - Copy updated kexts and drivers during post install
+  - Don't forget to copy `Microsoft` folder (it contains the windows bootloader)
 - Eject USB-Drive and reboot
 - If system boots
-	- Start High Sierra Update
-	- On restart select newly added `Install OS X ...` partition
-	- Disable all BCRM kexts to prevent loop at the end of boot
-	- After reboot select normal High Sierra partition
+  - Start High Sierra Update
+  - On restart select newly added `Install OS X ...` partition
+  - Disable all BCRM kexts to prevent loop at the end of boot
+  - After reboot select normal High Sierra partition
 - If system boots
-	- Be happy and enjoy the new update
+  - Be happy and enjoy the new update
 - If system doesn't boot on one of these steps 
-	- Try to fix the problem or revert to the latest backup
+  - Try to fix the problem or revert to the latest backup
 
 ### Post Install
 
@@ -92,14 +106,16 @@
 
 #### Download Kext Utility: [Link](http://cvad-mac.narod.ru/index/0-4)
 
-
 ### SSDT
+
 Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)
 <br>-x 1 is for SandyBridge CPU
 <br>-lmf 900 sets lowest idle frequency to 900 mhz
-```
+
+```sh
 ./ssdtPRGen.sh -x 1 -lfm 900
 ```
+
 Copy `/Users/{Name}/Library/ssdtPRGen/ssdt.aml` to `EFI/CLOVER/ACPI/patched/`
 Replace existing file, rename it to `SSDT.aml`
 
@@ -107,7 +123,8 @@ Replace existing file, rename it to `SSDT.aml`
 
 #### AzureWave Broadcom BCM94352HMB/BCM94352 WLAN+BT4.0 macOS Sierra 10.12.1: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/9414-azurewave-broadcom-bcm94352hmbbcm94352-wlanbt40-macos-sierra-10121/)
 
-#### WiFi:
+#### WiFi
+
 Copy latest LiLu.kext (requires v1.2.0) to EFI/CLOVER/kexts/other: [github.com](https://github.com/vit9696/Lilu/releases)
 
 Copy AirportBrcmFixup.kext to kexts folder: [sourceforge.net](https://sourceforge.net/projects/airportbrcmfixup/files/)
@@ -117,11 +134,11 @@ Add following entries to EFI/CLOVER/config.plist:
 - ACPI > Fixes > FixAirport
 - Devices > Fake ID > WIFI =  0x43a014E4
 
-#### Bluetooth:
+#### Bluetooth
+
 Copy BrcmFirmwareRepo.kext and BrcmPatchRAM2.kext to EFI/CLOVER/kexts/other: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?app=core&module=attach&section=attach&attach_id=12117)
 
-
-### Kext Ressources:
+### Kext Ressources
 
 Broadcom BCM4352 802.11 ac wifi and bluetooth combo card: [forum.osxlatitude.com](http://forum.osxlatitude.com/index.php?/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/)
 
