@@ -44,10 +44,10 @@ This Hackintosh is based on an ASUS UX32VD-R4002V Laptop, with an Intel Core i7-
 
 The default 2GB RAM module was replaced with an equivalent 8GB module to get 10GB of RAM.
 
-##### WIFI
+##### WIFI / Bluetooth
 
-As the default Wifi card is not supported by OS X, it was replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).
-<br>Notice that you need antenna-adapters when replacing the default card due to different connector sizes ([link](http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/)).
+As the default WiFi/BT card is not supported by OS X, it is replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).
+<br>Notice that antenna-adapters are needed when replacing the default card due to different connector sizes ([link](http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/)).
 
 ##### Ethernet
 
@@ -56,9 +56,9 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ---
 
-### Install OS X Mojave
+### Install OS X
 
-#### 1. Make Clover USB-Drive
+#### 1. Create Clover USB-Drive
 
 ##### a) Preparation
 
@@ -77,7 +77,7 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 - Download Clover: [sourceforge.net](https://sourceforge.net/projects/cloverefiboot/)
 
-##### b) Clover Install [clover-wiki](https://clover-wiki.zetam.org/Installation)
+##### b) Install Clover [clover-wiki](https://clover-wiki.zetam.org/Installation)
 
 - Install Clover r4798
   - Select USB-Drive as install target
@@ -97,9 +97,28 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 - Delete all 10.X folders from `EFI/CLOVER/kexts/`
 - Copy Mojave compatible kexts from/to `EFI/CLOVER/kexts/other/`
 
-#### 2. Make Mojave USB-Drive
+#### 2. Create OS X USB-Drive
 
-- Use [DiskMaker X](https://diskmakerx.com/) to create Mojave USB=Drive
+To create a working macOS Mojave installer boot drive, you will need the following:
+- A free USB flash drive (minimum 8GB)
+- A device already running OS X with access to the App Store
+
+##### a) Download OS X Installer
+
+- Open the Mac App Store on your device already running OS X
+- Download `Install macOS Mojave` application
+- Close when it opens automatically
+
+##### b) Format USB flash drive
+
+- Insert USB flash drive
+- Open Disk Utility and format flash drive
+  - Select `GUID` as partition scheme
+  - Select `Mac OS Extended (Journaled)` as file format
+
+##### c) Create Installer
+
+- Use [DiskMaker X](https://diskmakerx.com/) to create OS X USB-Drive
 
 #### 3. Install Clover in EFI partition on Mojave
 
@@ -107,7 +126,27 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ---
 
-### Update Mojave
+#### 3. Install OS X
+
+- Connect Mojave USB drive and Clover USB drive to your target machine
+- Boot from Clover USB drive and select Mojave USB drive (`Install OS X Mojave`)
+- Once ollow the installation instructions
+
+---
+
+#### 4. Install Clover in EFI partition of OS X HDD
+
+- After successfully install repeat steps 1b - 1c but with EFI on Mojave HDD as target
+
+---
+
+### Troubleshooting
+
+- On `Error loading kernel cache` reboot
+
+---
+
+### Update OS X
 
 - Make a full backup
 - Check [hackintosher.com](https://hackintosher.com/guides/) for the latest OS X Update Guide
@@ -133,6 +172,8 @@ Benefits of the new adapter are USB3 and Gigabit speed.
   - Try to fix the problem or revert to the latest backup
 
 ---
+
+## Resources
 
 ### SSDT
 
