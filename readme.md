@@ -118,7 +118,7 @@ To create a working macOS Mojave installer boot drive, you will need the followi
 
 ##### c) Create Installer
 
-- Use [DiskMaker X](https://diskmakerx.com/) to create OS X USB-Drive
+- Use [DiskMaker X](https://diskmakerx.com/) or [Install Disk Creator](https://macdaddy.io/install-disk-creator/) to create OS X USB-Drive
 
 #### 3. Install Clover in EFI partition on Mojave
 
