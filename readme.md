@@ -137,6 +137,7 @@ To create a working macOS Mojave installer boot drive, you will need the followi
 #### 4. Install Clover in EFI partition of OS X HDD
 
 - After successfully install repeat steps 1b - 1c but with EFI on Mojave HDD as target
+- Follow this guide to add clover boot entry in BIOS [Restoring UEFI boot entry](https://www.thomas-krenn.com/en/wiki/Restoring_UEFI_boot_entry_via_motherboard_replacement_or_BIOS_update) or this [UEFI clover boot option](https://www.tonymacx86.com/threads/solved-uefi-clover-boot-option-gone-after-bios-update.211715/#post-1409404)
 
 ---
 
