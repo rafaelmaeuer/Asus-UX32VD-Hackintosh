@@ -147,6 +147,10 @@ To create a working macOS Mojave installer boot drive, you will need the followi
 
 ---
 
+### Update Clover
+
+Download latest `CLOVERX64.efi` from [Dids/clover-builder](https://github.com/Dids/clover-builder/releases) and replace in `EFI/CLOVER`
+
 ### Update OS X
 
 - Make a full backup
