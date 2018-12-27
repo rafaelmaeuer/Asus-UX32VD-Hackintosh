@@ -144,7 +144,15 @@ To create a working macOS Mojave installer boot drive, you will need the followi
 ### Troubleshooting
 
 - On `Error loading kernel cache` reboot
+- If you broked EFI and abble to boot only in safe mode:
 
+To mount EFI:
+```
+sudo mkdir /kexts
+sudo cp -RX /System/Library/Extensions/msdosfs.kext /kexts
+sudo /usr/libexec/PlistBuddy -c "Add :OSBundleRequired string" /kexts/msdosfs.kext/Contents/Info.plist
+sudo /usr/libexec/PlistBuddy -c "Set :OSBundleRequired \"Safe Boot\"" /kexts/msdosfs.kext/Contents/Info.plist
+```
 ---
 
 ### Update OS X
@@ -246,12 +254,3 @@ Generation of DSDT is not part of this tutorial, have a look at this repository:
 
 - Clover Configurator: [Link](http://mackie100projects.altervista.org/download-clover-configurator/)
 - Kext Utility: [Link](http://cvad-mac.narod.ru/index/0-4)
-
-### If you broked EFI and abble to boot only in safe mode
-To mount EFI:
-```
-sudo mkdir /kexts
-sudo cp -RX /System/Library/Extensions/msdosfs.kext /kexts
-sudo /usr/libexec/PlistBuddy -c "Add :OSBundleRequired string" /kexts/msdosfs.kext/Contents/Info.plist
-sudo /usr/libexec/PlistBuddy -c "Set :OSBundleRequired \"Safe Boot\"" /kexts/msdosfs.kext/Contents/Info.plist
-```
