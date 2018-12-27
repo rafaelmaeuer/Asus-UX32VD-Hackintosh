@@ -141,9 +141,9 @@ To create a working macOS Mojave installer boot drive, you will need the followi
 
 #### 5. Enable TRIM for SSD
 
-There is two option:
+There are two options:
 - Run in the terminal on your Mojave `sudo trimforce enable` 
-- patch as well in clover configurator:
+- patch in clover configurator:
 
 ```
 com.apple.iokit.IOAHCIBlockStorage
