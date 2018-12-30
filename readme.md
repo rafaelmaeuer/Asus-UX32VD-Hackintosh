@@ -244,6 +244,10 @@ Generation of DSDT is not part of this tutorial, have a look at this repository:
 
 - AsusNBFnKeys.kext
 
+#### USB 3.0: [RehabMan/os-x-usb-inject-all](https://bitbucket.org/RehabMan/os-x-usb-inject-all/downloads/)
+
+- USBInjectAll.kext
+
 ---
 
 ### Driver
