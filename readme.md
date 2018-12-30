@@ -246,6 +246,14 @@ Generation of DSDT is not part of this tutorial, have a look at this repository:
 
 ---
 
+### Driver
+
+- ASIX USB 2.0 to 10/100M Fast Ethernet Controller [AX88772B Driver](https://www.asix.com.tw/download.php?PItemID=105&sub=driverdetail)
+
+- Ugreen USB 3.0 Gigabit Ethernet Adapter [AX88179 Driver](https://www.ugreen.com/drivers/217-en.html)
+
+---
+
 ### Tools
 
 - Clover Configurator: [Link](http://mackie100projects.altervista.org/download-clover-configurator/)
