@@ -1,6 +1,6 @@
 
-Clover EFI installer log - Thu Dec 13 12:31:04 CET 2018
-Installer version: v2.4k r4798 EFI bootloader
+Clover EFI installer log - Sun Dec 30 12:45:55 CET 2018
+Installer version: v2.4k r4813 EFI bootloader
 ======================================================
 /dev/disk0 (internal, physical):
    #:                       TYPE NAME                    SIZE       IDENTIFIER
@@ -13,10 +13,10 @@ Installer version: v2.4k r4798 EFI bootloader
    #:                       TYPE NAME                    SIZE       IDENTIFIER
    0:      APFS Container Scheme -                      +626.1 GB   disk1
                                  Physical Store disk0s2
-   1:                APFS Volume Macintosh               349.4 GB   disk1s1
-   2:                APFS Volume Preboot                 42.9 MB    disk1s2
+   1:                APFS Volume Macintosh               361.8 GB   disk1s1
+   2:                APFS Volume Preboot                 43.0 MB    disk1s2
    3:                APFS Volume Recovery                509.5 MB   disk1s3
-   4:                APFS Volume VM                      2.1 GB     disk1s4
+   4:                APFS Volume VM                      6.4 GB     disk1s4
    5:                APFS Volume Veerle-CMS Git          1.0 GB     disk1s5
 
 /dev/disk2 (external, physical):
@@ -28,8 +28,7 @@ Installer version: v2.4k r4798 EFI bootloader
 ======================================================
 Backing up EFI files
 
-Backing up stage2 file /Volumes/Clover Zenbook/EFIROOTDIR/boot  to /Volumes/Clover Zenbook/EFI-Backups/r4798/2018-12-13-12h31/boot
-Backing up /Volumes/Clover Zenbook/EFIROOTDIR/EFI folder to /Volumes/Clover Zenbook/EFI-Backups/r4798/2018-12-13-12h31/EFI
+Backing up /Volumes/Clover Zenbook/EFIROOTDIR/EFI folder to /Volumes/Clover Zenbook/EFI-Backups/r4798/2018-12-30-12h45/EFI
 No Active Partition
 
 Stage 0 - Writing boot0ss to /dev/rdisk2
@@ -45,9 +44,9 @@ cp /tmp/boot1f32 /tmp/newbs
 dd if=/tmp/origbs of=/tmp/newbs skip=3 seek=3 bs=1 count=87 conv=notrunc
 dd if=/tmp/newbs of=/dev/rdisk2s1
 
-Stage 2 - Written boot6 (x64) to /Volumes/ESP/boot
+Stage 2 - Written boot6 (x64) to /Volumes/EFI/boot
 
-Theme 'HighSierra' (defined in config.plist) not found !
+Theme 'Clovy' (defined in config.plist) not found !
 Using default theme 'christmas'
 ======================================================
 =========== Clover EFI Installation Finish ===========
