@@ -130,42 +130,51 @@ To create a working macOS Mojave installer boot drive, you will need the followi
 
 - Connect Mojave USB drive and Clover USB drive to your target machine
 - Boot from Clover USB drive and select Mojave USB drive (`Install OS X Mojave`)
-- Once ollow the installation instructions
+- Once installer shows up, follow the installation instructions
+- On reboot select the OS X disk in Clover (`OS X Mojave`)
+- Create user account and finish setup process
 
 ---
 
-#### 4. Install Clover in EFI partition of OS X HDD
+#### 4. Post Installation
 
-- After successfully install repeat steps 1b - 1c but with EFI on Mojave HDD as target
+##### a) Install Clover in EFI partition of OS X disk
+
+- After successfully install repeat steps 1b - 1c but with EFI on OS X disk as target
 - Follow this guide to add clover boot entry in BIOS [Restoring UEFI boot entry](https://www.thomas-krenn.com/en/wiki/Restoring_UEFI_boot_entry_via_motherboard_replacement_or_BIOS_update) or this [UEFI clover boot option](https://www.tonymacx86.com/threads/solved-uefi-clover-boot-option-gone-after-bios-update.211715/#post-1409404)
 
-#### 5. Enable TRIM for SSD
+##### b) Enable TRIM for SSD
 
 There are two options:
-- Run in the terminal on your Mojave `sudo trimforce enable` 
-- patch in clover configurator:
 
-```
-com.apple.iokit.IOAHCIBlockStorage
+- Run following command in the terminal:
+  
+  `sudo trimforce enable`
 
-00415050 4C452053 534400
-00000000 00000000 000000
-```
+- Patch kext with clover configurator:
+
+  ```sh
+  com.apple.iokit.IOAHCIBlockStorage
+
+  00415050 4C452053 534400
+  00000000 00000000 000000
+  ```
 
 ---
 
 ### Troubleshooting
 
-- On `Error loading kernel cache` reboot
-- If you broked EFI and abble to boot only in safe mode:
+- When getting `Error loading kernel cache` reboot until it passes
 
-To mount EFI:
-```
-sudo mkdir /kexts
-sudo cp -RX /System/Library/Extensions/msdosfs.kext /kexts
-sudo /usr/libexec/PlistBuddy -c "Add :OSBundleRequired string" /kexts/msdosfs.kext/Contents/Info.plist
-sudo /usr/libexec/PlistBuddy -c "Set :OSBundleRequired \"Safe Boot\"" /kexts/msdosfs.kext/Contents/Info.plist
-```
+- If EFI partition is messed up and boot only works in safe mode, mount EFI with:
+
+  ```sh
+  sudo mkdir /kexts
+  sudo cp -RX /System/Library/Extensions/msdosfs.kext /kexts
+  sudo /usr/libexec/PlistBuddy -c "Add :OSBundleRequired string" /kexts/msdosfs.kext/Contents/Info.plist
+  sudo /usr/libexec/PlistBuddy -c "Set :OSBundleRequired \"Safe Boot\"" /kexts/msdosfs.kext/Contents/Info.plist
+  ```
+
 ---
 
 ### Update Clover
@@ -216,7 +225,7 @@ Replace existing file, rename it to `SSDT.aml`
 
 ### DSDT
 
-Generation of DSDT is not part of this tutorial, have a look at this repository: [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh/tree/master/src/DSDT)
+Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh/tree/master/src/DSDT)
 
 ---
 
