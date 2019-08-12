@@ -79,14 +79,25 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ##### b) Install Clover [clover-wiki](https://clover-wiki.zetam.org/Installation)
 
-- Install Clover r4798
+- Install Clover v2.5 r5045
   - Select USB-Drive as install target
   - Open custom install settings
     - Select `Install Clover in the ESP`
-    - At Boot Sectors select `Install boot0ss in MBR`
-    - Select `Clover for BIOS (legacy) booting`
-    - Select `BIOS Drivers, 64 bit`
-    - Select `UEFI Drivers`
+    - At `Bootloader` select
+      - Install boot0ss in MBR
+    - At `BIOS Drivers, 64 bit` select
+      - Recommended Drivers
+      - Driver for Filesystems
+        - ApfsDriverLoader
+    - At `UEFI Drivers, 64 bit` select
+      - Recommended Drivers
+      - Input Devices
+      - Driver for Filesystems
+        - ApfsDriverLoader
+      - Memory Fix Driver
+        - OsxAptioFix3Drv
+      - Additional Driver
+        - CsmVideoDxe
   - Install
 
 ##### c) Post Install
@@ -96,6 +107,7 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 - Copy config.plist from/to `EFI/CLOVER/`
 - Delete all 10.X folders from `EFI/CLOVER/kexts/`
 - Copy Mojave compatible kexts from/to `EFI/CLOVER/kexts/other/`
+- (Optional: Copy Mojave Theme to `EFI/CLOVER/themes`)
 
 #### 2. Create OS X USB-Drive
 
@@ -234,6 +246,10 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 #### Kext Patch: [acidanthera/Lilu](https://github.com/acidanthera/Lilu/releases)
 
 - Lilu.kext
+
+#### WiFi: [acidanthera/AirportBrcmFixup](https://github.com/acidanthera/AirportBrcmFixup/releases)
+
+- AirportBrcmFixup.kext
 
 #### WiFi: [RehabMan/OS-X-Fake-PCI-ID](https://bitbucket.org/RehabMan/os-x-fake-pci-id/downloads/)
 
