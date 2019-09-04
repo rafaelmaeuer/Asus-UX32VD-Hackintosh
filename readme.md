@@ -4,6 +4,9 @@
 
 Guide how to install OS X Mojave on ASUS UX32VD
 
+- macOS version: 10.14.6
+- clover version: 2.5k r5045
+
 #### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
 
 ---
