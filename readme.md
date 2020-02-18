@@ -2,10 +2,10 @@
 
 ### Info
 
-Guide how to install OS X Mojave on ASUS UX32VD
+Guide how to install macOS Catalina on ASUS UX32VD
 
-- macOS version: 10.14.6
-- clover version: 2.5k r5045
+- macOS version: 10.15.3
+- clover version: 2.5k r5104
 
 #### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
 
@@ -49,7 +49,7 @@ The default 2GB RAM module was replaced with an equivalent 8GB module to get 10G
 
 ##### WIFI / Bluetooth
 
-As the default WiFi/BT card is not supported by OS X, it is replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).
+As the default WiFi/BT card is not supported by macOS, it is replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).
 <br>Notice that antenna-adapters are needed when replacing the default card due to different connector sizes ([link](http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/)).
 
 ##### Ethernet
@@ -59,49 +59,26 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ---
 
-### Install OS X
+### Install macOS
 
-#### 1. Create Clover USB-Drive
+#### 1. Create Clover Drive
 
 ##### a) Preparation
 
-- Format USB-Drive with GUID and HFS+
+- Format USB-Drive with GUID and FAT32
   - Find the correct disk number of USB-Drive:
 
-  ```sh
-  diskutil list
-  ```
+        diskutil list
 
   - Replace {#} with corresponding disk number and {Volume} with desired Name:
 
-  ```sh
-  diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
-  ```
+        diskutil partitionDisk /dev/disk{#} 1 GPT FAT32 {Volume} R
 
-- Download Clover: [sourceforge.net](https://sourceforge.net/projects/cloverefiboot/)
+- Download Clover: [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases)
 
 ##### b) Install Clover [clover-wiki](https://clover-wiki.zetam.org/Installation)
 
-- Install Clover v2.5 r5045
-  - Select USB-Drive as install target
-  - Open custom install settings
-    - Select `Install Clover in the ESP`
-    - At `Bootloader` select
-      - Install boot0ss in MBR
-    - At `BIOS Drivers, 64 bit` select
-      - Recommended Drivers
-      - Driver for Filesystems
-        - ApfsDriverLoader
-    - At `UEFI Drivers, 64 bit` select
-      - Recommended Drivers
-      - Input Devices
-      - Driver for Filesystems
-        - ApfsDriverLoader
-      - Memory Fix Driver
-        - OsxAptioFix3Drv
-      - Additional Driver
-        - CsmVideoDxe
-  - Install
+- Follow this guide [Create a MacOS Catalina 10.15.0 USB Installer Drive w/Clover](https://hackintosher.com/forums/thread/guide-how-to-create-a-macos-catalina-10-15-0-usb-installer-drive-w-clover.2836/) Section `IV. Install Clover Bootloader into the USB Installer Flash Drive's EFI Boot Partition`
 
 ##### c) Post Install
 
@@ -109,53 +86,43 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 - Rename existing config.plist to config-org.plist in `EFI/CLOVER/`
 - Copy config.plist from/to `EFI/CLOVER/`
 - Delete all 10.X folders from `EFI/CLOVER/kexts/`
-- Copy Mojave compatible kexts from/to `EFI/CLOVER/kexts/other/`
-- (Optional: Copy Mojave Theme to `EFI/CLOVER/themes`)
+- Copy all necessary kexts from/to `EFI/CLOVER/kexts/other/`
+- (Optional: Copy favorite theme to `EFI/CLOVER/themes`)
 
-#### 2. Create OS X USB-Drive
+#### 2. Create macOS Installer Drive
 
-To create a working macOS Mojave installer boot drive, you will need the following:
-- A free USB flash drive (minimum 8GB)
-- A device already running OS X with access to the App Store
+To create a working macOS Installer boot drive, you will need the following:
+- An empty USB flash drive (minimum 16GB)  
+  (Chose USB2 or you need an USB2 cable to avoid USBSMC-Error)
+- A device already running macOS with access to the App Store
 
-##### a) Download OS X Installer
+##### a) Download macOS Installer
 
-- Open the Mac App Store on your device already running OS X
-- Download `Install macOS Mojave` application
+- Open the Mac App Store on your device already running macOS
+- Download `Install macOS Catalina` application
 - Close when it opens automatically
 
-##### b) Format USB flash drive
+##### b) Create Installer Stick
 
-- Insert USB flash drive
-- Open Disk Utility and format flash drive
-  - Select `GUID` as partition scheme
-  - Select `Mac OS Extended (Journaled)` as file format
-
-##### c) Create Installer
-
-- Use [DiskMaker X](https://diskmakerx.com/) or [Install Disk Creator](https://macdaddy.io/install-disk-creator/) to create OS X USB-Drive
-
-#### 3. Install Clover in EFI partition on Mojave
-
-- Repeat steps 1b - 1c but with Mojave disk as target
+- Use [DiskMaker X](https://diskmakerx.com/) or [Install Disk Creator](https://macdaddy.io/install-disk-creator/) to create macOS Install Drive
 
 ---
 
-#### 3. Install OS X
+#### 3. Install macOS
 
-- Connect Mojave USB drive and Clover USB drive to your target machine
-- Boot from Clover USB drive and select Mojave USB drive (`Install OS X Mojave`)
+- Connect macOS Installer and Clover Drive to your UX32VD
+- Boot from Clover drive and select macOS Installer (`Install macOS Catalina`)
 - Once installer shows up, follow the installation instructions
-- On reboot select the OS X disk in Clover (`OS X Mojave`)
+- On reboot select Macintosh HD in Clover (`Macintosh HD`)
 - Create user account and finish setup process
 
 ---
 
 #### 4. Post Installation
 
-##### a) Install Clover in EFI partition of OS X disk
+##### a) Install Clover in EFI partition of Macintosh HD
 
-- After successfully install repeat steps 1b - 1c but with EFI on OS X disk as target
+- After successfully install repeat steps 1b - 1c but with EFI on Macintosh HD as target
 - Follow this guide to add clover boot entry in BIOS [Restoring UEFI boot entry](https://www.thomas-krenn.com/en/wiki/Restoring_UEFI_boot_entry_via_motherboard_replacement_or_BIOS_update) or this [UEFI clover boot option](https://www.tonymacx86.com/threads/solved-uefi-clover-boot-option-gone-after-bios-update.211715/#post-1409404)
 
 ##### b) Enable TRIM for SSD
@@ -181,6 +148,8 @@ There are two options:
 
 - When getting `Error loading kernel cache` reboot until it passes
 
+- On USBSMC Error check if your Installer-Stick is USB3, use an USB2 cable then
+
 - If EFI partition is messed up and boot only works in safe mode, mount EFI with:
 
   ```sh
@@ -194,28 +163,27 @@ There are two options:
 
 ### Update Clover
 
-Download latest `CLOVERX64.efi` from [Dids/clover-builder](https://github.com/Dids/clover-builder/releases) and replace in `EFI/CLOVER`
+Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases) and replace in `EFI/CLOVER`
 
-### Update OS X
+### Update macOS
 
 - Make a full backup
-- Check [hackintosher.com](https://hackintosher.com/guides/) for the latest OS X Update Guide
+- Check [hackintosher.com](https://hackintosher.com/guides/) for the latest macOS Update Guide
 - Check all kexts for updates
-- Make a new Clover USB-Drive for testing purpose
+- Create a new Clover Drive for testing purpose
   - Use updated kexts and drivers in post install
-- Boot from new Clover USB-Drive
+- Boot from new Clover Drive
 - If system boots
-  - Mount Mojave EFI partition
+  - Mount EFI partition of Macintosh HD
   - Backup `EFI` to `EFI-Backups`
   - Install new Clover version to EFI partition
   - Copy updated kexts and drivers during post install
-  - Don't forget to copy `Microsoft` folder (it contains the windows bootloader)
-- Eject USB-Drive and reboot
+  - Don't forget to copy `Microsoft` and `Ubuntu` folder (it contains the windows and ubuntu bootloader)
+- Eject Clover Drive and reboot
 - If system boots
-  - Start Mojave Update
-  - On restart select newly added `Install OS X ...` partition
-  - Disable all BCRM kexts to prevent loop at the end of boot
-  - After reboot select normal Mojave partition
+  - Start macOS Update
+  - On restart select newly added `Install macOS Catalina` partition
+  - After reboot select normal Macintosh HD partition
 - If system boots
   - Be happy and enjoy the new update
 - If system doesn't boot on one of these steps
@@ -227,13 +195,11 @@ Download latest `CLOVERX64.efi` from [Dids/clover-builder](https://github.com/Di
 
 ### SSDT
 
-Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)
-<br>-x 1 is for Ivy Bridge CPU
-<br>-lmf 900 sets lowest idle frequency to 900 mhz
+Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)  
+-x 1 is for Ivy Bridge CPU  
+-lmf 900 sets lowest idle frequency to 900 mhz
 
-```sh
-./ssdtPRGen.sh -x 1 -lfm 900
-```
+    ./ssdtPRGen.sh -x 1 -lfm 900
 
 Copy `/Users/{Name}/Library/ssdtPRGen/ssdt.aml` to `EFI/CLOVER/ACPI/patched/`
 Replace existing file, rename it to `SSDT.aml`
@@ -261,7 +227,7 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 
 #### Bluetooth: [RehabMan/OS-X-BrcmPatchRAM](https://bitbucket.org/RehabMan/os-x-brcmpatchram/downloads/)
 
-- BrcmFirmwareRepo.kext
+- BrcmFirmwareData.kext
 - BrcmPatchRAM2.kext
 
 #### Battery: [RehabMan/OS-X-ACPI-Battery-Driver](https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/)
@@ -309,5 +275,5 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 
 ### Tools
 
-- Clover Configurator: [Link](http://mackie100projects.altervista.org/download-clover-configurator/)
-- Kext Utility: [Link](http://cvad-mac.narod.ru/index/0-4)
+- [Clover Configurator](http://mackie100projects.altervista.org/download-clover-configurator/)
+- [Hackintool](https://www.tonymacx86.com/threads/release-hackintool-v2-8-6.254559/)
