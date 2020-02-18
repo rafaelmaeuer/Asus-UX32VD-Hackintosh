@@ -225,10 +225,11 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 - FakePCIID.kext
 - FakePCIID_Broadcom_WiFi.kext
 
-#### Bluetooth: [RehabMan/OS-X-BrcmPatchRAM](https://bitbucket.org/RehabMan/os-x-brcmpatchram/downloads/)
+#### Bluetooth: [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM/releases)
 
+- BrcmBluetoothInjector.kext
 - BrcmFirmwareData.kext
-- BrcmPatchRAM2.kext
+- BrcmPatchRAM3.kext
 
 #### Battery: [RehabMan/OS-X-ACPI-Battery-Driver](https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/)
 
