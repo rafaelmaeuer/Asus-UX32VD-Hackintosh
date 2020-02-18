@@ -1,92 +1,53 @@
-  
-Clover EFI installer log - Mon Aug 12 14:27:59 CEST 2019
-Installer version: v2.5k r5045 EFI bootloader
+
+Clover EFI installer log - Sun Feb 16 21:29:31 CET 2020
+Installer version: v2.5k r5104 EFI bootloader
 ======================================================
-Changes:
-Mount ESP Beta (r5030): use of a new command line called espfinder to find the ESP that belong with the target volume
-using the installer. espfinder is able to find the ESP for standard hfs fylesystem, APFS, CoreStorage, RAID with or without APFS,
-Fusion drives... or combined. Is in beta stage and is not used by default, in fact to activate it you have to create a file in "/"
-called useespfinder just before running the installer:
-sudo touch /useespfinder
-
-- New Drivers directories (r4986): drivers64 and drivers64UEFI are deprecated and now Clover load drivers from
-EFI/CLOVER/drivers/BIOS and EFI/CLOVER/drivers/UEFI. The Installer takes the step for the migration without, however,
-deleting old directories. Anyway the installers now only update EFI/CLOVER/drivers/ leaving old path untouched.
-For retro compatibility new Clover loads drivers from drivers64/drivers64UEFI only if EFI/CLOVER/drivers/(BIOS or UEFI)
-are not present. You can safely remove drivers64 and drivers64UEFI using newer revisions.
-Additionally, during the migration each driver with the "-64" suffix will be renamed without it.. as Clover is for some
-time 64-bit only. None of the mentioned changes affect any functionality
-
-- Conflicting drivers:
-VirtualSMC.efi is removed if SMCHelper.efi is selected.
-HFSPlus.efi is removed if VBoxHfs.efi is selected or viceversa.
-ApfsDriverLoader.efi is removed if apfs.efi is selected or viceversa.
-Only one of OsxAptioFixDrv.efi, OsxAptioFix3Drv.efi, AptioMemoryFix.efi, OsxLowMemFixDrv.efi is allowed
-and any driver that match with "aptiofix", "memfix" or "memoryfix" will be deleted.
-
-- Drivers off (r4987): installs all drivers available in EFI/CLOVER/drivers/off. This path is ignored by Clover and is only
-used as a repository, e.g., if you want move a driver using the EFI Shell or the Finder.
-
-A backup is always made to the root of the target volume.
-
-
-======================================================
-/dev/disk0 (internal, physical):
+/dev/disk0 (internal):
    #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:      GUID_partition_scheme                        *500.1 GB   disk0
-   1:                        EFI EFI                     209.7 MB   disk0s1
-   2:                 Apple_APFS Container disk2         258.8 GB   disk0s2
-   3:       Microsoft Basic Data Windows 10              240.2 GB   disk0s3
-   4:           Windows Recovery                         845.2 MB   disk0s4
+   0:      GUID_partition_scheme                         500.3 GB   disk0
+   1:                        EFI EFI                     314.6 MB   disk0s1
+   2:                 Apple_APFS Container disk1         391.0 GB   disk0s2
+   3:       Microsoft Basic Data Windows 10              100.4 GB   disk0s3
+   4:           Windows Recovery                         571.5 MB   disk0s4
 
-/dev/disk1 (internal, physical):
+/dev/disk1 (synthesized):
    #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:     FDisk_partition_scheme                        *24.0 GB    disk1
-   1:               Windows_NTFS Temp                    24.0 GB    disk1s1
-
-/dev/disk2 (synthesized):
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:      APFS Container Scheme -                      +258.8 GB   disk2
+   0:      APFS Container Scheme -                      +391.0 GB   disk1
                                  Physical Store disk0s2
-   1:                APFS Volume High Sierra             102.9 GB   disk2s1
-   2:                APFS Volume Preboot                 21.0 MB    disk2s2
-   3:                APFS Volume Recovery                517.8 MB   disk2s3
-   4:                APFS Volume VM                      2.1 GB     disk2s4
-   5:                APFS Volume OS X Daten              49.2 GB    disk2s5
+   1:                APFS Volume Macintosh HD            237.6 GB   disk1s1
+   2:                APFS Volume Preboot                 44.0 MB    disk1s2
+   3:                APFS Volume Recovery                510.3 MB   disk1s3
+   4:                APFS Volume VM                      10.7 GB    disk1s4
+   5:                APFS Volume Daten                   120.1 GB   disk1s5
 
-/dev/disk3 (external, physical):
+/dev/disk2 (external, physical):
    #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:      GUID_partition_scheme                        *4.0 GB     disk3
-   1:                        EFI EFI                     209.7 MB   disk3s1
-   2:                  Apple_HFS Clover Zenbook v2.5k... 3.7 GB     disk3s2
+   0:      GUID_partition_scheme                        *4.0 GB     disk2
+   1:                        EFI EFI                     209.7 MB   disk2s1
+   2:       Microsoft Basic Data CLOVER                  3.8 GB     disk2s2
 
-/dev/disk5 (disk image):
-   #:                       TYPE NAME                    SIZE       IDENTIFIER
-   0:     Apple_partition_scheme                        +18.9 MB    disk5
-   1:        Apple_partition_map                         32.3 KB    disk5s1
-   2:                  Apple_HFS APFS Data Recovery 5... 18.8 MB    disk5s2
+======================================================
+Backing up EFI files
 
-using old scripting mode
-ESP BSD Name is disk3s1
 No Active Partition
 
-Stage 0 - Writing boot0ss to /dev/rdisk3
-dd if=/dev/rdisk3 count=1 bs=512 of=/tmp/origMBR
+Stage 0 - Writing boot0ss to /dev/rdisk2
+dd if=/dev/rdisk2 count=1 bs=512 of=/tmp/origMBR
 cp /tmp/origMBR /tmp/newMBR
-dd if=/Volumes/Clover Zenbook v2.5k_r5045/usr/standalone/i386/boot0ss of=/tmp/newMBR bs=440 count=1 conv=notrunc
-fdisk -f /tmp/newMBR -u -y /dev/rdisk3
+dd if=/Volumes/CLOVER/usr/standalone/i386/boot0ss of=/tmp/newMBR bs=440 count=1 conv=notrunc
+fdisk -f /tmp/newMBR -u -y /dev/rdisk2
 
-Stage 1 - Writing boot1f32 to /dev/rdisk3s1
-dd if=/dev/rdisk3s1 count=1 bs=512 of=/tmp/origbs
+Stage 1 - Writing boot1f32 to /dev/rdisk2s1
+dd if=/dev/rdisk2s1 count=1 bs=512 of=/tmp/origbs
 boot volume format is FAT32
 cp /tmp/boot1f32 /tmp/newbs
 dd if=/tmp/origbs of=/tmp/newbs skip=3 seek=3 bs=1 count=87 conv=notrunc
-dd if=/tmp/newbs of=/dev/rdisk3s1
+dd if=/tmp/newbs of=/dev/rdisk2s1
 
 Stage 2 - Written boot6 (x64) to /Volumes/ESP/boot
 
 Theme 'Clovy' (defined in config.plist) not found !
-Using default theme 'embedded'
+Using default theme 'random'
 ======================================================
 =========== Clover EFI Installation Finish ===========
 ======================================================

@@ -55,7 +55,7 @@
 		<key>Debug</key>
 		<false/>
 		<key>DefaultVolume</key>
-		<string>High Sierra</string>
+		<string>Catalina</string>
 		<key>Legacy</key>
 		<string>PBR</string>
 		<key>Secure</key>
@@ -105,53 +105,10 @@
 	</array>
 	<key>GUI</key>
 	<dict>
-		<key>Custom</key>
-		<dict>
-			<key>Entries</key>
-			<array>
-				<dict>
-					<key>Disabled</key>
-					<false/>
-					<key>Hidden</key>
-					<false/>
-					<key>Ignore</key>
-					<false/>
-					<key>Title</key>
-					<string>Windows 10</string>
-					<key>Type</key>
-					<string>Windows</string>
-					<key>Volume</key>
-					<string>531DDE99-9256-4A3F-B56F-560BB4D8B4BC</string>
-					<key>VolumeType</key>
-					<string>Internal</string>
-				</dict>
-				<dict>
-					<key>Disabled</key>
-					<false/>
-					<key>Hidden</key>
-					<false/>
-					<key>Ignore</key>
-					<false/>
-					<key>NoCaches</key>
-					<false/>
-					<key>Title</key>
-					<string>High Sierra</string>
-					<key>Type</key>
-					<string>OSX</string>
-					<key>Volume</key>
-					<string>684DA1C7-73D6-4486-BDD7-BDE67CF195C5</string>
-					<key>VolumeType</key>
-					<string>Internal</string>
-				</dict>
-			</array>
-		</dict>
 		<key>Hide</key>
 		<array>
-			<string>Preboot</string>
 			<string>VM</string>
-			<string>Legacy HD1</string>
-			<string>Legacy HD3</string>
-			<string>Legacy HD4</string>
+			<string>Preboot</string>
 		</array>
 		<key>Language</key>
 		<string>de:0</string>
@@ -167,20 +124,11 @@
 			<integer>8</integer>
 		</dict>
 		<key>Scan</key>
-		<dict>
-			<key>Entries</key>
-			<true/>
-			<key>Legacy</key>
-			<string>First</string>
-			<key>Linux</key>
-			<false/>
-			<key>Tool</key>
-			<true/>
-		</dict>
+		<true/>
 		<key>ScreenResolution</key>
 		<string>1920x1080</string>
 		<key>Theme</key>
-		<string>Mojave</string>
+		<string>Catalina</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -216,39 +164,49 @@
 		<array>
 			<dict>
 				<key>Comment</key>
-				<string>External icons patch</string>
+				<string>USB Port Limit Patch 1 PMHeart/DalianSky</string>
 				<key>Disabled</key>
 				<true/>
 				<key>Find</key>
-				<data>
-				RXh0ZXJuYWw=
-				</data>
+				<data>g/sPDw==</data>
 				<key>InfoPlistPatch</key>
 				<false/>
+				<key>MatchOS</key>
+				<string>10.15.x</string>
 				<key>Name</key>
-				<string>AppleAHCIPort</string>
+				<string>com.apple.iokit.IOUSBHostFamily</string>
 				<key>Replace</key>
-				<data>
-				SW50ZXJuYWw=
-				</data>
+				<data>g/s/Dw==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>BCM4352-fvco, (credit Sherlocks based on the-darkvoid original)</string>
+				<string>USB Port Limit Patch 2 PMHeart/DalianSky</string>
 				<key>Disabled</key>
 				<true/>
 				<key>Find</key>
-				<data>
-				gf9SqgAAdMQ=
-				</data>
+				<data>g/kPDw==</data>
+				<key>InfoPlistPatch</key>
+				<false/>
+				<key>MatchOS</key>
+				<string>10.15.x</string>
+				<key>Name</key>
+				<string>com.apple.driver.usb.AppleUSBXHCI</string>
+				<key>Replace</key>
+				<data>g/k/Dw==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>TRIM Enabler</string>
+				<key>Disabled</key>
+				<true/>
+				<key>Find</key>
+				<data>AEFQUExFIFNTRAA=</data>
 				<key>InfoPlistPatch</key>
 				<false/>
 				<key>Name</key>
-				<string>com.apple.driver.AirPort.BrcmNIC-MFG</string>
+				<string>IOAHCIBlockStorage</string>
 				<key>Replace</key>
-				<data>
-				gf9SqgAAZpA=
-				</data>
+				<data>AAAAAAAAAAAAAAA=</data>
 			</dict>
 		</array>
 	</dict>
