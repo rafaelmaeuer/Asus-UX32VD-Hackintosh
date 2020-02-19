@@ -17,7 +17,7 @@ Method (_DSM, 4, NotSerialized)\n
     If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }\n
     Return (Package()\n
     {\n
-        "AAPL,ig-platform-id", Buffer() { 0x03, 0x00, 0x66, 0x01 },\n
+        "AAPL,ig-platform-id", Buffer(0x04) { 0x09, 0x00, 0x66, 0x01 },\n
         "hda-gfx", Buffer() { "onboard-1" },\n
     })\n
 }\n

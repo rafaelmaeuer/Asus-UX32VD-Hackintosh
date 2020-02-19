@@ -8116,10 +8116,11 @@ DefinitionBlock ("", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
                     Return (Package()
                     {
-                        "AAPL,ig-platform-id", Buffer() { 0x03, 0x00, 0x66, 0x01 },
+                        "AAPL,ig-platform-id", Buffer(0x04) { 0x09, 0x00, 0x66, 0x01 },
                         "hda-gfx", Buffer() { "onboard-1" },
                     })
                 }
+                
                 
             }
 
