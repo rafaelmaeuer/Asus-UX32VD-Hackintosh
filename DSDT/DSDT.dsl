@@ -12675,6 +12675,20 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
                 Return (Zero)
             }
+            Method (ALSS, 0, NotSerialized)
+            {
+                If (CondRefOf(^^PCI0.LPCB.EC0.RALS))
+                {
+                    Return (^^PCI0.LPCB.EC0.RALS ())
+                }
+                Return (0x012C)
+            }
+            Method (SKBV, 1, NotSerialized)
+            {
+                ^^KBLV = Arg0 / 16
+                ^^PCI0.LPCB.EC0.WRAM (0x044B, Arg0)
+                Return (Arg0)
+            }
         }
     }
 
