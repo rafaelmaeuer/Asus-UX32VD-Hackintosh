@@ -45,7 +45,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>darkwake=0 rootless=0 dart=0 -gux_defer_usb2 nv_disable=1 -xcpm -v</string>
+		<string>darkwake=0 rootless=0 dart=0 -gux_defer_usb2 nv_disable=1 -wegnoegpu -xcpm -v</string>
 		<key>Debug</key>
 		<false/>
 		<key>DefaultVolume</key>
@@ -63,6 +63,26 @@
 	</dict>
 	<key>Devices</key>
 	<dict>
+		<key>Arbitrary</key>
+		<array>
+			<dict>
+				<key>Comment</key>
+				<string>iGPU</string>
+				<key>CustomProperties</key>
+				<array>
+					<dict>
+						<key>Disabled</key>
+						<false/>
+						<key>Key</key>
+						<string>AAPL,ig-platform-id</string>
+						<key>Value</key>
+						<data>CgBmAQ==</data>
+					</dict>
+				</array>
+				<key>PciAddr</key>
+				<string>PciRoot(0x0)/Pci(0x2,0x0)</string>
+			</dict>
+		</array>
 		<key>Audio</key>
 		<dict>
 			<key>Inject</key>
@@ -125,8 +145,6 @@
 			<key>NVidia</key>
 			<false/>
 		</dict>
-		<key>ig-platform-id</key>
-		<string>0x16160002</string>
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
