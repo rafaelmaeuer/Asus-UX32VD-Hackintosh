@@ -21,6 +21,8 @@
 				<string>DMAR</string>
 			</dict>
 		</array>
+		<key>FixMCFG</key>
+		<true/>
 		<key>SSDT</key>
 		<dict>
 			<key>DropOem</key>
@@ -51,7 +53,7 @@
 		<key>Legacy</key>
 		<string>LegacyBiosDefault</string>
 		<key>NeverHibernate</key>
-		<true/>
+		<false/>
 		<key>Secure</key>
 		<false/>
 		<key>Timeout</key>
