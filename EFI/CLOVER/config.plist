@@ -104,6 +104,64 @@
 	</array>
 	<key>GUI</key>
 	<dict>
+		<key>Custom</key>
+		<dict>
+			<key>Entries</key>
+			<array>
+				<dict>
+					<key>Disabled</key>
+					<false/>
+					<key>Ignore</key>
+					<false/>
+					<key>Title</key>
+					<string>Windows 10</string>
+					<key>Type</key>
+					<string>Windows</string>
+					<key>Volume</key>
+					<string>33BD744D-19E7-49C3-AE73-66003BFA8637</string>
+				</dict>
+				<dict>
+					<key>Disabled</key>
+					<false/>
+					<key>Ignore</key>
+					<false/>
+					<key>Title</key>
+					<string>Ubuntu 18</string>
+					<key>Type</key>
+					<string>Linux</string>
+					<key>Volume</key>
+					<string>33BD744D-19E7-49C3-AE73-66003BFA8637</string>
+				</dict>
+				<dict>
+					<key>Disabled</key>
+					<false/>
+					<key>Ignore</key>
+					<false/>
+					<key>NoCaches</key>
+					<false/>
+					<key>Title</key>
+					<string>macOS</string>
+					<key>Type</key>
+					<string>OSXRecovery</string>
+					<key>Volume</key>
+					<string>AA0429C5-F0D0-45BD-AE13-532BAA8A5753</string>
+				</dict>
+				<dict>
+					<key>Disabled</key>
+					<false/>
+					<key>Ignore</key>
+					<false/>
+					<key>NoCaches</key>
+					<false/>
+					<key>Title</key>
+					<string>macOS</string>
+					<key>Type</key>
+					<string>OSX</string>
+					<key>Volume</key>
+					<string>E513F1D6-2423-44BC-8128-37686B74687D</string>
+				</dict>
+			</array>
+		</dict>
 		<key>Hide</key>
 		<array>
 			<string>VM</string>
@@ -217,48 +275,6 @@
 				<string>IOGraphicsFamily</string>
 				<key>Replace</key>
 				<data>AQAA6xc=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Zeroing 10ec0885 codec (patched by AppleHDA Patcher.app)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>hQjsEA==</data>
-				<key>InfoPlistPatch</key>
-				<false/>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>AAAAAA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Zeroing 11d41983 codec (patched by AppleHDA Patcher.app)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>gxnUEQ==</data>
-				<key>InfoPlistPatch</key>
-				<false/>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>AAAAAA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Patching 11d41984 with 10ec0269 codec (patched by AppleHDA Patcher.app)</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Find</key>
-				<data>hBnUEQ==</data>
-				<key>InfoPlistPatch</key>
-				<false/>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>aQLsEA==</data>
 			</dict>
 		</array>
 	</dict>
