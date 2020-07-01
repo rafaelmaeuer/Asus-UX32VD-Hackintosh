@@ -4,8 +4,8 @@
 
 Guide how to install macOS Catalina on ASUS UX32VD
 
-- macOS version: 10.15.3
-- clover version: 2.5k r5104
+- macOS version: 10.15.5
+- clover version: r5119
 
 #### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
 
@@ -65,14 +65,14 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ##### a) Preparation
 
-- Format USB-Drive with GUID and FAT32
+- Format USB-Drive with GUID and HFS+
   - Find the correct disk number of USB-Drive:
 
         diskutil list
 
   - Replace {#} with corresponding disk number and {Volume} with desired Name:
 
-        diskutil partitionDisk /dev/disk{#} 1 GPT FAT32 {Volume} R
+        diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
 
 - Download Clover: [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases)
 
@@ -82,12 +82,13 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ##### c) Post Install
 
-- Copy DSDT.aml and SSDT.aml from/to `EFI/CLOVER/ACPI/patched/`
-- Rename existing config.plist to config-org.plist in `EFI/CLOVER/`
+- Copy `EFI/BOOT/BOOTX64.efi` to USB-Drive root and rename it to `SHELLX64.efi`
+- Copy patches from `ACPI/patched` to `EFI/CLOVER/ACPI/patched/`
+- In `EFI/CLOVER/` rename existing config.plist to config-org.plist
 - Copy config.plist from/to `EFI/CLOVER/`
-- Delete all 10.X folders from `EFI/CLOVER/kexts/`
-- Copy all necessary kexts from/to `EFI/CLOVER/kexts/other/`
-- (Optional: Copy favorite theme to `EFI/CLOVER/themes`)
+- Delete all 10.X folders in `EFI/CLOVER/kexts/`
+- Copy kexts from/to `EFI/CLOVER/kexts/other/`
+- (Optional: Copy favorite theme from/to `EFI/CLOVER/themes`)
 
 #### 2. Create macOS Installer Drive
 
@@ -148,7 +149,7 @@ There are two options:
 
 - When getting `Error loading kernel cache` reboot until it passes
 
-- On USBSMC Error check if your Installer-Stick is USB3, use an USB2 cable then
+- On USBSMC Error check if your Installer-Stick is USB3, use an USB2 cable/adapter then
 
 - If EFI partition is messed up and boot only works in safe mode, mount EFI with:
 
@@ -193,20 +194,49 @@ Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.
 
 ## Resources
 
+### Sleep
+
+- In order to get sleep working with Bluetooth enabled the [GPRW-Patch](https://dortania.github.io/USB-Map-Guide/misc/instant-wake.html) is applied. Loading of SSDT-GPRW.aml fails, but it seems that the `Rename GPRW to XPRW` ACPI-patch is sufficient, as it prevents waking up from sleep (but producing some error logs in verbose boot).
+
+### ACPI
+
+- SSDT-EC.aml is necessary to boot since macOS Catalina
+- SSDT-PNLF.aml activates backlight control
+
 ### SSDT
 
-Generate your SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)  
+#### Method 1: use precompiled SSDT
+
+🚨 WARNING: Make sure you have exactly the same CPU (Core i7-3517U) 🚨  
+Use precompiled SSDT from `SSDT/SSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
+
+#### Method 2: create your own SSDT
+
+Generate your own SSDT with [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh)  
 -x 1 is for Ivy Bridge CPU  
 -lmf 900 sets lowest idle frequency to 900 mhz
 
     ./ssdtPRGen.sh -x 1 -lfm 900
 
-Copy `/Users/{Name}/Library/ssdtPRGen/ssdt.aml` to `EFI/CLOVER/ACPI/patched/`
+Copy `/Users/{Name}/Library/ssdtPRGen/ssdt.aml` to `EFI/CLOVER/ACPI/patched/`  
 Replace existing file, rename it to `SSDT.aml`
 
 ### DSDT
 
-Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh/tree/master/src/DSDT)
+#### Method 1: use precompiled DSDT
+
+🚨 WARNING: Make sure you have exactly the same Laptop Model (UX32VD-R4002V) 🚨  
+Use precompiled DSDT from `DSDT/DSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
+
+#### Method 2: create your own DSDT
+
+Generation of DSDT is inspired by: [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh/tree/master/src/DSDT)
+
+- Extract original ACPI by pressing F4 in Clover menu
+- Download [acidanthera/MaciASL](https://github.com/acidanthera/MaciASL/releases/tag/1.5.7)
+- Open `EFI/CLOVER/ACPI/origin/DSDT.aml` with MaciASL
+- Apply all patches from `DSDT/patches` in correct order
+- Export `DSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
 
 ---
 
@@ -216,14 +246,13 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 
 - Lilu.kext
 
+#### Graphics: [acidanthera/WhateverGreen](https://github.com/acidanthera/WhateverGreen)
+
+- WhateverGreen.kext
+
 #### WiFi: [acidanthera/AirportBrcmFixup](https://github.com/acidanthera/AirportBrcmFixup/releases)
 
 - AirportBrcmFixup.kext
-
-#### WiFi: [RehabMan/OS-X-Fake-PCI-ID](https://bitbucket.org/RehabMan/os-x-fake-pci-id/downloads/)
-
-- FakePCIID.kext
-- FakePCIID_Broadcom_WiFi.kext
 
 #### Bluetooth: [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM/releases)
 
@@ -231,18 +260,13 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 - BrcmFirmwareData.kext
 - BrcmPatchRAM3.kext
 
-#### Battery: [RehabMan/OS-X-ACPI-Battery-Driver](https://bitbucket.org/RehabMan/os-x-acpi-battery-driver/downloads/)
+#### Sensors: [acidanthera/VirtualSMC](https://github.com/acidanthera/VirtualSMC)
 
-- ACPIBatteryManager.kext
-
-#### Sensors: [RehabMan/OS-X-FakeSMC-kozlek](https://bitbucket.org/RehabMan/os-x-fakesmc-kozlek/downloads/)
-
-- FakeSMC.kext
-- FakeSMC_ACPISensors.kext
-- FakeSMC_CPUSensors.kext
-- FakeSMC_GPUSensors.kext
-- FakeSMC_LPCSensors.kext
-- FakeSMC_SMMSensors.kext
+- VirtualSMC.kext
+- SMCBatteryManager.kext
+- SMCLightSensor.kext
+- SMCProcessor.kext
+- SMCSuperIO.kext
 
 #### CPU: [tonymacx86/NullCPUPowerManagement](https://www.tonymacx86.com/resources/nullcpupowermanagement.268/)
 
@@ -256,13 +280,14 @@ Generation of DSDT is not covered by this tutorial, have a look at: [danieleds/A
 
 - ApplePS2SmartTouchPad.kext
 
-#### FN-Keys: [EMlyDinEsH/ASUS-FN-ALS-Sensor-Driver](http://forum.osxlatitude.com/index.php?/topic/1968-fn-hotkey-and-als-sensor-driver-for-asus-notebooks/)
+#### FN-Keys: [hieplpvip/AsusSMC](https://github.com/hieplpvip/AsusSMC)
 
-- AsusNBFnKeys.kext
+- AsusSMC.kext
 
-#### USB 3.0: [RehabMan/os-x-usb-inject-all](https://bitbucket.org/RehabMan/os-x-usb-inject-all/downloads/)
+#### USB: [RehabMan/OS-X-Fake-PCI-ID](https://bitbucket.org/RehabMan/os-x-fake-pci-id/downloads/)
 
-- USBInjectAll.kext
+- FakePCIID.kext
+- FakePCIID_XHCIMux.kext
 
 ---
 
