@@ -33,7 +33,7 @@ Intel
 
 USB
 - Legacy USB Support [Enabled]
-- XHCI Pre-Boot Mode [Disabled]
+- XHCI Pre-Boot Mode [Auto]
 
 Network
 - Network Stack [Disabled]
@@ -46,6 +46,10 @@ This Hackintosh is based on an ASUS UX32VD-R4002V Laptop, with an Intel Core i7-
 ##### RAM
 
 The default 2GB RAM module was replaced with an equivalent 8GB module to get 10GB of RAM.
+
+##### Graphics
+
+The NVIDIA GeForce GT 620M was disabled in favour of the Ivy Bridge Intel HD 4000 graphics card which is renamed to iGPU with a DSDT patch.
 
 ##### WIFI / Bluetooth
 
@@ -82,26 +86,26 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ##### c) Post Install
 
-- Copy `EFI/BOOT/BOOTX64.efi` to USB-Drive root and rename it to `SHELLX64.efi`
-- Copy patches from `ACPI/patched` to `EFI/CLOVER/ACPI/patched/`
-- In `EFI/CLOVER/` rename existing config.plist to config-org.plist
-- Copy config.plist from/to `EFI/CLOVER/`
-- Delete all 10.X folders in `EFI/CLOVER/kexts/`
-- Copy kexts from/to `EFI/CLOVER/kexts/other/`
-- (Optional: Copy favorite theme from/to `EFI/CLOVER/themes`)
+- Copy `EFI/BOOT/BOOTX64.efi` to USB-Drive root and name it `SHELLX64.efi`
+- Copy all ACPI patches from/to `EFI/CLOVER/ACPI/patched/`
+- Copy `config.plist` from/to `EFI/CLOVER/config.plist` (backup original first)
+- Copy all kexts from/to `EFI/CLOVER/kexts/Other/`
+  - Delete all 10.X folders in `EFI/CLOVER/kexts/`
+- (Optional: Copy favorite Clover theme to `EFI/CLOVER/themes`)
 
 #### 2. Create macOS Installer Drive
 
 To create a working macOS Installer boot drive, you will need the following:
+
 - An empty USB flash drive (minimum 16GB)  
-  (Chose USB2 or you need an USB2 cable to avoid USBSMC-Error)
+  (Chose USB2 or you will need an USB2 cable/adapter to avoid USBSMC-Error)
 - A device already running macOS with access to the App Store
 
 ##### a) Download macOS Installer
 
 - Open the Mac App Store on your device already running macOS
 - Download `Install macOS Catalina` application
-- Close when it opens automatically
+- Close Installer when it opens automatically
 
 ##### b) Create Installer Stick
 
@@ -126,22 +130,21 @@ To create a working macOS Installer boot drive, you will need the following:
 - After successfully install repeat steps 1b - 1c but with EFI on Macintosh HD as target
 - Follow this guide to add clover boot entry in BIOS [Restoring UEFI boot entry](https://www.thomas-krenn.com/en/wiki/Restoring_UEFI_boot_entry_via_motherboard_replacement_or_BIOS_update) or this [UEFI clover boot option](https://www.tonymacx86.com/threads/solved-uefi-clover-boot-option-gone-after-bios-update.211715/#post-1409404)
 
-##### b) Enable TRIM for SSD
+##### b) Install AsusSMCDaemon
 
-There are two options:
+- Unzip `Post-Install/AsusSMCDaemon.zip`
+- Run `install_daemon.sh` as root [Link](https://github.com/hieplpvip/AsusSMC/wiki/Installation-Instruction#2-installing-asussmcdaemon-only-if-you-have-sleep-and-airplane-fn-keys)
 
-- Run following command in the terminal:
-  
-  `sudo trimforce enable`
+##### c) Install Karabiner Elements
 
-- Patch kext with clover configurator:
+- Install Karabiner Elements from `Post-Install/Karabiner-Elements-12.10.0.dmg`
+- Switch keys `cmd` with `alt` on left and right side
+- Setup function keys to work as desired
 
-  ```sh
-  com.apple.iokit.IOAHCIBlockStorage
+##### d) Optimize Clover GUI
 
-  00415050 4C452053 534400
-  00000000 00000000 000000
-  ```
+- Unzip and install Clover Configurator from `Post-Install/CloverConfigurator 5.9.3.0.zip`
+- Mount EFI partition, load `config.plist` go to `GUI` section and modify custom boot entries to match your setup
 
 ---
 
@@ -149,7 +152,7 @@ There are two options:
 
 - When getting `Error loading kernel cache` reboot until it passes
 
-- On USBSMC Error check if your Installer-Stick is USB3, use an USB2 cable/adapter then
+- On `USBSMC Error` check if your Installer-Drive is USB3, use an USB2 Drive (or cable/adapter) instead
 
 - If EFI partition is messed up and boot only works in safe mode, mount EFI with:
 
@@ -237,6 +240,35 @@ Generation of DSDT is inspired by: [danieleds/Asus-UX32VD-Hackintosh](https://gi
 - Open `EFI/CLOVER/ACPI/origin/DSDT.aml` with MaciASL
 - Apply all patches from `DSDT/patches` in correct order
 - Export `DSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
+
+### Clover Configuration
+
+#### Fix for Hibernation
+
+- Hackintool -> Power -> Fix Sleep  
+  (Sets Clover -> ACPI -> FixMCFG)
+
+#### Fix Freeze after Wakeup
+
+- Setting up the iGPU [Link](https://khronokernel-4.gitbook.io/disable-unsupported-gpus/igpu)
+- Disable GPU with Boot Flags [Link](https://khronokernel-4.gitbook.io/disable-unsupported-gpus/disabling-the-gpu/option-1-boot-flags)
+
+#### Enable TRIM for SSD
+
+There are two options:
+
+- Run following command in the terminal:
+  
+  `sudo trimforce enable`
+
+- Patch kext with clover configurator:
+
+  ```sh
+  com.apple.iokit.IOAHCIBlockStorage
+
+  00415050 4C452053 534400
+  00000000 00000000 000000
+  ```
 
 ---
 
