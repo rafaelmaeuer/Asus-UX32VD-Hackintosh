@@ -310,9 +310,10 @@ There are two options:
 
 - NullCPUPowerManagement.kext
 
-#### Audio: [SourceForge/VoodooHDA](https://sourceforge.net/projects/voodoohda/)
+#### Audio: AppleALC or VoodooHDA
 
-- VoodooHDA.kext
+- AppleALC.kext [acidanthera/AppleALC](https://github.com/acidanthera/AppleALC/releases/)
+- VoodooHDA.kext [SourceForge/VoodooHDA](https://sourceforge.net/projects/voodoohda/)
 
 #### TouchPad: [EMlyDinEsH/Smart-Touchpad-Driver](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/)
 
