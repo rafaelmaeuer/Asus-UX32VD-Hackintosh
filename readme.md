@@ -201,6 +201,8 @@ Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.
 
 - In order to get sleep working with Bluetooth enabled the [GPRW-Patch](https://dortania.github.io/USB-Map-Guide/misc/instant-wake.html) is applied. Loading of SSDT-GPRW.aml fails, but it seems that the `Rename GPRW to XPRW` ACPI-patch is sufficient, as it prevents waking up from sleep (but producing some error logs in verbose boot).
 
+---
+
 ### ACPI
 
 - SSDT-EC.aml is necessary to boot since macOS Catalina
@@ -241,7 +243,11 @@ Generation of DSDT is inspired by: [danieleds/Asus-UX32VD-Hackintosh](https://gi
 - Apply all patches from `DSDT/patches` in correct order
 - Export `DSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
 
+---
+
 ### Clover Configuration
+
+- Use `MacBookAir5.2` as SMBIOS
 
 #### Fix for Hibernation
 
