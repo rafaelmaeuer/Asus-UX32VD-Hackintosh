@@ -70,6 +70,7 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 ##### a) Preparation
 
 - Format USB-Drive with GUID and HFS+
+
   - Find the correct disk number of USB-Drive:
 
         diskutil list
@@ -264,7 +265,7 @@ Generation of DSDT is inspired by: [danieleds/Asus-UX32VD-Hackintosh](https://gi
 There are two options:
 
 - Run following command in the terminal:
-  
+
   `sudo trimforce enable`
 
 - Patch kext with clover configurator:
@@ -315,9 +316,9 @@ There are two options:
 - AppleALC.kext [acidanthera/AppleALC](https://github.com/acidanthera/AppleALC/releases/)
 - VoodooHDA.kext [SourceForge/VoodooHDA](https://sourceforge.net/projects/voodoohda/)
 
-#### TouchPad: [EMlyDinEsH/Smart-Touchpad-Driver](http://forum.osxlatitude.com/index.php?/topic/1948-elan-focaltech-and-synaptics-smart-touchpad-driver-mac-os-x/)
+#### TouchPad: [BAndysc/VoodooPS2](https://github.com/BAndysc/VoodooPS2)
 
-- ApplePS2SmartTouchPad.kext
+- VoodooPS2Controller.kext
 
 #### FN-Keys: [hieplpvip/AsusSMC](https://github.com/hieplpvip/AsusSMC)
 
