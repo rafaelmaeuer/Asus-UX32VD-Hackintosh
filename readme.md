@@ -4,8 +4,8 @@
 
 Guide how to install macOS Catalina on ASUS UX32VD
 
-- macOS version: 10.15.5
-- clover version: r5119
+- macOS version: 10.15.6
+- clover version: r5122
 
 #### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
 
@@ -342,4 +342,4 @@ There are two options:
 ### Tools
 
 - [Clover Configurator](http://mackie100projects.altervista.org/download-clover-configurator/)
-- [Hackintool](https://www.tonymacx86.com/threads/release-hackintool-v2-8-6.254559/)
+- [Hackintool](https://github.com/headkaze/Hackintool/releases/)

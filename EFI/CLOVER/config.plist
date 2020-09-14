@@ -20,6 +20,8 @@
 					<string>rename GPRW to XPRW (use with SSDT-GPRW.aml)</string>
 					<key>Count</key>
 					<integer>0</integer>
+					<key>Disabled</key>
+					<false/>
 					<key>Enabled</key>
 					<true/>
 					<key>Find</key>
