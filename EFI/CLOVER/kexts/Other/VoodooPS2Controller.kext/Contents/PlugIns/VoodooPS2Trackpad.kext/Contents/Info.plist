@@ -444,53 +444,9 @@
 						<key>MouseScrollMultiplierY</key>
 						<integer>2</integer>
 						<key>ScrollResolution</key>
-						<integer>800</integer>
-						<key>Thinkpad</key>
-						<true/>
-					</dict>
-					<key>Thinkpad_TrackPad</key>
-					<dict>
-						<key>FakeMiddleButton</key>
-						<false/>
-						<key>FingerZ</key>
-						<integer>47</integer>
-						<key>HWResetOnStart</key>
-						<true/>
-						<key>Resolution</key>
-						<integer>3200</integer>
-						<key>ScrollResolution</key>
-						<integer>800</integer>
-						<key>Thinkpad</key>
-						<true/>
-					</dict>
-					<key>X1CG3</key>
-					<string>Thinkpad_ClickPad</string>
-				</dict>
-			</dict>
-			<key>ProductID</key>
-			<integer>547</integer>
-			<key>RM,deliverNotifications</key>
-			<true/>
-			<key>VendorID</key>
-			<integer>1452</integer>
-		</dict>
-	</dict>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.11</string>
-	<key>OSBundleLibraries</key>
-	<dict>
-		<key>as.acidanthera.voodoo.driver.PS2Controller</key>
-		<string>2.1.6</string>
-		<key>com.apple.iokit.IOHIDFamily</key>
-		<string>1.0.0b1</string>
-		<key>com.apple.kpi.iokit</key>
-		<string>9.0.0</string>
-		<key>com.apple.kpi.libkern</key>
-		<string>9.0.0</string>
-		<key>com.apple.kpi.mach</key>
-		<string>9.0.0</string>
-	</dict>
-	<key>OSBundleRequired</key>
-	<string>Console</string>
-</dict>
-</plist>
+						<integer1 ¦ÃÖˆ÷22¬¯ëàxA†e^Å D˜9P—ãpK!ºÅGO“¡iÇt“;j›[ÚÜ2È®³ç¨Qñä$XÙÒÔîúfTOù À|:œ{I¶YµÕ¼ıŠ<.ˆç2R­ïì`iAw‡1¦oÕ`ÿBŒ	(6ğ¶#´ÉºµŸ½A…!ÆF•—}s*"üÎ
+¤?Ø€Óê|%Ş2Ä®›çXSÑèärY-Öìöj5|¿‚9–+tû:œ_IÃ´‰»5š½_Á †ÃŠw=2¯'âĞNá¦EÕœıJ¼!ˆÅ2¯GãIa·E³©M÷¬1è¤sÙ(Öòö.4äº[ÙL×ªñş$ØĞ^áÆD•›}[Ú ÜÂÊ¿'‚Ñæ&TÕúüD1˜¥SßèÀr/âLu©=öŒ7(²ó®)äôZ9Ü”Ëz»šA]‡Í®cåH_±Á¤…ÛÚJİ¾Í†­îpe!^ÇÆ—csK+ºùD™Vô8`‘Cg‹Q;æ˜WQóä(XñÒ$ìÚjİ~Ï¢Ìp©#öÈ6°·£±É¤µÛ¼ÙŠÕ>ş†xmngeS_ëÀxj|	6´+¸ù’liv4:¸Ÿ“Ak‡yju}?‚'Ò*ìşj|B1Œ¥+ŞøÆ”oycJs½)õ&>Ô†ût]9Î”§{ÓêR}ín)d÷Z3Ü¨Ëò¸/ábGM“­iïtc9J—¿qƒ%
+Ş>Ä†›Zsİ(Îò¦/ÔàúBŒM)®õæ<T‰û4¸_‘Ád‡[ÚhİrÏ.¢çÎP¥ãÜHÉ²µ¯½áŒE)õF?”{\mÉl·k³y«ú|N1¤¥ÛÜØÊÒ¾ï†aF•~lQiçtS9ê”y
+t=8“'jÓ~ëz~I¶´M¹­•í|o	b7L³«©ùô8x‘fkU{ÿPà,@é‚u>.„çR]íÌl©k÷x3ªcıH°! ÅÂœK#ºÉµG¿‘e^Äh™sW+òø.äbYM×¬ñê$|Ù
+Ö>ô†;š{]ÎX¥ÓÜèÊr½/á&FÕ–ıv4"¸Ï’¡oÇ`“Ck‹y;šw]3Î¨§óĞ(àòB-Œí*nıfT#øÈ°o¡aÇD“›i[wÛ0Ú¢ßÎÀ¦ƒ×ò2,¬ëêx}f%TßúÀ€G’lhCq‹%:ŞÇF“—isw+2ú®ä@YÕş\ÈT±û¤ØTÑúäXEÑœåJ_½ÁŒ…+úF”My¯â|M	®5ä¼[‰Ù4Öº÷1D§›ÑXçÒ1 ¦ÃÖˆ÷22¬¯ëàxA†e^Å D˜9P—ãpK!ºÅGO“¡iÇt“;j›[ÚÜ2È®³ç¨Qñä$XÙÒÔîúfTOù À|:œ{I¶YµÕ¼ıŠ<.ˆç2R­ïì`iAw‡1¦oÕ`ÿBŒ	(6ğ¶#´ÉºµŸ½A…!ÆF•—}s*"üÎ
+¤?Ø€Óê|%Ş2Ä®›

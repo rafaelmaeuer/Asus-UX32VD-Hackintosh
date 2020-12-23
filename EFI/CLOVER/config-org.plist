@@ -715,12 +715,14 @@
 		<string>Daytime</string>
 		<key>PlayAsync</key>
 		<false/>
+		<key>ProvideConsoleGop</key>
+		<true/>
 		<key>ScreenResolution</key>
 		<string>1280x1024</string>
 		<key>ShowOptimus</key>
 		<false/>
 		<key>Theme</key>
-		<string>random</string>
+		<string>christmas</string>
 		<key>Timezone</key>
 		<integer>3</integer>
 	</dict>
@@ -938,7 +940,7 @@
 				<data>
 				VUiJ
 				</data>
-				<key>FindMask</key>
+				<key>MaskFind</key>
 				<data>
 				AAAA
 				</data>
@@ -1088,9 +1090,19 @@
 	</dict>
 	<key>Quirks</key>
 	<dict>
+		<key>AppleXcpmExtraMsrs</key>
+		<false/>
+		<key>AppleXcpmForceBoost</key>
+		<false/>
 		<key>AvoidRuntimeDefrag</key>
 		<true/>
 		<key>DevirtualiseMmio</key>
+		<false/>
+		<key>DisableIoMapper</key>
+		<true/>
+		<key>DisableLinkeditJettison</key>
+		<true/>
+		<key>DisableRtcChecksum</key>
 		<false/>
 		<key>DisableSingleUser</key>
 		<false/>
@@ -1098,14 +1110,43 @@
 		<false/>
 		<key>DiscardHibernateMap</key>
 		<false/>
+		<key>DummyPowerManagement</key>
+		<false/>
 		<key>EnableSafeModeSlide</key>
 		<true/>
 		<key>EnableWriteUnprotector</key>
 		<true/>
+		<key>ExternalDiskIcons</key>
+		<false/>
 		<key>ForceExitBootServices</key>
 		<false/>
+		<key>FuzzyMatch</key>
+		<true/>
+		<key>IncreasePciBarSize</key>
+		<false/>
+		<key>KernelCache</key>
+		<string>Auto</string>
 		<key>MmioWhitelist</key>
-		<array/>
+		<array>
+			<dict>
+				<key>Address</key>
+				<integer>4275159040</integer>
+				<key>Comment</key>
+				<string>Haswell: SB_RCBA is a 0x4 page memory region, containing SPI_BASE at 0x3800 (SPI_BASE_ADDRESS)</string>
+				<key>Enabled</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>Address</key>
+				<integer>4278190080</integer>
+				<key>Comment</key>
+				<string>Generic: PCI root is a 0x1000 page memory region used by some firmwares</string>
+				<key>Enabled</key>
+				<false/>
+			</dict>
+		</array>
+		<key>PowerTimeoutKernelPanic</key>
+		<false/>
 		<key>ProtectMemoryRegions</key>
 		<false/>
 		<key>ProtectSecureBoot</key>
@@ -1126,6 +1167,10 @@
 		<false/>
 		<key>SyncRuntimePermissions</key>
 		<true/>
+		<key>ThirdPartyDrives</key>
+		<false/>
+		<key>XhciPortLimit</key>
+		<false/>
 	</dict>
 	<key>RtVariables</key>
 	<dict>

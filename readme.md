@@ -1,11 +1,15 @@
-## ASUS UX32VD
+## ASUS UX32VD Hackintosh
+
+Guide on how to install macOS Big Sur on ASUS UX32VD Laptop
+
+![UX32VD Hackintosh](Images/UX32VD-HQ-Web.jpg)
 
 ### Info
 
-Guide how to install macOS Catalina on ASUS UX32VD
+Considerations for this project are moving towards a migration with OpenCore. Due to the effort for the migration, the current setup still uses Clover (with OC integration).
 
-- macOS version: 10.15.6
-- clover version: r5122
+- macOS version: 11.1
+- clover version: r5127
 
 #### Laptop Frequent Questions: [tonymacx86.com](https://www.tonymacx86.com/threads/faq-read-first-laptop-frequent-questions.164990/)
 
@@ -41,11 +45,11 @@ Network
 
 #### Hardware
 
-This Hackintosh is based on an ASUS UX32VD-R4002V Laptop, with an Intel Core i7-3517U Processor and a NVIDIA GeForce GT 620M graphics card.
+This Hackintosh is based on an [ASUS UX32VD-R4002V](https://www.asus.com/de/supportonly/UX32VD/HelpDesk_Download/) Laptop, with an [Intel Core i7-3517U](https://ark.intel.com/content/www/de/de/ark/products/65714/intel-core-i7-3517u-processor-4m-cache-up-to-3-00-ghz.html) Processor and a [NVIDIA GeForce GT 620M](https://www.geforce.co.uk/hardware/notebook-gpus/geforce-gt-620m/specifications) graphics card.
 
 ##### RAM
 
-The default 2GB RAM module was replaced with an equivalent 8GB module to get 10GB of RAM.
+The default 2GB of RAM were replaced with an equivalent [8GB DDR3](https://www.speicher.de/arbeitsspeicher-8gb-ddr3-asus-zenbook-ux32vd-r4002v-ram-so-dimm-sp247073.html) module to get 10GB of RAM.
 
 ##### Graphics
 
@@ -69,7 +73,7 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 ##### a) Preparation
 
-- Format USB-Drive with GUID and HFS+
+- Format USB-Drive with GUID and APFS ([Link](https://www.howtogeek.com/272741/how-to-format-a-drive-with-the-apfs-file-system-on-macos-sierra/))
 
   - Find the correct disk number of USB-Drive:
 
@@ -77,19 +81,25 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
   - Replace {#} with corresponding disk number and {Volume} with desired Name:
 
-        diskutil partitionDisk /dev/disk{#} 1 GPT HFS+ {Volume} R
+        diskutil apfs createContainer /dev/disk{#}
+        diskutil apfs addVolume disk{#} APFS {Volume}
 
-- Download Clover: [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases)
+- Download latest Clover release: [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases)
 
-##### b) Install Clover [clover-wiki](https://clover-wiki.zetam.org/Installation)
+##### b) Install Clover
 
-- Follow this guide [Create a MacOS Catalina 10.15.0 USB Installer Drive w/Clover](https://hackintosher.com/forums/thread/guide-how-to-create-a-macos-catalina-10-15-0-usb-installer-drive-w-clover.2836/) Section `IV. Install Clover Bootloader into the USB Installer Flash Drive's EFI Boot Partition`
+- Follow these steps:
+  
+  ![Clover Install 1](Images/Clover-Install-1.png)
+  ![Clover Install 1](Images/Clover-Install-2.png)
+  ![Clover Install 1](Images/Clover-Install-3.png)
 
 ##### c) Post Install
 
-- Copy `EFI/BOOT/BOOTX64.efi` to USB-Drive root and name it `SHELLX64.efi`
+- Overwrite `CsmVideoDxe.efi` from/to `EFI/CLOVER/drivers/UEFI/`
 - Copy all ACPI patches from/to `EFI/CLOVER/ACPI/patched/`
-- Copy `config.plist` from/to `EFI/CLOVER/config.plist` (backup original first)
+- Rename `config.plist` to `config-org.plist` in `EFI/CLOVER`
+- Copy `config.plist` from/to `EFI/CLOVER/config.plist`
 - Copy all kexts from/to `EFI/CLOVER/kexts/Other/`
   - Delete all 10.X folders in `EFI/CLOVER/kexts/`
 - (Optional: Copy favorite Clover theme to `EFI/CLOVER/themes`)
@@ -98,37 +108,84 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 To create a working macOS Installer boot drive, you will need the following:
 
-- An empty USB flash drive (minimum 16GB)  
-  (Chose USB2 or you will need an USB2 cable/adapter to avoid USBSMC-Error)
-- A device already running macOS with access to the App Store
+- An empty USB3 flash drive (minimum 32GB)
+- A device already running macOS with App Store access
 
 ##### a) Download macOS Installer
 
-- Open the Mac App Store on your device already running macOS
-- Download `Install macOS Catalina` application
+- Open the Mac App Store on a device running macOS
+- Download `Install macOS Big Sur` application
 - Close Installer when it opens automatically
 
 ##### b) Create Installer Stick
 
-- Use [DiskMaker X](https://diskmakerx.com/) or [Install Disk Creator](https://macdaddy.io/install-disk-creator/) to create macOS Install Drive
+- Follow this guide: [macOS Big Sur 11: bootbaren USB-Stick erstellen](https://www.zdnet.de/88389660/macos-big-sur-11-bootbaren-usb-stick-erstellen/)
+  
+  Create installer stick with this command:
+
+  ```sh
+  sudo /Applications/Install\ macOS\ Big\ Sur.app/Contents/Resources/createinstallmedia --volume /Volumes/Big\ Sur/ --nointeraction
+  ```
+
+##### c) Patch Installer Stick
+
+Enable installation on unsupported hardware:
+  
+- Download and unpack: [barrykn/big-sur-micropatcher](https://github.com/barrykn/big-sur-micropatcher/releases)
+- Execute in Terminal
+  
+  ```sh
+  ~/Downloads/big-sur-micropatcher-main/micropatcher.sh
+  ```
 
 ---
 
 #### 3. Install macOS
 
 - Connect macOS Installer and Clover Drive to your UX32VD
-- Boot from Clover drive and select macOS Installer (`Install macOS Catalina`)
+
+##### Stage 0
+
+- Boot from Clover drive and select macOS Installer (`Install macOS Big Sur`)
+- Disable all Broadcom kexts:
+  - Hit Spacebar after selecting macOS Installer
+  - Select `Block injected kexts ->` (Spacebar)
+  - Select `Other ->` (Spacebar)
+  - Select (Spacebar)
+    - `AirportBrcmFixup.kext`
+    - `BrcmBluetoothInjector.kext`
+    - `BrcmFirmwareData.kext`
+    - `BrcmPatchRAM3.kext`
+  - Select `Return` twice (Spacebar)
+  - Select `Boot macOS with selected options`
+- If screen turns completely blue, reboot
+
+##### Stage 1
+
 - Once installer shows up, follow the installation instructions
-- On reboot select Macintosh HD in Clover (`Macintosh HD`)
-- Create user account and finish setup process
+
+##### Stage 2
+
+- On 1. reboot select `macOS HD` instead of `macOS Installer`
+- Again disable all Broadcom kexts
+
+##### Stage 3
+
+- On 2. reboot [press F3](https://tiebac.baidu.com/p/7115539134) in Clover and select `Big Sur Preboot` Volume
+- Repeat this step on 3. and 4. reboot
+
+##### Stage 4
+
+- Once installation is complete, create user account and finish setup process
+- From now on boot regular `Big Sur` Volume from `macOS HD`
 
 ---
 
 #### 4. Post Installation
 
-##### a) Install Clover in EFI partition of Macintosh HD
+##### a) Install Clover in EFI partition of macOS HD
 
-- After successfully install repeat steps 1b - 1c but with EFI on Macintosh HD as target
+- After successfully install repeat steps 1b - 1c but with EFI on macOS HD as target
 - Follow this guide to add clover boot entry in BIOS [Restoring UEFI boot entry](https://www.thomas-krenn.com/en/wiki/Restoring_UEFI_boot_entry_via_motherboard_replacement_or_BIOS_update) or this [UEFI clover boot option](https://www.tonymacx86.com/threads/solved-uefi-clover-boot-option-gone-after-bios-update.211715/#post-1409404)
 
 ##### b) Install AsusSMCDaemon
@@ -138,22 +195,25 @@ To create a working macOS Installer boot drive, you will need the following:
 
 ##### c) Install Karabiner Elements
 
-- Install Karabiner Elements from `Post-Install/Karabiner-Elements-12.10.0.dmg`
+- Install Karabiner Elements from `Post-Install/Karabiner-Elements-13.1.0.dmg`
 - Switch keys `cmd` with `alt` on left and right side
 - Setup function keys to work as desired
 
 ##### d) Optimize Clover GUI
 
-- Unzip and install Clover Configurator from `Post-Install/CloverConfigurator 5.9.3.0.zip`
+- Unzip and install Clover Configurator from `Post-Install/CCG 5.17.3.0.zip`
 - Mount EFI partition, load `config.plist` go to `GUI` section and modify custom boot entries to match your setup
 
 ---
 
 ### Troubleshooting
 
-- When getting `Error loading kernel cache` reboot until it passes
+- If display shows graphical glitches, close lid, wait for sleep and reopen
 
-- On `USBSMC Error` check if your Installer-Drive is USB3, use an USB2 Drive (or cable/adapter) instead
+- ~~When getting `Error loading kernel cache` reboot until it passes~~  
+  (should be fixed with OpenRuntime.efi)
+
+- ~~On `USBSMC Error` check if your Installer-Drive is USB3, use an USB2 Drive (or cable/adapter) instead~~ (not more valid for Big Sur)
 
 - If EFI partition is messed up and boot only works in safe mode, mount EFI with:
 
@@ -168,7 +228,7 @@ To create a working macOS Installer boot drive, you will need the following:
 
 ### Update Clover
 
-Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases) and replace in `EFI/CLOVER`
+Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.com/CloverHackyColor](https://github.com/CloverHackyColor/CloverBootloader/releases) and replace in `EFI/CLOVER/CLOVERX64.efi` and `EFI/BOOT/BOOTX64.efi`
 
 ### Update macOS
 
@@ -179,7 +239,7 @@ Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.
   - Use updated kexts and drivers in post install
 - Boot from new Clover Drive
 - If system boots
-  - Mount EFI partition of Macintosh HD
+  - Mount EFI partition of macOS HD
   - Backup `EFI` to `EFI-Backups`
   - Install new Clover version to EFI partition
   - Copy updated kexts and drivers during post install
@@ -187,8 +247,8 @@ Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.
 - Eject Clover Drive and reboot
 - If system boots
   - Start macOS Update
-  - On restart select newly added `Install macOS Catalina` partition
-  - After reboot select normal Macintosh HD partition
+  - On restart select newly added `Install macOS Big Sur` partition
+  - After reboot select normal macOS HD partition
 - If system boots
   - Be happy and enjoy the new update
 - If system doesn't boot on one of these steps
@@ -275,6 +335,38 @@ There are two options:
 
   00415050 4C452053 534400
   00000000 00000000 000000
+  ```
+
+#### Fix OC boot for Big Sur ([Link](https://www.reddit.com/r/hackintosh/comments/fu8f8w/getting_crazy_with_10154_boot_error/))
+
+- Change Quirk `SetupVirtualMap` to `True`
+
+
+#### Fix WiFi for Big Sur ([Link](https://www.tonymacx86.com/threads/help-bcm94352z-bluetooth-works-wifi-dont-on-big-sur.305843/page-3#post-2211335))
+
+- Remove `AirPortBrcm4360_Injector.kext` from plugins folder of `AirportBRCMFixup.kext` (right click -> package content)
+
+- Add in `config.plist` -> `KernelAndKextPatches` -> `KextsToPatch`
+  
+  ```plist
+  <dict>
+      <key>Arch</key>
+      <string>Any</string>
+      <key>BundlePath</key>
+      <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcmNIC_Injector.kext</string>
+      <key>Comment</key>
+      <string></string>
+      <key>Enabled</key>
+      <true/>
+      <key>ExecutablePath</key>
+      <string></string>
+      <key>MaxKernel</key>
+      <string></string>
+      <key>MinKernel</key>
+      <string></string>
+      <key>PlistPath</key>
+      <string>Contents/Info.plist</string>
+  </dict>
   ```
 
 ---
