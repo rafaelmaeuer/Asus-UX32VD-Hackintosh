@@ -299,7 +299,8 @@ Use precompiled DSDT from `DSDT/DSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
 Generation of DSDT is inspired by: [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh/tree/master/src/DSDT)
 
 - Extract original ACPI by pressing F4 in Clover menu
-- Download [acidanthera/MaciASL](https://github.com/acidanthera/MaciASL/releases/tag/1.5.7)
+- Download [acidanthera/MaciASL](https://github.com/acidanthera/MaciASL/releases)
+  - Set iASL Compiler to `Legacy` in Preferences
 - Open `EFI/CLOVER/ACPI/origin/DSDT.aml` with MaciASL
 - Apply all patches from `DSDT/patches` in correct order
 - Export `DSDT.aml` and copy to `EFI/CLOVER/ACPI/patched/`
