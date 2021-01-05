@@ -86,7 +86,7 @@
 		<key>Debug</key>
 		<false/>
 		<key>Arguments</key>
-		<string>darkwake=0 dart=0 nv_disable=1 -gux_defer_usb2 -wegnoegpu -xcpm -no_compat_check -v</string>
+		<string>darkwake=0 dart=0 nv_disable=1 -wegnoegpu -xcpm -no_compat_check -v</string>
 		<key>XMPDetection</key>
 		<string>Yes</string>
 		<key>Timeout</key>
@@ -105,68 +105,8 @@
 		</dict>
 		<key>Hide</key>
 		<array>
-			<string>VM</string>
 			<string>Preboot</string>
-			<string>Legecy HD3</string>
 		</array>
-		<key>Custom</key>
-		<dict>
-			<key>Entries</key>
-			<array>
-				<dict>
-					<key>Ignore</key>
-					<false/>
-					<key>Type</key>
-					<string>Windows</string>
-					<key>Disabled</key>
-					<false/>
-					<key>Title</key>
-					<string>Windows 10</string>
-					<key>Volume</key>
-					<string>33BD744D-19E7-49C3-AE73-66003BFA8637</string>
-				</dict>
-				<dict>
-					<key>Ignore</key>
-					<false/>
-					<key>Type</key>
-					<string>Linux</string>
-					<key>Disabled</key>
-					<false/>
-					<key>Title</key>
-					<string>Ubuntu 18</string>
-					<key>Volume</key>
-					<string>33BD744D-19E7-49C3-AE73-66003BFA8637</string>
-				</dict>
-				<dict>
-					<key>Ignore</key>
-					<false/>
-					<key>NoCaches</key>
-					<false/>
-					<key>Type</key>
-					<string>OSXRecovery</string>
-					<key>Disabled</key>
-					<false/>
-					<key>Title</key>
-					<string>macOS</string>
-					<key>Volume</key>
-					<string>AA0429C5-F0D0-45BD-AE13-532BAA8A5753</string>
-				</dict>
-				<dict>
-					<key>Ignore</key>
-					<false/>
-					<key>NoCaches</key>
-					<false/>
-					<key>Type</key>
-					<string>OSX</string>
-					<key>Disabled</key>
-					<false/>
-					<key>Title</key>
-					<string>macOS</string>
-					<key>Volume</key>
-					<string>E513F1D6-2423-44BC-8128-37686B74687D</string>
-				</dict>
-			</array>
-		</dict>
 		<key>Scan</key>
 		<dict>
 			<key>Entries</key>
@@ -299,24 +239,6 @@
 				<key>InfoPlistPatch</key>
 				<false/>
 			</dict>
-			<dict>
-		        <key>Arch</key>
-		        <string>Any</string>
-		        <key>BundlePath</key>
-		        <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcmNIC_Injector.kext</string>
-		        <key>Comment</key>
-		        <string></string>
-		        <key>Enabled</key>
-		        <true/>
-		        <key>ExecutablePath</key>
-		        <string></string>
-		        <key>MaxKernel</key>
-		        <string></string>
-		        <key>MinKernel</key>
-		        <string></string>
-		        <key>PlistPath</key>
-		        <string>Contents/Info.plist</string>
-		    </dict>
 		</array>
 		<key>KernelLapic</key>
 		<true/>

@@ -90,9 +90,9 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 - Follow these steps:
   
-  ![Clover Install 1](Images/Clover-Install-1.png)
-  ![Clover Install 1](Images/Clover-Install-2.png)
-  ![Clover Install 1](Images/Clover-Install-3.png)
+  ![Clover Install 1](Images/Clover-Installation-1.png)
+  ![Clover Install 1](Images/Clover-Installation-2.png)
+  ![Clover Install 1](Images/Clover-Installation-3.png)
 
 ##### c) Post Install
 
@@ -196,8 +196,10 @@ Enable installation on unsupported hardware:
 ##### c) Install Karabiner Elements
 
 - Install Karabiner Elements from `Post-Install/Karabiner-Elements-13.1.0.dmg`
-- Switch keys `cmd` with `alt` on left and right side
-- Setup function keys to work as desired
+- Create configuration with following options:
+
+  ![Karabiner-Key-Mapping](Images/Karabiner-Key-Mapping.png)
+  ![Karabiner-FN-Keys](Images/Karabiner-FN-Keys.png)
 
 ##### d) Optimize Clover GUI
 
@@ -260,14 +262,15 @@ Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.
 
 ### Sleep
 
-- In order to get sleep working with Bluetooth enabled the [GPRW-Patch](https://dortania.github.io/USB-Map-Guide/misc/instant-wake.html) is applied. Loading of SSDT-GPRW.aml fails, but it seems that the `Rename GPRW to XPRW` ACPI-patch is sufficient, as it prevents waking up from sleep (but producing some error logs in verbose boot).
+- In order to get sleep working with Bluetooth enabled the [GPRW-Patch](https://dortania.github.io/USB-Map-Guide/misc/instant-wake.html) is applied. ~~Loading of SSDT-GPRW.aml fails, but it seems that the `Rename GPRW to XPRW` ACPI-patch is sufficient, as it prevents waking up from sleep (but producing some error logs in verbose boot).~~
 
 ---
 
 ### ACPI
 
-- SSDT-EC.aml is necessary to boot since macOS Catalina
-- SSDT-PNLF.aml activates backlight control
+- SSDT-EC.aml fixes embedded controller (since macOS Catalina)
+- SSDT-GPRW.aml prevents instant wake from sleep
+- SSDT-PNLF.aml activates display backlight control
 
 ### SSDT
 
