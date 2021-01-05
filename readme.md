@@ -447,3 +447,8 @@ There are two options:
 
 - [Clover Configurator](http://mackie100projects.altervista.org/download-clover-configurator/)
 - [Hackintool](https://github.com/headkaze/Hackintool/releases/)
+
+### Links
+
+- [Clover Bootargs](https://www.hackintosh-forum.de/forum/thread/21723-clover-configurator-parameter-reiter-wiki-erkl%C3%A4rung/)
+- [Hibernation Modes](https://www.tonymacx86.com/threads/what-is-different-between-hibernatemode-0-and-hibernatemode-3.164030/)
