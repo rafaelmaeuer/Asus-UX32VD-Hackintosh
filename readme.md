@@ -43,6 +43,14 @@ Network
 - Network Stack [Disabled]
 ```
 
+#### Restrictions
+
+The following features are not working or disabled:
+
+- NVIDIA GeForce GT 620M
+- Right/top USB-Connector
+- F2 LED-Indicator
+
 #### Hardware
 
 This Hackintosh is based on an [ASUS UX32VD-R4002V](https://www.asus.com/de/supportonly/UX32VD/HelpDesk_Download/) Laptop, with an [Intel Core i7-3517U](https://ark.intel.com/content/www/de/de/ark/products/65714/intel-core-i7-3517u-processor-4m-cache-up-to-3-00-ghz.html) Processor and a [NVIDIA GeForce GT 620M](https://www.geforce.co.uk/hardware/notebook-gpus/geforce-gt-620m/specifications) graphics card.

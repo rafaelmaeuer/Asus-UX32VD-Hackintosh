@@ -2,7 +2,7 @@
  * Intel ACPI Component Architecture
  * AML Disassembler version 20100331
  *
- * Disassembly of iASLL9Ypvd.aml, Sat Dec 26 13:12:19 2020
+ * Disassembly of iASLF80ofX.aml, Tue Jan  5 00:40:50 2021
  *
  *
  * Original Table Header:
@@ -16,7 +16,7 @@
  *     Compiler ID      "INTL"
  *     Compiler Version 0x20091112 (537465106)
  */
-DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
+DefinitionBlock ("iASLF80ofX.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
 {
     External (PDC7)
     External (PDC6)
@@ -2468,7 +2468,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 }
                 Else
                 {
-                    If (_OSI ("Windows 2012"))
+                    If(LOr(_OSI("Darwin"),_OSI("Windows 2012")))
                     {
                         If (LEqual (XCNT, Zero))
                         {
@@ -9314,7 +9314,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
         Processor (CPU7, 0x08, 0x00000410, 0x06) {}
     }
 
-    Mutex(MUTX, 0)
+    Mutex (MUTX, 0x00)
     OperationRegion (DEB0, SystemIO, 0x80, One)
     Field (DEB0, ByteAcc, NoLock, Preserve)
     {
@@ -9399,7 +9399,9 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
     Method (PNOT, 0, Serialized)
     {
         
+        
         // nothing
+
 
     }
 
@@ -9448,12 +9450,12 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     Store (0x07D3, OSYS)
                 }
 
-                If (_OSI ("Windows 2006"))
+                If(LOr(_OSI("Darwin"),_OSI("Windows 2006")))
                 {
                     Store (0x07D6, OSYS)
                 }
 
-                If (_OSI ("Windows 2009"))
+                If(LOr(_OSI("Darwin"),_OSI("Windows 2009")))
                 {
                     Store (0x07D9, OSYS)
                 }
@@ -10175,8 +10177,8 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     )
             })
             Name (_GPE, 0x19)
-            Mutex(MUEC, 0)
-            Mutex(MU4T, 0)
+            Mutex (MUEC, 0x00)
+            Mutex (MU4T, 0x00)
             Name (ECFL, Ones)
             Method (ECAV, 0, NotSerialized)
             {
@@ -11194,12 +11196,12 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                     Store (OSVT, OSFG)
                 }
 
-                If (_OSI ("Linux"))
+                If(LOr(_OSI("Darwin"),_OSI("Linux")))
                 {
                     Store (OSEG, OSFG)
                 }
 
-                If (_OSI ("Windows 2009"))
+                If(LOr(_OSI("Darwin"),_OSI("Windows 2009")))
                 {
                     Store (OSW7, OSFG)
                 }
@@ -11209,7 +11211,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                     Store (OSW7, OSFG)
                 }
 
-                If (_OSI ("Windows 2012"))
+                If(LOr(_OSI("Darwin"),_OSI("Windows 2012")))
                 {
                     Store (OSW8, OSFG)
                 }
@@ -12958,6 +12960,11 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
                 Return (Zero)
             }
+            Method (SKBV, 1, NotSerialized)
+            {
+                ^^PCI0.LPCB.EC0.WRAM (0x044B, Arg0)
+                Return (Arg0)
+            }
         }
     }
 
@@ -12992,7 +12999,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
             Method (_STA, 0, NotSerialized)
             {
-                If (_OSI ("Windows 2012"))
+                If(LOr(_OSI("Darwin"),_OSI("Windows 2012")))
                 {
                     Return (0x0F)
                 }
@@ -13789,7 +13796,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             }
         }
 
-        Mutex(MMPX, 0)
+        Mutex (MMPX, 0x00)
         Method (BATO, 0, Serialized)
         {
             Acquire (MMPX, 0xFFFF)
@@ -17698,7 +17705,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             Return (Local0)
         }
 
-        Mutex(MUEP, 0)
+        Mutex (MUEP, 0x00)
         Method (RBEP, 1, NotSerialized)
         {
             Store (0xFFFF, Local1)
@@ -18780,212 +18787,22 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (_Q0A, 0, NotSerialized)
         {
-            Notify (SLPB, 0x80)
+            
+            If (ATKP)
+            {
+                \_SB.ATKD.IANE (0x5E)
+            }
+
         }
 
         Method (_Q0B, 0, NotSerialized)
         {
-            If (_OSI ("Windows 2012"))
+            
+            If (ATKP)
             {
-                Notify (ASHS, 0x88)
+                \_SB.ATKD.IANE (0x7D)
             }
-            Else
-            {
-                If (And (^^^^ATKD.WAPF, 0x04))
-                {
-                    If (ATKP)
-                    {
-                        ^^^^ATKD.IANE (0x88)
-                    }
-                }
-                Else
-                {
-                    Store (OHWR (), Local0)
-                    If (And (Local0, 0x02))
-                    {
-                        If (And (Local0, One))
-                        {
-                            Store (One, Local0)
-                        }
-                        Else
-                        {
-                            Store (Zero, Local0)
-                        }
-                    }
-                    Else
-                    {
-                        Store (One, Local0)
-                    }
 
-                    If (Local0)
-                    {
-                        If (And (^^^^ATKD.WAPF, One))
-                        {
-                            If (LAnd (WLDP, BTDP))
-                            {
-                                Store (WRST, Local0)
-                                Or (ShiftLeft (BRST, One), Local0, Local0)
-                                Increment (Local0)
-                                If (LGreater (Local0, 0x03))
-                                {
-                                    Store (Zero, Local0)
-                                }
-
-                                Store (DerefOf (Index (WBTL, Local0)), Local1)
-                                If (LEqual (Local1, Zero))
-                                {
-                                    ^^^^ATKD.IANE (0x74)
-                                    OWLD (Zero)
-                                    Sleep (0x0DAC)
-                                    OBTD (Zero)
-                                }
-
-                                If (LEqual (Local1, One))
-                                {
-                                    ^^^^ATKD.IANE (0x73)
-                                    OWLD (One)
-                                    Sleep (0x0DAC)
-                                    OBTD (One)
-                                }
-
-                                If (LEqual (Local1, 0x02))
-                                {
-                                    ^^^^ATKD.IANE (0x74)
-                                    OWLD (Zero)
-                                    Sleep (0x0DAC)
-                                    OBTD (Zero)
-                                }
-
-                                If (LEqual (Local1, 0x03))
-                                {
-                                    ^^^^ATKD.IANE (0x74)
-                                    OWLD (Zero)
-                                    Sleep (0x0DAC)
-                                    OBTD (Zero)
-                                }
-                            }
-                            Else
-                            {
-                                If (WLDP)
-                                {
-                                    ^^^^ATKD.IANE (0x5D)
-                                }
-                                Else
-                                {
-                                    If (BTDP)
-                                    {
-                                        If (BRST)
-                                        {
-                                            OBTD (Zero)
-                                            ^^^^ATKD.IANE (0x7E)
-                                        }
-                                        Else
-                                        {
-                                            OBTD (One)
-                                            ^^^^ATKD.IANE (0x7D)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        Else
-                        {
-                            If (LAnd (WLDP, BTDP))
-                            {
-                                Store (WRST, Local0)
-                                Or (ShiftLeft (BRST, One), Local0, Local0)
-                                Increment (Local0)
-                                If (LGreater (Local0, 0x03))
-                                {
-                                    Store (Zero, Local0)
-                                }
-
-                                Store (DerefOf (Index (WBTL, Local0)), Local1)
-                                If (LEqual (Local1, Zero))
-                                {
-                                    OWLD (Zero)
-                                    ^^^^ATKD.IANE (0x5F)
-                                    Sleep (0x0DAC)
-                                    OBTD (Zero)
-                                    ^^^^ATKD.IANE (0x7E)
-                                }
-
-                                If (LEqual (Local1, One))
-                                {
-                                    OWLD (One)
-                                    ^^^^ATKD.IANE (0x5E)
-                                    Sleep (0x0DAC)
-                                    OBTD (Zero)
-                                    ^^^^ATKD.IANE (0x7E)
-                                }
-
-                                If (LEqual (Local1, 0x02))
-                                {
-                                    OWLD (Zero)
-                                    ^^^^ATKD.IANE (0x5F)
-                                    Sleep (0x0DAC)
-                                    OBTD (One)
-                                    ^^^^ATKD.IANE (0x7D)
-                                }
-
-                                If (LEqual (Local1, 0x03))
-                                {
-                                    OWLD (One)
-                                    ^^^^ATKD.IANE (0x5E)
-                                    Sleep (0x0DAC)
-                                    OBTD (One)
-                                    ^^^^ATKD.IANE (0x7D)
-                                }
-                            }
-                            Else
-                            {
-                                If (WLDP)
-                                {
-                                    If (WRST)
-                                    {
-                                        OWLD (Zero)
-                                        ^^^^ATKD.IANE (0x5F)
-                                    }
-                                    Else
-                                    {
-                                        OWLD (One)
-                                        ^^^^ATKD.IANE (0x5E)
-                                    }
-                                }
-                                Else
-                                {
-                                    If (BTDP)
-                                    {
-                                        If (BRST)
-                                        {
-                                            OBTD (Zero)
-                                            ^^^^ATKD.IANE (0x7E)
-                                        }
-                                        Else
-                                        {
-                                            OBTD (One)
-                                            ^^^^ATKD.IANE (0x7D)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Else
-                    {
-                        If (WLDP) {}
-                        If (LAnd (WLDP, BTDP))
-                        {
-                            Sleep (0x0DAC)
-                        }
-
-                        If (BTDP)
-                        {
-                            ^^^^ATKD.IANE (0x7E)
-                        }
-                    }
-                }
-            }
         }
 
         Name (WBTL, Package (0x04)
@@ -19185,160 +19002,22 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (_Q10, 0, NotSerialized)
         {
-            If (LEqual (BLCT, Zero))
+            
+            If (ATKP)
             {
-                Store (One, Local0)
-                Store (RPIN (0x72), Local0)
-                XOr (Local0, One, Local0)
-                SPIN (0x72, Local0)
-                If (ATKP)
-                {
-                    Subtract (0x34, Local0, Local0)
-                    ^^^^ATKD.IANE (Local0)
-                }
+                \_SB.ATKD.IANE (0x35)
             }
-            Else
-            {
-                If (LEqual (BLCT, One))
-                {
-                    If (ATKP)
-                    {
-                        ^^^^ATKD.IANE (0x35)
-                    }
-                }
-            }
+
         }
 
         Method (_Q11, 0, Serialized)
         {
-            Name (_T_0, Zero)
-            If (LGreaterEqual (MSOS (), OSW8))
+            
+            If (ATKP)
             {
-                If (LEqual (F8FG, Zero))
-                {
-                    Store (One, F8FG)
-                    STB2 (0xE0)
-                    STB2 (0x5B)
-                }
-
-                STB2 (0x19)
-                STB2 (0x99)
-                Return (One)
+                \_SB.ATKD.IANE (0x61)
             }
 
-            If (LEqual (ORFG, One))
-            {
-                If (LEqual (F8FG, Zero))
-                {
-                    Store (One, F8FG)
-                    STB2 (0xE0)
-                    STB2 (0x5B)
-                }
-
-                STB2 (0x19)
-                STB2 (0x99)
-                Return (One)
-            }
-
-            If (LEqual (^^^IGPU.HGCK, One))
-            {
-                Return (One)
-            }
-
-            FHKW ()
-            Store (ADVG (), Local0)
-            If (NATK ())
-            {
-                If (LLess (Local0, 0x08))
-                {
-                    Add (Local0, 0x60, Local1)
-                }
-                Else
-                {
-                    If (LLess (Local0, 0x10))
-                    {
-                        Subtract (Local0, 0x08, Local1)
-                        Add (Local1, 0x8C, Local1)
-                    }
-                    Else
-                    {
-                        If (LLess (Local0, 0x20))
-                        {
-                            And (Local0, 0x07, Local1)
-                            Add (Local1, 0xA0, Local1)
-                        }
-                        Else
-                        {
-                            If (LLess (Local0, 0x40))
-                            {
-                                While (One)
-                                {
-                                    Store (ToInteger (Local0), _T_0)
-                                    If (LEqual (_T_0, 0x20))
-                                    {
-                                        Store (0xD0, Local1)
-                                    }
-                                    Else
-                                    {
-                                        If (LEqual (_T_0, 0x21))
-                                        {
-                                            Store (0xD1, Local1)
-                                        }
-                                        Else
-                                        {
-                                            If (LEqual (_T_0, 0x22))
-                                            {
-                                                Store (0xD2, Local1)
-                                            }
-                                            Else
-                                            {
-                                                If (LEqual (_T_0, 0x24))
-                                                {
-                                                    Store (0xD3, Local1)
-                                                }
-                                                Else
-                                                {
-                                                    If (LEqual (_T_0, 0x28))
-                                                    {
-                                                        Store (0xD4, Local1)
-                                                    }
-                                                    Else
-                                                    {
-                                                        If (LEqual (_T_0, 0x30))
-                                                        {
-                                                            Store (0xD5, Local1)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    Break
-                                }
-                            }
-                        }
-                    }
-                }
-
-                If (ATKP)
-                {
-                    If (LNotEqual (Local1, 0x60))
-                    {
-                        ^^^^ATKD.IANE (Local1)
-                    }
-                }
-                Else
-                {
-                    SWHG (Local0)
-                }
-            }
-            Else
-            {
-                SWHG (Local0)
-            }
-
-            FHKS ()
         }
 
         Method (_Q12, 0, NotSerialized)
@@ -20192,7 +19871,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         Name (XSCT, 0x18)
         Name (XSST, 0x1A)
         Name (XRCT, 0x1C)
-        Mutex(MUTE, 0)
+        Mutex (MUTE, 0x00)
         Method (BDFR, 4, NotSerialized)
         {
             ShiftLeft (Arg0, 0x14, Arg0)
@@ -20880,7 +20559,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             Return (Zero)
         }
 
-        Mutex(P4SM, 0)
+        Mutex (P4SM, 0x00)
         Method (SBYT, 2, Serialized)
         {
             Acquire (P4SM, 0xFFFF)
@@ -22501,8 +22180,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             }
             Else
             {
-                //Return (Zero)
-                Return (Buffer (){})
+                Return ( Buffer (){})
             }
         }
 

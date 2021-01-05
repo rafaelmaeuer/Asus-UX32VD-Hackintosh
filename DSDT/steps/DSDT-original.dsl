@@ -2,7 +2,7 @@
  * Intel ACPI Component Architecture
  * AML Disassembler version 20100331
  *
- * Disassembly of iASLL9Ypvd.aml, Sat Dec 26 13:12:19 2020
+ * Disassembly of iASLF80ofX.aml, Tue Jan  5 00:40:50 2021
  *
  *
  * Original Table Header:
@@ -16,7 +16,7 @@
  *     Compiler ID      "INTL"
  *     Compiler Version 0x20091112 (537465106)
  */
-DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
+DefinitionBlock ("iASLF80ofX.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
 {
     External (PDC7)
     External (PDC6)
@@ -2842,21 +2842,6 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 {
                     Return (GPRW (0x0D, 0x03))
                 }
-                Method (_DSM, 4, NotSerialized)
-                {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                    Return (Package()
-                    {
-                        "built-in", Buffer() { 0x00 },
-                        "AAPL,clock-id", Buffer() { 0x01 },
-                        "device_type", Buffer() { "EHCI" },
-                        "AAPL,current-available", 2100,
-                        "AAPL,current-extra", 2200,
-                        "AAPL,current-extra-in-sleep", 1600,
-                        "AAPL,device-internal", 0x02,
-                        "AAPL,max-port-current-in-sleep", 2100,
-                    })
-                }
             }
 
             Device (USB5)
@@ -2905,17 +2890,6 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 Method (_PRW, 0, NotSerialized)
                 {
                     Return (GPRW (0x0D, 0x04))
-                }
-                Method (_DSM, 4, NotSerialized)
-                {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                    Return (Package()
-                    {
-                        "layout-id", Buffer() { 3, 0x00, 0x00, 0x00 },
-                        "hda-gfx", Buffer() { "onboard-1" },
-                        "PinConfigurations", Buffer() { },
-                        //"MaximumBootBeepVolume", 77,
-                    })
                 }
             }
 
@@ -4111,16 +4085,13 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 {
                     Name (_HID, EisaId ("PNP0103"))
                     Name (_UID, Zero)
-                    Name (BUF0, ResourceTemplate()
-{
-    IRQNoFlags() { 0, 8, 11, 15 }
-
+                    Name (BUF0, ResourceTemplate ()
+                    {
                         Memory32Fixed (ReadWrite,
                             0xFED00000,         // Address Base
                             0x00000400,         // Address Length
                             )
                     })
-
                     Method (_STA, 0, NotSerialized)
                     {
                         If (LGreaterEqual (OSYS, 0x07D1))
@@ -4273,7 +4244,8 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                             0x01,               // Alignment
                             0x02,               // Length
                             )
-                        
+                        IRQNoFlags ()
+                            {2}
                     })
                 }
 
@@ -4403,9 +4375,10 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                             0x0070,             // Range Minimum
                             0x0070,             // Range Maximum
                             0x01,               // Alignment
-                            0x02,               // Length
+                            0x08,               // Length
                             )
-                        
+                        IRQNoFlags ()
+                            {8}
                     })
                 }
 
@@ -4426,7 +4399,8 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                             0x10,               // Alignment
                             0x04,               // Length
                             )
-                        
+                        IRQNoFlags ()
+                            {0}
                     })
                 }
 
@@ -5169,24 +5143,9 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     Or (HCON, 0x02, HCON)
                     Or (HSTS, 0xFF, HSTS)
                 }
-                Device (BUS0)
-                {
-                    Name (_CID, "smbus")
-                    Name (_ADR, Zero)
-                    Device (DVL0)
-                    {
-                        Name (_ADR, 0x57)
-                        Name (_CID, "diagsvault")
-                        Method (_DSM, 4, NotSerialized)
-                        {
-                            If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                            Return (Package() { "address", 0x57 })
-                        }
-                    }
-                }
             }
 
-            Device (IGPU)
+            Device (GFX0)
             {
                 Name (_ADR, 0x00020000)
                 OperationRegion (VSID, PCI_Config, Zero, 0x04)
@@ -5701,7 +5660,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                         }
                         Else
                         {
-                            Notify (IGPU, Arg1)
+                            Notify (GFX0, Arg1)
                         }
                     }
 
@@ -5711,7 +5670,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     }
                     Else
                     {
-                        Notify (IGPU, 0x80)
+                        Notify (GFX0, 0x80)
                     }
 
                     Return (Zero)
@@ -7020,7 +6979,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                         }
 
                         ISMI (0x94)
-                        Notify (IGPU, 0x81)
+                        Notify (GFX0, 0x81)
                     }
                     Else
                     {
@@ -7035,7 +6994,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                             }
                             Else
                             {
-                                Notify (IGPU, Zero)
+                                Notify (GFX0, Zero)
                             }
 
                             Sleep (0x03E8)
@@ -7043,7 +7002,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
 
                         Store (AF2D (Arg0), NSTE)
                         WNDD (NSTE)
-                        Notify (IGPU, 0x80)
+                        Notify (GFX0, 0x80)
                     }
 
                     Return (Zero)
@@ -7506,7 +7465,556 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     SAVO ()
                 }
 
-                
+                Method (_DSM, 4, Serialized)
+                {
+                    Name (_T_2, Zero)
+                    Name (_T_1, Zero)
+                    Name (_T_0, Zero)
+                    If (LEqual (Arg0, Buffer (0x10)
+                            {
+                                /* 0000 */    0xA0, 0xA0, 0x95, 0x9D, 0x60, 0x00, 0x48, 0x4D, 
+                                /* 0008 */    0xB3, 0x4D, 0x7E, 0x5F, 0xEA, 0x12, 0x9F, 0xD4
+                            }))
+                    {
+                        Store (Zero, Local0)
+                        Store (ShiftLeft (DerefOf (Index (Arg3, 0x03)), 0x18), Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, 0x02)), 0x10), Local0, 
+                            Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, One)), 0x08), Local0, 
+                            Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, Zero)), Zero), Local0, 
+                            Local0)
+                        While (One)
+                        {
+                            Store (ToInteger (Arg2), _T_0)
+                            If (LEqual (_T_0, Zero))
+                            {
+                                Return (Unicode ("?"))
+                            }
+                            Else
+                            {
+                                If (LEqual (_T_0, One))
+                                {
+                                    Return (Buffer (0x04)
+                                    {
+                                        0x01, 0x30, 0x00, 0x07
+                                    })
+                                }
+                                Else
+                                {
+                                    If (LEqual (_T_0, 0x02))
+                                    {
+                                        If (And (Local0, 0x10))
+                                        {
+                                            And (Local0, 0x0F, Local1)
+                                            EVD9 ()
+                                            Store (Local1, HGAP)
+                                        }
+
+                                        Or (DSM2, 0x10, DSM2)
+                                        Return (DSM2)
+                                    }
+                                    Else
+                                    {
+                                        If (LEqual (_T_0, 0x03))
+                                        {
+                                            And (Local0, 0x03, Local0)
+                                            If (LEqual (Local0, One))
+                                            {
+                                                ^^PEG0.PEGP.DON ()
+                                                Return (One)
+                                            }
+                                            Else
+                                            {
+                                                If (LEqual (Local0, 0x02))
+                                                {
+                                                    ^^PEG0.PEGP.DOFF ()
+                                                    Return (Zero)
+                                                }
+                                                Else
+                                                {
+                                                    Return (^^PEG0.PEGP.DSTA ())
+                                                }
+                                            }
+
+                                            Return (One)
+                                        }
+                                        Else
+                                        {
+                                            If (LEqual (_T_0, 0x04))
+                                            {
+                                                Name (NFBU, Buffer (0x04)
+                                                {
+                                                    0x00, 0x90, 0x10, 0x04
+                                                })
+                                                Name (HBDP, Zero)
+                                                CreateField (NFBU, Zero, 0x0C, BDRF)
+                                                CreateField (NFBU, 0x0C, One, BDOF)
+                                                CreateField (NFBU, 0x0D, 0x02, PSRF)
+                                                CreateField (NFBU, 0x0F, One, PSOF)
+                                                CreateField (NFBU, 0x10, 0x04, PTVF)
+                                                CreateField (NFBU, 0x14, One, PTVO)
+                                                CreateField (NFBU, 0x15, 0x05, TVFF)
+                                                CreateField (NFBU, 0x1A, One, TVOF)
+                                                While (One)
+                                                {
+                                                    Store (ToInteger (HBDP), _T_1)
+                                                    If (LEqual (_T_1, 0x07))
+                                                    {
+                                                        Store (0x10, Index (NFBU, Zero))
+                                                    }
+                                                    Else
+                                                    {
+                                                        If (LEqual (_T_1, 0x0B))
+                                                        {
+                                                            Store (0x11, Index (NFBU, Zero))
+                                                        }
+                                                        Else
+                                                        {
+                                                            If (LEqual (_T_1, 0x0D))
+                                                            {
+                                                                Store (0x12, Index (NFBU, Zero))
+                                                            }
+                                                            Else
+                                                            {
+                                                                If (LEqual (_T_1, 0x0E))
+                                                                {
+                                                                    Store (0x14, Index (NFBU, Zero))
+                                                                }
+                                                                Else
+                                                                {
+                                                                    If (LEqual (_T_1, 0x0F))
+                                                                    {
+                                                                        Store (0x18, Index (NFBU, Zero))
+                                                                    }
+                                                                    Else
+                                                                    {
+                                                                        Store (HBDP, Index (NFBU, Zero))
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    Break
+                                                }
+
+                                                Return (NFBU)
+                                            }
+                                            Else
+                                            {
+                                                If (LEqual (_T_0, 0x05))
+                                                {
+                                                    Store (Local0, \CADL)
+                                                    Store (ShiftRight (Local0, 0x0C), \CSTE)
+                                                    If (LEqual (QATH, One))
+                                                    {
+                                                        Store (Zero, QATH)
+                                                        Return (Zero)
+                                                    }
+
+                                                    Store (Local0, Local1)
+                                                    If (And (Local1, 0x01000000))
+                                                    {
+                                                        If (LGreater (TLST, 0x0A))
+                                                        {
+                                                            Store (One, TLST)
+                                                        }
+
+                                                        Store (TLST, Local0)
+                                                        Store (ShiftLeft (Local0, 0x08), Local1)
+                                                        Or (One, Local1, Local1)
+                                                        Return (Local1)
+                                                    }
+                                                    Else
+                                                    {
+                                                        If (LEqual (Local1, Zero))
+                                                        {
+                                                            Store (DSM5, Local0)
+                                                            Return (Local0)
+                                                        }
+                                                    }
+                                                }
+                                                Else
+                                                {
+                                                    If (LEqual (_T_0, 0x06))
+                                                    {
+                                                        Return (Package (0x1A)
+                                                        {
+                                                            0x0110, 
+                                                            0x2C, 
+                                                            0x80000100, 
+                                                            0x2C, 
+                                                            0x0110, 
+                                                            0x80000100, 
+                                                            0x2C, 
+                                                            0x80007330, 
+                                                            0x2C, 
+                                                            0x0110, 
+                                                            0x80007330, 
+                                                            0x2C, 
+                                                            0x80000100, 
+                                                            0x80007330, 
+                                                            0x2C, 
+                                                            0x80006340, 
+                                                            0x2C, 
+                                                            0x0110, 
+                                                            0x80006340, 
+                                                            0x2C, 
+                                                            0x80000100, 
+                                                            0x80006340, 
+                                                            0x2C, 
+                                                            0x80007330, 
+                                                            0x80006340, 
+                                                            0x2C
+                                                        })
+                                                    }
+                                                    Else
+                                                    {
+                                                        Return (Buffer (0x04)
+                                                        {
+                                                            0x02, 0x00, 0x00, 0x80
+                                                        })
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            Break
+                        }
+                    }
+
+                    If (LEqual (Arg0, Buffer (0x10)
+                            {
+                                /* 0000 */    0xD3, 0x73, 0xD8, 0x7E, 0xD0, 0xC2, 0x4F, 0x4E, 
+                                /* 0008 */    0xA8, 0x54, 0x0F, 0x13, 0x17, 0xB0, 0x1C, 0x2C
+                            }))
+                    {
+                        If (LEqual (Arg1, One))
+                        {
+                            If (LEqual (Arg2, Zero))
+                            {
+                                Return (Buffer (0x08)
+                                {
+                                    /* 0000 */    0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+                                })
+                            }
+
+                            If (LEqual (Arg2, One))
+                            {
+                                Return (Package (0x06)
+                                {
+                                    0x05, 
+                                    Package (0x02)
+                                    {
+                                        0x80010400, 
+                                        Buffer (0x04)
+                                        {
+                                            0x02, 0x03, 0x03, 0x00
+                                        }
+                                    }, 
+
+                                    Package (0x02)
+                                    {
+                                        0x80010100, 
+                                        Buffer (0x04)
+                                        {
+                                            0x01, 0x03, 0x03, 0x00
+                                        }
+                                    }, 
+
+                                    Package (0x02)
+                                    {
+                                        0x80010300, 
+                                        Buffer (0x04)
+                                        {
+                                            0x05, 0x03, 0x03, 0x00
+                                        }
+                                    }, 
+
+                                    Package (0x02)
+                                    {
+                                        0x80010301, 
+                                        Buffer (0x04)
+                                        {
+                                            0x08, 0x03, 0x03, 0x00
+                                        }
+                                    }, 
+
+                                    Package (0x02)
+                                    {
+                                        0x80000302, 
+                                        Buffer (0x04)
+                                        {
+                                            0x0A, 0x03, 0x03, 0x00
+                                        }
+                                    }
+                                })
+                            }
+
+                            Return (One)
+                        }
+
+                        Return (One)
+                    }
+
+                    If (LEqual (Arg0, Buffer (0x10)
+                            {
+                                /* 0000 */    0xF8, 0xD8, 0x86, 0xA4, 0xDA, 0x0B, 0x1B, 0x47, 
+                                /* 0008 */    0xA7, 0x2B, 0x60, 0x42, 0xA6, 0xB5, 0xBE, 0xE0
+                            }))
+                    {
+                        Store (Zero, Local0)
+                        Store (ShiftLeft (DerefOf (Index (Arg3, 0x03)), 0x18), Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, 0x02)), 0x10), Local0, 
+                            Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, One)), 0x08), Local0, 
+                            Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, Zero)), Zero), Local0, 
+                            Local0)
+                        If (LNotEqual (Arg1, 0x0100))
+                        {
+                            Return (Buffer (0x04)
+                            {
+                                0x02, 0x00, 0x00, 0x80
+                            })
+                        }
+
+                        Name (SUBF, Zero)
+                        Store (Arg2, SUBF)
+                        If (LEqual (SUBF, Zero))
+                        {
+                            Return (Buffer (0x04)
+                            {
+                                0x01, 0x00, 0x03, 0x04
+                            })
+                        }
+                        Else
+                        {
+                            If (LEqual (SUBF, 0x10))
+                            {
+                                ShiftRight (Local0, 0x10, Local2)
+                                If (LEqual (Local2, 0x564B))
+                                {
+                                    Return (OPVK)
+                                }
+
+                                Return (Zero)
+                            }
+                            Else
+                            {
+                                If (LEqual (SUBF, 0x1A))
+                                {
+                                    If (And (Local0, One))
+                                    {
+                                        ShiftRight (Local0, 0x18, Local2)
+                                        Store (Local2, P3MO)
+                                    }
+
+                                    If (DGPS)
+                                    {
+                                        Return (Buffer (0x04)
+                                        {
+                                            0x41, 0x00, 0x00, 0x01
+                                        })
+                                    }
+                                    Else
+                                    {
+                                        Return (Buffer (0x04)
+                                        {
+                                            0x59, 0x00, 0x00, 0x01
+                                        })
+                                    }
+                                }
+                            }
+
+                            Return (Buffer (0x04)
+                            {
+                                0x02, 0x00, 0x00, 0x80
+                            })
+                        }
+                    }
+
+                    If (LEqual (Arg0, Buffer (0x10)
+                            {
+                                /* 0000 */    0x01, 0x2D, 0x13, 0xA3, 0xDA, 0x8C, 0xBA, 0x49, 
+                                /* 0008 */    0xA5, 0x2E, 0xBC, 0x9D, 0x46, 0xDF, 0x6B, 0x81
+                            }))
+                    {
+                        Store (Zero, Local0)
+                        Store (ShiftLeft (DerefOf (Index (Arg3, 0x03)), 0x18), Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, 0x02)), 0x10), Local0, 
+                            Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, One)), 0x08), Local0, 
+                            Local0)
+                        Add (ShiftLeft (DerefOf (Index (Arg3, Zero)), Zero), Local0, 
+                            Local0)
+                        If (LNotEqual (Arg1, 0x0100))
+                        {
+                            Return (Buffer (0x04)
+                            {
+                                0x02, 0x00, 0x00, 0x80
+                            })
+                        }
+
+                        Name (SFNN, Zero)
+                        Store (Arg2, SFNN)
+                        If (LEqual (SFNN, Zero))
+                        {
+                            Return (Buffer (0x08)
+                            {
+                                /* 0000 */    0x01, 0x00, 0x08, 0x00, 0x0F, 0x04, 0x00, 0x00
+                            })
+                        }
+                        Else
+                        {
+                            If (LEqual (SFNN, 0x2A))
+                            {
+                                CreateByteField (Arg3, Zero, PSH0)
+                                CreateByteField (Arg3, One, PSH1)
+                                CreateBitField (Arg3, 0x08, GPUT)
+                                CreateBitField (Arg3, 0x09, CPUT)
+                                CreateBitField (Arg3, 0x0A, FANS)
+                                CreateBitField (Arg3, 0x0B, SKIN)
+                                CreateBitField (Arg3, 0x0C, ENGR)
+                                CreateBitField (Arg3, 0x0D, SEN1)
+                                CreateBitField (Arg3, 0x0E, SEN2)
+                                Store (0x00010000, VRV1)
+                                While (One)
+                                {
+                                    Store (PSH0, _T_2)
+                                    If (LEqual (_T_2, Zero))
+                                    {
+                                        If (CPUT)
+                                        {
+                                            Store (0x0200, RETN)
+                                            Or (RETN, PSH0, RETN)
+                                            Store (\_TZ.RTMP (), PDTS)
+                                        }
+
+                                        Return (GPSP)
+                                    }
+                                    Else
+                                    {
+                                        If (LEqual (_T_2, One))
+                                        {
+                                            Store (0x0300, RETN)
+                                            Or (RETN, PSH0, RETN)
+                                            Store (0x03E8, PDTS)
+                                            Return (GPSP)
+                                        }
+                                        Else
+                                        {
+                                            If (LEqual (_T_2, 0x02))
+                                            {
+                                                Store (0x0102, RETN)
+                                                Store (0x58, TMGP)
+                                                Store (Zero, PDTS)
+                                                Store (Zero, SFAN)
+                                                Store (Zero, CPUE)
+                                                Store (Zero, SKNT)
+                                                Store (Zero, TM01)
+                                                Store (Zero, TM02)
+                                                Return (GPSP)
+                                            }
+                                        }
+                                    }
+
+                                    Break
+                                }
+                            }
+                            Else
+                            {
+                                If (LEqual (SFNN, 0x20))
+                                {
+                                    CreateBitField (Arg3, 0x18, NRIT)
+                                    CreateBitField (Arg3, 0x19, NRIS)
+                                    If (NRIS)
+                                    {
+                                        If (NRIT)
+                                        {
+                                            Or (RET1, 0x00100000, RET1)
+                                        }
+                                        Else
+                                        {
+                                            Store (Subtract (CPUP, One), SLMT)
+                                            NCPS (0x80)
+                                            And (RET1, 0xFEFFFFFF, RET1)
+                                        }
+                                    }
+
+                                    Or (RET1, 0x40000000, RET1)
+                                    If (NLIM)
+                                    {
+                                        Or (RET1, One, RET1)
+                                    }
+
+                                    Return (RET1)
+                                }
+                                Else
+                                {
+                                    If (LEqual (SFNN, 0x13))
+                                    {
+                                        Return (Arg3)
+                                    }
+                                    Else
+                                    {
+                                        If (LEqual (SFNN, 0x21))
+                                        {
+                                            Return (\_PR.CPU0._PSS)
+                                        }
+                                        Else
+                                        {
+                                            If (LEqual (SFNN, 0x22))
+                                            {
+                                                CreateDWordField (Arg3, Zero, PCAP)
+                                                Store (Subtract (CPUP, PCAP), SLMT)
+                                                NCPS (0x80)
+                                                Store (PCAP, PSAP)
+                                                Return (PCAP)
+                                            }
+                                            Else
+                                            {
+                                                If (LEqual (SFNN, 0x23))
+                                                {
+                                                    Return (PSAP)
+                                                }
+                                                Else
+                                                {
+                                                    If (LEqual (SFNN, 0x25))
+                                                    {
+                                                        Return (\_PR.CPU0._TSS)
+                                                    }
+                                                    Else
+                                                    {
+                                                        If (LEqual (SFNN, 0x26))
+                                                        {
+                                                            CreateDWordField (Arg3, Zero, TCAP)
+                                                            Store (TCAP, PDC0)
+                                                            NCPS (0x82)
+                                                            Return (TCAP)
+                                                        }
+                                                        Else
+                                                        {
+                                                            Return (0x80000002)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Return (Zero)
+                    }
+
+                    Return (Zero)
+                }
 
                 Method (RSTO, 0, NotSerialized)
                 {
@@ -7558,7 +8066,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     Store (Zero, Local0)
                     Add (Arg0, Local0, Local0)
                     Store (Local0, DSM2)
-                    Notify (IGPU, 0xD0)
+                    Notify (GFX0, 0xD0)
                     Store (0x1E, Local0)
                     While (Local0)
                     {
@@ -8060,31 +8568,31 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
 
                 Method (EVD0, 0, NotSerialized)
                 {
-                    Notify (IGPU, 0xD0)
+                    Notify (GFX0, 0xD0)
                     NWM1 (0xD0)
                 }
 
                 Method (EVD9, 0, NotSerialized)
                 {
-                    Notify (IGPU, 0xD9)
+                    Notify (GFX0, 0xD9)
                     NWM1 (0xD9)
                 }
 
                 Method (EVDA, 0, NotSerialized)
                 {
-                    Notify (IGPU, 0xDA)
+                    Notify (GFX0, 0xDA)
                     NWM1 (0xDA)
                 }
 
                 Method (EV80, 0, NotSerialized)
                 {
-                    Notify (IGPU, 0x80)
+                    Notify (GFX0, 0x80)
                     NWM1 (0x80)
                 }
 
                 Method (EV81, 0, NotSerialized)
                 {
-                    Notify (IGPU, 0x81)
+                    Notify (GFX0, 0x81)
                     NWM1 (0x81)
                 }
 
@@ -8138,16 +8646,6 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                         Return (CRS2)
                     }
                 }
-                Method (_DSM, 4, NotSerialized)
-                {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                    Return (Package()
-                    {
-                        "AAPL,ig-platform-id", Buffer(0x04) { 0x09, 0x00, 0x66, 0x01 },
-                        "hda-gfx", Buffer() { "onboard-1" },
-                    })
-                }
-                
             }
 
             Device (RP02)
@@ -8302,21 +8800,6 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 {
                     Return (GPRW (0x0D, 0x03))
                 }
-                Method (_DSM, 4, NotSerialized)
-                {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                    Return (Package()
-                    {
-                        "built-in", Buffer() { 0x00 },
-                        "AAPL,clock-id", Buffer() { 0x01 },
-                        "device_type", Buffer() { "EHCI" },
-                        "AAPL,current-available", 2100,
-                        "AAPL,current-extra", 2200,
-                        "AAPL,current-extra-in-sleep", 1600,
-                        "AAPL,device-internal", 0x02,
-                        "AAPL,max-port-current-in-sleep", 2100,
-                    })
-                }
             }
 
             Device (XHC1)
@@ -8326,29 +8809,6 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 {
                     Return (GPRW (0x0D, 0x03))
                 }
-                Method (_DSM, 4, NotSerialized)
-                {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
-                    Return (Package()
-                    {
-                        "built-in", Buffer() { 0x00 },
-                        "AAPL,clock-id", Buffer() { 0x02 },
-                        "device_type", Buffer() { "XHCI" },
-                        "AAPL,current-available", 2100,
-                        "AAPL,current-extra", 2200,
-                        "AAPL,current-extra-in-sleep", 1600,
-                        "AAPL,device-internal", 0x02,
-                        "AAPL,max-port-current-in-sleep", 2100,
-                    })
-                }
-            }
-            Device (IMEI)
-            {
-                Name (_ADR, 0x00160000)
-            }
-            Device (MCHC)
-            {
-                Name (_ADR, Zero)
             }
         }
     }
@@ -9314,7 +9774,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
         Processor (CPU7, 0x08, 0x00000410, 0x06) {}
     }
 
-    Mutex(MUTX, 0)
+    Mutex (MUTX, 0x00)
     OperationRegion (DEB0, SystemIO, 0x80, One)
     Field (DEB0, ByteAcc, NoLock, Preserve)
     {
@@ -9398,9 +9858,94 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
 
     Method (PNOT, 0, Serialized)
     {
-        
-        // nothing
+        If (LGreater (TCNT, One))
+        {
+            If (And (PDC0, 0x08))
+            {
+                Notify (\_PR.CPU0, 0x80)
+                If (And (PDC0, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU0, 0x81)
+                }
+            }
 
+            If (And (PDC1, 0x08))
+            {
+                Notify (\_PR.CPU1, 0x80)
+                If (And (PDC1, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU1, 0x81)
+                }
+            }
+
+            If (And (PDC2, 0x08))
+            {
+                Notify (\_PR.CPU2, 0x80)
+                If (And (PDC2, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU2, 0x81)
+                }
+            }
+
+            If (And (PDC3, 0x08))
+            {
+                Notify (\_PR.CPU3, 0x80)
+                If (And (PDC3, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU3, 0x81)
+                }
+            }
+
+            If (And (PDC4, 0x08))
+            {
+                Notify (\_PR.CPU4, 0x80)
+                If (And (PDC4, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU4, 0x81)
+                }
+            }
+
+            If (And (PDC5, 0x08))
+            {
+                Notify (\_PR.CPU5, 0x80)
+                If (And (PDC5, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU5, 0x81)
+                }
+            }
+
+            If (And (PDC6, 0x08))
+            {
+                Notify (\_PR.CPU6, 0x80)
+                If (And (PDC6, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU6, 0x81)
+                }
+            }
+
+            If (And (PDC7, 0x08))
+            {
+                Notify (\_PR.CPU7, 0x80)
+                If (And (PDC7, 0x10))
+                {
+                    Sleep (0x64)
+                    Notify (\_PR.CPU7, 0x81)
+                }
+            }
+        }
+        Else
+        {
+            Notify (\_PR.CPU0, 0x80)
+            Sleep (0x64)
+            Notify (\_PR.CPU0, 0x81)
+        }
     }
 
     Method (TRAP, 2, Serialized)
@@ -10175,8 +10720,8 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                     )
             })
             Name (_GPE, 0x19)
-            Mutex(MUEC, 0)
-            Mutex(MU4T, 0)
+            Mutex (MUEC, 0x00)
+            Mutex (MU4T, 0x00)
             Name (ECFL, Ones)
             Method (ECAV, 0, NotSerialized)
             {
@@ -10513,8 +11058,8 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                         Offset (0x8A), 
                 HKEN,   1, 
                         Offset (0x93), 
-                TH00,8,TH01,8, 
-                TH10,8,TH11,8, 
+                TAH0,   16, 
+                TAH1,   16, 
                 TSTP,   8, 
                         Offset (0x9C), 
                 CDT4,   8, 
@@ -10539,7 +11084,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 B0TM,   16, 
                 B0C1,   16, 
                 B0C2,   16, 
-                XC30,8,XC31,8, 
+                B0C3,   16, 
                 B0C4,   16, 
                         Offset (0xD0), 
                 B1PN,   16, 
@@ -10552,16 +11097,16 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 B1TM,   16, 
                 B1C1,   16, 
                 B1C2,   16, 
-                YC30,8,YC31,8, 
+                B1C3,   16, 
                 B1C4,   16, 
                         Offset (0xF0), 
                         Offset (0xF2), 
                         Offset (0xF4), 
-                B0S0,8,B0S1,8, 
+                B0SN,   16, 
                         Offset (0xF8), 
                         Offset (0xFA), 
                         Offset (0xFC), 
-                B1S0,8,B1S1,8
+                B1SN,   16
             }
 
             Name (SMBF, Zero)
@@ -10575,16 +11120,7 @@ DefinitionBlock ("iASLL9Ypvd.aml", "DSDT", 2, "_ASUS_", "Notebook", 0x00000013)
                 CDFG,   1, 
                 ADDR,   8, 
                 CMDB,   8, 
-                //BDAT, 256,
-BA00,8,BA01,8,BA02,8,BA03,8,
-BA04,8,BA05,8,BA06,8,BA07,8,
-BA08,8,BA09,8,BA0A,8,BA0B,8,
-BA0C,8,BA0D,8,BA0E,8,BA0F,8,
-BA10,8,BA11,8,BA12,8,BA13,8,
-BA14,8,BA15,8,BA16,8,BA17,8,
-BA18,8,BA19,8,BA1A,8,BA1B,8,
-BA1C,8,BA1D,8,BA1E,8,BA1F,8
-, 
+                BDAT,   256, 
                 BCNT,   8, 
                     ,   1, 
                 ALAD,   7, 
@@ -10602,16 +11138,7 @@ BA1C,8,BA1D,8,BA1E,8,BA1F,8
                 CDF2,   1, 
                 ADD2,   8, 
                 CMD2,   8, 
-                //BDA2, 256,
-BB00,8,BB01,8,BB02,8,BB03,8,
-BB04,8,BB05,8,BB06,8,BB07,8,
-BB08,8,BB09,8,BB0A,8,BB0B,8,
-BB0C,8,BB0D,8,BB0E,8,BB0F,8,
-BB10,8,BB11,8,BB12,8,BB13,8,
-BB14,8,BB15,8,BB16,8,BB17,8,
-BB18,8,BB19,8,BB1A,8,BB1B,8,
-BB1C,8,BB1D,8,BB1E,8,BB1F,8
-, 
+                BDA2,   256, 
                 BCN2,   8, 
                     ,   1, 
                 ALA2,   7, 
@@ -10636,7 +11163,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             Field (SMBX, ByteAcc, NoLock, Preserve)
             {
                         Offset (0x04), 
-                T2B0,8,T2B1,8
+                DT2B,   16
             }
 
             OperationRegion (NSBS, EmbeddedControl, 0x40, 0x04)
@@ -10701,154 +11228,6 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 {
                     Store (Arg1, ECFL)
                 }
-            }
-            Method (RDBA, 0, Serialized)
-            {
-                Name (TEMP, Buffer(0x20) { })
-                Store (BA00, Index(TEMP, 0x00))
-                Store (BA01, Index(TEMP, 0x01))
-                Store (BA02, Index(TEMP, 0x02))
-                Store (BA03, Index(TEMP, 0x03))
-                Store (BA04, Index(TEMP, 0x04))
-                Store (BA05, Index(TEMP, 0x05))
-                Store (BA06, Index(TEMP, 0x06))
-                Store (BA07, Index(TEMP, 0x07))
-                Store (BA08, Index(TEMP, 0x08))
-                Store (BA09, Index(TEMP, 0x09))
-                Store (BA0A, Index(TEMP, 0x0A))
-                Store (BA0B, Index(TEMP, 0x0B))
-                Store (BA0C, Index(TEMP, 0x0C))
-                Store (BA0D, Index(TEMP, 0x0D))
-                Store (BA0E, Index(TEMP, 0x0E))
-                Store (BA0F, Index(TEMP, 0x0F))
-                Store (BA10, Index(TEMP, 0x10))
-                Store (BA11, Index(TEMP, 0x11))
-                Store (BA12, Index(TEMP, 0x12))
-                Store (BA13, Index(TEMP, 0x13))
-                Store (BA14, Index(TEMP, 0x14))
-                Store (BA15, Index(TEMP, 0x15))
-                Store (BA16, Index(TEMP, 0x16))
-                Store (BA17, Index(TEMP, 0x17))
-                Store (BA18, Index(TEMP, 0x18))
-                Store (BA19, Index(TEMP, 0x19))
-                Store (BA1A, Index(TEMP, 0x1A))
-                Store (BA1B, Index(TEMP, 0x1B))
-                Store (BA1C, Index(TEMP, 0x1C))
-                Store (BA1D, Index(TEMP, 0x1D))
-                Store (BA1E, Index(TEMP, 0x1E))
-                Store (BA1F, Index(TEMP, 0x1F))
-                Return (TEMP)
-            }
-            Method (WRBA, 1, Serialized)
-            {
-                Name (TEMP, Buffer(0x20) { })
-                Store (Arg0, TEMP)
-                Store (DerefOf(Index(TEMP, 0x00)), BA00)
-                Store (DerefOf(Index(TEMP, 0x01)), BA01)
-                Store (DerefOf(Index(TEMP, 0x02)), BA02)
-                Store (DerefOf(Index(TEMP, 0x03)), BA03)
-                Store (DerefOf(Index(TEMP, 0x04)), BA04)
-                Store (DerefOf(Index(TEMP, 0x05)), BA05)
-                Store (DerefOf(Index(TEMP, 0x06)), BA06)
-                Store (DerefOf(Index(TEMP, 0x07)), BA07)
-                Store (DerefOf(Index(TEMP, 0x08)), BA08)
-                Store (DerefOf(Index(TEMP, 0x09)), BA09)
-                Store (DerefOf(Index(TEMP, 0x0A)), BA0A)
-                Store (DerefOf(Index(TEMP, 0x0B)), BA0B)
-                Store (DerefOf(Index(TEMP, 0x0C)), BA0C)
-                Store (DerefOf(Index(TEMP, 0x0D)), BA0D)
-                Store (DerefOf(Index(TEMP, 0x0E)), BA0E)
-                Store (DerefOf(Index(TEMP, 0x0F)), BA0F)
-                Store (DerefOf(Index(TEMP, 0x10)), BA10)
-                Store (DerefOf(Index(TEMP, 0x11)), BA11)
-                Store (DerefOf(Index(TEMP, 0x12)), BA12)
-                Store (DerefOf(Index(TEMP, 0x13)), BA13)
-                Store (DerefOf(Index(TEMP, 0x14)), BA14)
-                Store (DerefOf(Index(TEMP, 0x15)), BA15)
-                Store (DerefOf(Index(TEMP, 0x16)), BA16)
-                Store (DerefOf(Index(TEMP, 0x17)), BA17)
-                Store (DerefOf(Index(TEMP, 0x18)), BA18)
-                Store (DerefOf(Index(TEMP, 0x19)), BA19)
-                Store (DerefOf(Index(TEMP, 0x1A)), BA1A)
-                Store (DerefOf(Index(TEMP, 0x1B)), BA1B)
-                Store (DerefOf(Index(TEMP, 0x1C)), BA1C)
-                Store (DerefOf(Index(TEMP, 0x1D)), BA1D)
-                Store (DerefOf(Index(TEMP, 0x1E)), BA1E)
-                Store (DerefOf(Index(TEMP, 0x1F)), BA1F)
-            }
-            Method (RDBB, 0, Serialized)
-            {
-                Name (TEMP, Buffer(0x20) { })
-                Store (BB00, Index(TEMP, 0x00))
-                Store (BB01, Index(TEMP, 0x01))
-                Store (BB02, Index(TEMP, 0x02))
-                Store (BB03, Index(TEMP, 0x03))
-                Store (BB04, Index(TEMP, 0x04))
-                Store (BB05, Index(TEMP, 0x05))
-                Store (BB06, Index(TEMP, 0x06))
-                Store (BB07, Index(TEMP, 0x07))
-                Store (BB08, Index(TEMP, 0x08))
-                Store (BB09, Index(TEMP, 0x09))
-                Store (BB0A, Index(TEMP, 0x0A))
-                Store (BB0B, Index(TEMP, 0x0B))
-                Store (BB0C, Index(TEMP, 0x0C))
-                Store (BB0D, Index(TEMP, 0x0D))
-                Store (BB0E, Index(TEMP, 0x0E))
-                Store (BB0F, Index(TEMP, 0x0F))
-                Store (BB10, Index(TEMP, 0x10))
-                Store (BB11, Index(TEMP, 0x11))
-                Store (BB12, Index(TEMP, 0x12))
-                Store (BB13, Index(TEMP, 0x13))
-                Store (BB14, Index(TEMP, 0x14))
-                Store (BB15, Index(TEMP, 0x15))
-                Store (BB16, Index(TEMP, 0x16))
-                Store (BB17, Index(TEMP, 0x17))
-                Store (BB18, Index(TEMP, 0x18))
-                Store (BB19, Index(TEMP, 0x19))
-                Store (BB1A, Index(TEMP, 0x1A))
-                Store (BB1B, Index(TEMP, 0x1B))
-                Store (BB1C, Index(TEMP, 0x1C))
-                Store (BB1D, Index(TEMP, 0x1D))
-                Store (BB1E, Index(TEMP, 0x1E))
-                Store (BB1F, Index(TEMP, 0x1F))
-                Return (TEMP)
-            }
-            Method (WRBB, 1, Serialized)
-            {
-                Name (TEMP, Buffer(0x20) { })
-                Store (Arg0, TEMP)
-                Store (DerefOf(Index(TEMP, 0x00)), BB00)
-                Store (DerefOf(Index(TEMP, 0x01)), BB01)
-                Store (DerefOf(Index(TEMP, 0x02)), BB02)
-                Store (DerefOf(Index(TEMP, 0x03)), BB03)
-                Store (DerefOf(Index(TEMP, 0x04)), BB04)
-                Store (DerefOf(Index(TEMP, 0x05)), BB05)
-                Store (DerefOf(Index(TEMP, 0x06)), BB06)
-                Store (DerefOf(Index(TEMP, 0x07)), BB07)
-                Store (DerefOf(Index(TEMP, 0x08)), BB08)
-                Store (DerefOf(Index(TEMP, 0x09)), BB09)
-                Store (DerefOf(Index(TEMP, 0x0A)), BB0A)
-                Store (DerefOf(Index(TEMP, 0x0B)), BB0B)
-                Store (DerefOf(Index(TEMP, 0x0C)), BB0C)
-                Store (DerefOf(Index(TEMP, 0x0D)), BB0D)
-                Store (DerefOf(Index(TEMP, 0x0E)), BB0E)
-                Store (DerefOf(Index(TEMP, 0x0F)), BB0F)
-                Store (DerefOf(Index(TEMP, 0x10)), BB10)
-                Store (DerefOf(Index(TEMP, 0x11)), BB11)
-                Store (DerefOf(Index(TEMP, 0x12)), BB12)
-                Store (DerefOf(Index(TEMP, 0x13)), BB13)
-                Store (DerefOf(Index(TEMP, 0x14)), BB14)
-                Store (DerefOf(Index(TEMP, 0x15)), BB15)
-                Store (DerefOf(Index(TEMP, 0x16)), BB16)
-                Store (DerefOf(Index(TEMP, 0x17)), BB17)
-                Store (DerefOf(Index(TEMP, 0x18)), BB18)
-                Store (DerefOf(Index(TEMP, 0x19)), BB19)
-                Store (DerefOf(Index(TEMP, 0x1A)), BB1A)
-                Store (DerefOf(Index(TEMP, 0x1B)), BB1B)
-                Store (DerefOf(Index(TEMP, 0x1C)), BB1C)
-                Store (DerefOf(Index(TEMP, 0x1D)), BB1D)
-                Store (DerefOf(Index(TEMP, 0x1E)), BB1E)
-                Store (DerefOf(Index(TEMP, 0x1F)), BB1F)
             }
         }
     }
@@ -11248,9 +11627,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         Name (ONAM, "ASUSTeK")
         Method (ADVG, 0, NotSerialized)
         {
-            If (\_SB.PCI0.IGPU.PRST ())
+            If (\_SB.PCI0.GFX0.PRST ())
             {
-                Return (\_SB.PCI0.IGPU.ADVD ())
+                Return (\_SB.PCI0.GFX0.ADVD ())
             }
 
             If (\_SB.PCI0.PEG0.PEGP.PRST ())
@@ -11263,9 +11642,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (GCDM, 0, NotSerialized)
         {
-            If (\_SB.PCI0.IGPU.PRST ())
+            If (\_SB.PCI0.GFX0.PRST ())
             {
-                Return (\_SB.PCI0.IGPU.GCDS ())
+                Return (\_SB.PCI0.GFX0.GCDS ())
             }
 
             If (\_SB.PCI0.PEG0.PEGP.PRST ())
@@ -11278,9 +11657,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (SWHG, 1, Serialized)
         {
-            If (\_SB.PCI0.IGPU.PRST ())
+            If (\_SB.PCI0.GFX0.PRST ())
             {
-                \_SB.PCI0.IGPU.SWHD (Arg0)
+                \_SB.PCI0.GFX0.SWHD (Arg0)
                 Return (One)
             }
 
@@ -11295,9 +11674,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (NATK, 0, NotSerialized)
         {
-            If (\_SB.PCI0.IGPU.PRST ())
+            If (\_SB.PCI0.GFX0.PRST ())
             {
-                Return (\_SB.PCI0.IGPU.NATK ())
+                Return (\_SB.PCI0.GFX0.NATK ())
             }
 
             If (\_SB.PCI0.PEG0.PEGP.PRST ())
@@ -12617,7 +12996,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 Store (Arg0, ALAE)
                 If (LEqual (MSOS (), OSW7))
                 {
-                    ^^PCI0.IGPU.AINT (Zero, Local0)
+                    ^^PCI0.GFX0.AINT (Zero, Local0)
                 }
                 Else
                 {
@@ -12957,11 +13336,6 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 }
 
                 Return (Zero)
-            }
-            Method (SKBV, 1, NotSerialized)
-            {
-                ^^PCI0.LPCB.EC0.WRAM (0x044B, Arg0)
-                Return (Arg0)
             }
         }
     }
@@ -13457,7 +13831,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                         0x09))
                 }
 
-                Store (B1B2(^^LPCB.EC0.XC30,^^LPCB.EC0.XC31), Index (BIXT, 0x0A))
+                Store (^^LPCB.EC0.B0C3, Index (BIXT, 0x0A))
                 Store (0x0001869F, Index (BIXT, 0x0B))
                 Return (BIXT)
             }
@@ -13696,11 +14070,11 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             {
                 If (BSLF)
                 {
-                    Store (B1B2(B1S0,B1S1), Local0)
+                    Store (B1SN, Local0)
                 }
                 Else
                 {
-                    Store (B1B2(B0S0,B0S1), Local0)
+                    Store (B0SN, Local0)
                 }
             }
             Else
@@ -13794,7 +14168,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             }
         }
 
-        Mutex(MMPX, 0)
+        Mutex (MMPX, 0x00)
         Method (BATO, 0, Serialized)
         {
             Acquire (MMPX, 0xFFFF)
@@ -17200,7 +17574,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                             ShiftLeft (Local4, 0x04, Local4)
                             Store (LBTN, Local3)
                             Store (Add (Local4, Local3), Local3)
-                            ^^^IGPU.AINT (One, Divide (Multiply (DerefOf (Index (PWAC, Local3)), 0x64
+                            ^^^GFX0.AINT (One, Divide (Multiply (DerefOf (Index (PWAC, Local3)), 0x64
                                 ), 0xFF, ))
                         }
                     }
@@ -17580,7 +17954,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                     }
                 }
 
-                WRBA(Zero)
+                Store (Zero, BDAT)
                 Store (Arg0, PRTC)
                 Store (SWTC (Arg0), Index (Local0, Zero))
                 If (LEqual (DerefOf (Index (Local0, Zero)), Zero))
@@ -17588,13 +17962,13 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                     If (LEqual (Arg0, RDBL))
                     {
                         Store (BCNT, Index (Local0, One))
-                        Store (RDBA(), Index (Local0, 0x02))
+                        Store (BDAT, Index (Local0, 0x02))
                     }
 
                     If (LEqual (Arg0, RDWD))
                     {
                         Store (0x02, Index (Local0, One))
-                        Store (B1B2(T2B0,T2B1), Index (Local0, 0x02))
+                        Store (DT2B, Index (Local0, 0x02))
                     }
 
                     If (LEqual (Arg0, RDBT))
@@ -17663,7 +18037,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
             If (LLessEqual (Local2, 0x03E8))
             {
-                WRBA(Zero)
+                Store (Zero, BDAT)
                 ShiftLeft (Arg1, One, Local3)
                 Store (Local3, ADDR)
                 If (LNotEqual (Arg0, WRQK))
@@ -17677,12 +18051,12 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 If (LEqual (Arg0, WRBL))
                 {
                     Store (Arg3, BCNT)
-                    WRBA(Arg4)
+                    Store (Arg4, BDAT)
                 }
 
                 If (LEqual (Arg0, WRWD))
                 {
-                    Store(Arg4,T2B0) Store(ShiftRight(Arg4,8),T2B1)
+                    Store (Arg4, DT2B)
                 }
 
                 If (LEqual (Arg0, WRBT))
@@ -17703,7 +18077,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             Return (Local0)
         }
 
-        Mutex(MUEP, 0)
+        Mutex (MUEP, 0x00)
         Method (RBEP, 1, NotSerialized)
         {
             Store (0xFFFF, Local1)
@@ -17858,7 +18232,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                         If (LOr (LEqual (Arg1, 0x0A), LEqual (Arg1, 0x0B)))
                         {
                             Store (DerefOf (Index (Arg6, Zero)), BCNT)
-                            WRBA(DerefOf (Index (Arg6, One)))
+                            Store (DerefOf (Index (Arg6, One)), BDAT)
                         }
                         Else
                         {
@@ -17875,7 +18249,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                         If (LOr (LEqual (Arg1, 0x0A), LEqual (Arg1, 0x0B)))
                         {
                             Store (DerefOf (Index (Arg6, Zero)), BCN2)
-                            WRBB(DerefOf (Index (Arg6, One)))
+                            Store (DerefOf (Index (Arg6, One)), BDA2)
                         }
                         Else
                         {
@@ -17912,7 +18286,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                             Store (DAT0, Index (Local1, One))
                             Store (DAT1, Index (Local1, 0x02))
                             Store (BCNT, Index (Local1, 0x03))
-                            Store (RDBA(), Index (Local1, 0x04))
+                            Store (BDAT, Index (Local1, 0x04))
                         }
                         Else
                         {
@@ -17920,7 +18294,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                             Store (DA20, Index (Local1, One))
                             Store (DA21, Index (Local1, 0x02))
                             Store (BCN2, Index (Local1, 0x03))
-                            Store (RDBB(), Index (Local1, 0x04))
+                            Store (BDA2, Index (Local1, 0x04))
                         }
 
                         And (Local0, 0x1F, Local0)
@@ -18533,14 +18907,14 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                     Store (Arg0, _T_0)
                     If (LEqual (_T_0, Zero))
                     {
-                        Store (B1B2(TH00,TH01), Local0)
+                        Store (TAH0, Local0)
                         Break
                     }
                     Else
                     {
                         If (LEqual (_T_0, One))
                         {
-                            Store (B1B2(TH10,TH11), Local0)
+                            Store (TAH1, Local0)
                             Break
                         }
                         Else
@@ -18682,7 +19056,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                         If (LEqual (MSOS (), OSW7))
                         {
                             Store (RALS (), Local0)
-                            ^^^IGPU.AINT (Zero, Local0)
+                            ^^^GFX0.AINT (Zero, Local0)
                         }
                         Else
                         {
@@ -19013,9 +19387,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         Name (ASBN, Zero)
         Method (SBRN, 0, Serialized)
         {
-            If (^^^IGPU.PRST ())
+            If (^^^GFX0.PRST ())
             {
-                Store (^^^IGPU.GCBL (^^^IGPU.CBLV), Local0)
+                Store (^^^GFX0.GCBL (^^^GFX0.CBLV), Local0)
                 Subtract (0x0A, Local0, Local1)
                 If (LNotEqual (Local1, LBTN))
                 {
@@ -19034,14 +19408,14 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             If (LGreaterEqual (MSOS (), OSVT))
             {
                 Store (LBTN, Local0)
-                If (^^^IGPU.PRST ())
+                If (^^^GFX0.PRST ())
                 {
-                    If (LNotEqual (^^^IGPU.LCDD._DCS (), 0x1F))
+                    If (LNotEqual (^^^GFX0.LCDD._DCS (), 0x1F))
                     {
                         Return (One)
                     }
 
-                    ^^^IGPU.DWBL ()
+                    ^^^GFX0.DWBL ()
                     Store (One, ASBN)
                 }
 
@@ -19062,7 +19436,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 Store (Zero, ASBN)
                 If (ATKP)
                 {
-                    If (LEqual (^^^IGPU.HGCK, One))
+                    If (LEqual (^^^GFX0.HGCK, One))
                     {
                         Return (One)
                     }
@@ -19117,14 +19491,14 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             If (LGreaterEqual (MSOS (), OSVT))
             {
                 Store (LBTN, Local0)
-                If (^^^IGPU.PRST ())
+                If (^^^GFX0.PRST ())
                 {
-                    If (LNotEqual (^^^IGPU.LCDD._DCS (), 0x1F))
+                    If (LNotEqual (^^^GFX0.LCDD._DCS (), 0x1F))
                     {
                         Return (One)
                     }
 
-                    ^^^IGPU.UPBL ()
+                    ^^^GFX0.UPBL ()
                     Store (One, ASBN)
                 }
 
@@ -19145,7 +19519,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 Store (Zero, ASBN)
                 If (ATKP)
                 {
-                    If (LEqual (^^^IGPU.HGCK, One))
+                    If (LEqual (^^^GFX0.HGCK, One))
                     {
                         Return (One)
                     }
@@ -19245,7 +19619,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 Return (One)
             }
 
-            If (LEqual (^^^IGPU.HGCK, One))
+            If (LEqual (^^^GFX0.HGCK, One))
             {
                 Return (One)
             }
@@ -19671,7 +20045,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             {
                 If (LEqual (MSOS (), OSW7))
                 {
-                    ^^^IGPU.AINT (Zero, Local0)
+                    ^^^GFX0.AINT (Zero, Local0)
                 }
                 Else
                 {
@@ -19728,7 +20102,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             {
                 If (LEqual (MSOS (), OSW7))
                 {
-                    ^^^IGPU.AINT (Zero, Local0)
+                    ^^^GFX0.AINT (Zero, Local0)
                 }
                 Else
                 {
@@ -19980,7 +20354,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
                 If (And (VGAF, One))
                 {
-                    Store (One, ^^PCI0.IGPU.CLID)
+                    Store (One, ^^PCI0.GFX0.CLID)
                 }
 
                 Return (Local0)
@@ -20012,9 +20386,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             {
                 Store (GLID (), Local0)
                 Store (Local0, LIDS)
-                If (CondRefOf (\_SB.PCI0.IGPU.GLID))
+                If (CondRefOf (\_SB.PCI0.GFX0.GLID))
                 {
-                    ^^^IGPU.GLID (LIDS)
+                    ^^^GFX0.GLID (LIDS)
                 }
             }
         }
@@ -20197,7 +20571,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         Name (XSCT, 0x18)
         Name (XSST, 0x1A)
         Name (XRCT, 0x1C)
-        Mutex(MUTE, 0)
+        Mutex (MUTE, 0x00)
         Method (BDFR, 4, NotSerialized)
         {
             ShiftLeft (Arg0, 0x14, Arg0)
@@ -20791,9 +21165,9 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (_L06, 0, NotSerialized)
         {
-            If (LAnd (\_SB.PCI0.IGPU.GSSE, LNot (GSMI)))
+            If (LAnd (\_SB.PCI0.GFX0.GSSE, LNot (GSMI)))
             {
-                \_SB.PCI0.IGPU.GSCI ()
+                \_SB.PCI0.GFX0.GSCI ()
             }
         }
     }
@@ -20885,7 +21259,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             Return (Zero)
         }
 
-        Mutex(P4SM, 0)
+        Mutex (P4SM, 0x00)
         Method (SBYT, 2, Serialized)
         {
             Acquire (P4SM, 0xFFFF)
@@ -22084,20 +22458,20 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                 Sleep (One)
             }
 
-            ^^^IGPU.RSTO ()
+            ^^^GFX0.RSTO ()
             Store (Zero, NHDA)
             Sleep (0x32)
-            Store (One, ^^^IGPU.HPWR)
+            Store (One, ^^^GFX0.HPWR)
             ^^^LPCB.EC0.WRAM (0x0520, 0x97)
             Store (^^^LPCB.EC0.RRAM (0x0522), Local0)
             And (Local0, 0xCF, Local0)
             Or (Local0, 0x10, Local0)
             ^^^LPCB.EC0.WRAM (0x0522, Local0)
-            If (^^^IGPU.NTSA) {}
+            If (^^^GFX0.NTSA) {}
             Else
             {
                 ^^^LPCB.EC0.WRAM (0x052B, 0x9E)
-                Store (One, ^^^IGPU.NTSA)
+                Store (One, ^^^GFX0.NTSA)
             }
         }
 
@@ -22122,7 +22496,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             ^^^LPCB.EC0.WRAM (0x0520, 0x95)
             ^^^LPCB.EC0.WRAM (0x03A4, Zero)
             ^^^LPCB.EC0.WRAM (0x03A5, Zero)
-            ^^^IGPU.SAVO ()
+            ^^^GFX0.SAVO ()
             Store (One, LNKD)
             While (LNotEqual (LNKS, Zero))
             {
@@ -22135,7 +22509,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             SGPL (0x32, One, Zero)
             Sleep (0x0A)
             SGPL (0x36, One, One)
-            Store (Zero, ^^^IGPU.HPWR)
+            Store (Zero, ^^^GFX0.HPWR)
             Return (Zero)
         }
 
@@ -22143,26 +22517,26 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         {
             If (And (Arg0, Zero))
             {
-                Return (^^^IGPU.HLMX)
+                Return (^^^GFX0.HLMX)
             }
             Else
             {
-                Store (One, ^^^IGPU.HLMX)
-                Store (One, ^^^IGPU.HCMX)
+                Store (One, ^^^GFX0.HLMX)
+                Store (One, ^^^GFX0.HCMX)
                 Sleep (0x64)
             }
         }
 
         Method (MXMX, 1, NotSerialized)
         {
-            Store (One, ^^^IGPU.HLMM)
-            Store (One, ^^^IGPU.HCMM)
-            Store (One, ^^^IGPU.HDMU)
-            Store (One, ^^^IGPU.HHMM)
-            Store (One, ^^^IGPU.HLMX)
-            Store (One, ^^^IGPU.HCMX)
-            Store (One, ^^^IGPU.HDMX)
-            Store (One, ^^^IGPU.HHMX)
+            Store (One, ^^^GFX0.HLMM)
+            Store (One, ^^^GFX0.HCMM)
+            Store (One, ^^^GFX0.HDMU)
+            Store (One, ^^^GFX0.HHMM)
+            Store (One, ^^^GFX0.HLMX)
+            Store (One, ^^^GFX0.HCMX)
+            Store (One, ^^^GFX0.HDMX)
+            Store (One, ^^^GFX0.HHMX)
             Return (One)
         }
 
@@ -22184,7 +22558,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (_DSM, 4, NotSerialized)
         {
-            Return (^^^IGPU._DSM (Arg0, Arg1, Arg2, Arg3))
+            Return (^^^GFX0._DSM (Arg0, Arg1, Arg2, Arg3))
         }
 
         OperationRegion (VSID, PCI_Config, Zero, 0x0100)
@@ -22416,7 +22790,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (SWHD, 1, Serialized)
         {
-            ^^^IGPU.HWHG (Arg0)
+            ^^^GFX0.HWHG (Arg0)
         }
 
         Method (GETD, 0, NotSerialized)
@@ -22433,27 +22807,27 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
         Method (ADVD, 0, NotSerialized)
         {
-            Return (^^^IGPU.HDVG ())
+            Return (^^^GFX0.HDVG ())
         }
 
         Method (GCDS, 0, NotSerialized)
         {
-            Return (^^^IGPU.GCDS ())
+            Return (^^^GFX0.GCDS ())
         }
 
         Method (UPBL, 0, NotSerialized)
         {
-            If (LEqual (^^^IGPU.HGAP, 0x02))
+            If (LEqual (^^^GFX0.HGAP, 0x02))
             {
-                Notify (^^^IGPU.LCDD, 0x86)
+                Notify (^^^GFX0.LCDD, 0x86)
             }
         }
 
         Method (DWBL, 0, NotSerialized)
         {
-            If (LEqual (^^^IGPU.HGAP, 0x02))
+            If (LEqual (^^^GFX0.HGAP, 0x02))
             {
-                Notify (^^^IGPU.LCDD, 0x87)
+                Notify (^^^GFX0.LCDD, 0x87)
             }
         }
 
@@ -22506,29 +22880,28 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
             }
             Else
             {
-                //Return (Zero)
-                Return (Buffer (){})
+                Return (Zero)
             }
         }
 
         Method (_PS0, 0, NotSerialized)
         {
-            Store (Zero, ^^^IGPU._PSC)
-            If (LNotEqual (^^^IGPU.DGPS, Zero))
+            Store (Zero, ^^^GFX0._PSC)
+            If (LNotEqual (^^^GFX0.DGPS, Zero))
             {
                 DON ()
-                Store (Zero, ^^^IGPU.DGPS)
+                Store (Zero, ^^^GFX0.DGPS)
             }
         }
 
         Method (_PS3, 0, NotSerialized)
         {
-            If (LEqual (^^^IGPU.P3MO, 0x03))
+            If (LEqual (^^^GFX0.P3MO, 0x03))
             {
                 DOFF ()
-                Store (0x03, ^^^IGPU._PSC)
-                Store (One, ^^^IGPU.DGPS)
-                Store (0x02, ^^^IGPU.P3MO)
+                Store (0x03, ^^^GFX0._PSC)
+                Store (One, ^^^GFX0.DGPS)
+                Store (0x02, ^^^GFX0.P3MO)
             }
         }
     }
@@ -22607,7 +22980,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                     {
                         If (LEqual (Arg1, 0x10))
                         {
-                            Return (^^IGPU._DOD ())
+                            Return (^^GFX0._DOD ())
                         }
                         Else
                         {
@@ -22634,7 +23007,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                                     {
                                         If (LEqual (Arg1, 0x10))
                                         {
-                                            Return (^^IGPU.LCDD._DCS ())
+                                            Return (^^GFX0.LCDD._DCS ())
                                         }
                                         Else
                                         {
@@ -22678,7 +23051,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
                                         CreateField (Arg2, 0xE0, 0x20, SARG)
                                         If (LNotEqual (Arg1, 0x10))
                                         {
-                                            Return (^^IGPU._DSM (MUID, REVI, SFNC, SARG))
+                                            Return (^^GFX0._DSM (MUID, REVI, SFNC, SARG))
                                         }
                                     }
                                 }
@@ -22688,7 +23061,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
 
                     If (LEqual (FUNC, 0x47504F4E))
                     {
-                        Store (One, ^^IGPU.DGPS)
+                        Store (One, ^^GFX0.DGPS)
                         ^^PEG0.PEGP._PS0 ()
                     }
                 }
@@ -22827,7 +23200,7 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         If (Arg0)
         {
             \_SB.PCI0.NPTS (Arg0)
-            \_SB.PCI0.IGPU.OPTS (Arg0)
+            \_SB.PCI0.GFX0.OPTS (Arg0)
             OEMS (Arg0)
         }
     }
@@ -22837,9 +23210,8 @@ BB1C,8,BB1D,8,BB1E,8,BB1F,8
         \_SB.PCI0.XHC.XWAK (Arg0)
         \_SB.PCI0.NWAK (Arg0)
         \_SB.ATKD.GENW (Arg0)
-        \_SB.PCI0.IGPU.OWAK (Arg0)
+        \_SB.PCI0.GFX0.OWAK (Arg0)
         OEMW (Arg0)
     }
-    Method (B1B2, 2, NotSerialized) { Return (Or (Arg0, ShiftLeft (Arg1, 8))) }
 }
 
