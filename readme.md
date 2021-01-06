@@ -98,9 +98,9 @@ Benefits of the new adapter are USB3 and Gigabit speed.
 
 - Follow these steps:
   
-  ![Clover Install 1](Images/Clover-Installation-1.png)
-  ![Clover Install 1](Images/Clover-Installation-2.png)
-  ![Clover Install 1](Images/Clover-Installation-3.png)
+  ![Clover Install 1](Images/Clover-Install-1.png)
+  ![Clover Install 1](Images/Clover-Install-2.png)
+  ![Clover Install 1](Images/Clover-Install-3.png)
 
 ##### c) Post Install
 
