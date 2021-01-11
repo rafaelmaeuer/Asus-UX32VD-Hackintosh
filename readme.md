@@ -2,7 +2,7 @@
 
 Guide on how to install macOS Big Sur on ASUS UX32VD Laptop
 
-![UX32VD Hackintosh](Images/UX32VD-HQ-Web.jpg)
+![UX32VD Hackintosh](Images/UX32VD-banner.jpg)
 
 ### Info
 
@@ -277,7 +277,7 @@ Update with Clover Configurator or download latest `CLOVERX64.efi` from [github.
 ### ACPI
 
 - SSDT-EC.aml fixes embedded controller (since macOS Catalina)
-- SSDT-GPRW.aml prevents instant wake from sleep
+- SSDT-GPRW.aml prevents instant wake from sleep (usb-devices)
 - SSDT-PNLF.aml activates display backlight control
 
 ### SSDT
