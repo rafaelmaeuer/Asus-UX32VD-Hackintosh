@@ -6,6 +6,8 @@ Guide on how to install macOS Big Sur on ASUS UX32VD Laptop
 
 ### Info
 
+This Hackintosh was build with help of [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh) repository as base.
+
 Considerations for this project are moving towards a migration with OpenCore. Due to the effort for the migration, the current setup still uses Clover (with OC integration).
 
 - macOS version: 11.1
@@ -17,31 +19,31 @@ Considerations for this project are moving towards a migration with OpenCore. Du
 
 #### BIOS
 
-- Use version 214
-- Check for correct settings
+- Use version 214 (get ROM from [BIOS](/BIOS) folder)
+- Check for correct BIOS settings:
 
-```sh
-Basic
-- Intel Virtualization Technology [Enabled]
-- Intel AES-NI [Enabled]
-- VT-d [Enabled]
+  ```sh
+  Basic
+  - Intel Virtualization Technology [Enabled]
+  - Intel AES-NI [Enabled]
+  - VT-d [Enabled]
 
-SATA
-- SATA Mode Selection [AHCI]
+  SATA
+  - SATA Mode Selection [AHCI]
 
-Graphics
-- DVMT Pre-Allocated [64M]
+  Graphics
+  - DVMT Pre-Allocated [64M]
 
-Intel
-- Intel(R) Anti-Theft Technology [Enabled]
+  Intel
+  - Intel(R) Anti-Theft Technology [Enabled]
 
-USB
-- Legacy USB Support [Enabled]
-- XHCI Pre-Boot Mode [Auto]
+  USB
+  - Legacy USB Support [Enabled]
+  - XHCI Pre-Boot Mode [Auto]
 
-Network
-- Network Stack [Disabled]
-```
+  Network
+  - Network Stack [Disabled]
+  ```
 
 #### Restrictions
 
