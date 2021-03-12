@@ -213,14 +213,23 @@ Enable installation on unsupported hardware:
 
 **d) Karabiner Elements**
 
-- Install Karabiner Elements from [Tools](/Tools) folder
+- Install Karabiner Elements from [Config/Karabiner](/Config/Karabiner) folder
 - Option a) Import `karabiner.json` from [Config/Karabiner](/Config/Karabiner) folder
 - Option b) Create config with following settings:
 
   ![Karabiner-Key-Mapping](Images/Karabiner-Key-Mapping.png)
   ![Karabiner-FN-Keys](Images/Karabiner-FN-Keys.png)
 
-**e) Drivers**
+**e) Audio Boost**
+
+As the maximum audio volume with AppleALC can be insufficient, [Boom 2](https://www.globaldelight.com/boom/boom2.php) is used as system-wide volume booster.
+
+- Install `Boom 2` (download [Trial](https://www.globaldelight.com/storefs/thankyou_free_boom2.php) or [Buy](https://www.globaldelight.com/store/?product=boom2)) and the [Boom 2 Audio Component](https://www.globaldelight.com/boom/mas-content/device-installer.php) from [Tools](/Tools) folder
+- Use the following settings, which allow a satisfying volume for audio output on UX32VD:
+
+  ![Boom2-Audio-Booster](Images/Boom2-Audio-Booster.png)
+
+**f) Drivers**
 
 Install the driver for the appropriate Ethernet-Adapter from [Driver](/Driver) folder
 
