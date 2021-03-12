@@ -334,16 +334,48 @@ For iGPU the correct platform-id `09006601` is necessary to complete the last bo
 
 In order to get sound working properly, the correct `layout-id` must be used with AppleALC (see [Fixing audio with AppleALC](https://dortania.github.io/OpenCore-Post-Install/universal/audio.html#fixing-audio-with-applealc)). The Audio-Codec on UX32VD is `Realtek ALC269` and shows up in [AppleALC/wiki/Supported-codecs](https://github.com/acidanthera/AppleALC/wiki/Supported-codecs). Instead of testing all possible IDs, working configs of similar devices were tested using [ALC269/Info.plist](https://github.com/acidanthera/AppleALC/blob/master/Resources/ALC269/Info.plist):
 
-- Asus K53SJ, Asus G73s (alcid=3): audio + switch, no mic
-- Asus Vivobook S200CE (alcid=12): audio, no switch + mic
-- Asus Vivobook S300CA (alcid=19): audio + switch + mic
-- Asus A45A 269VB1 (alcid=45): audio + switch + mic + Line-In
-- Asus K53SJ Mod (alcid=93): audio + switch, no mic + switch
+| Device-Preset         | AppleALC ID | Audio Output | Output Switch | Microphone | Feature    |
+| --------------------- | ----------- | ------------ | ------------- | ---------- | ---------- |
+| Asus K53SJ, Asus G73s | alcid=3     | ✓            | ✓             | 𐄂          | -          |
+| Asus Vivobook S200CE  | alcid=12    | ✓            | 𐄂             | ✓          | -          |
+| Asus Vivobook S300CA  | alcid=19    | ✓            | ✓             | ✓          | -          |
+| Asus A45A 269VB1      | alcid=45    | ✓            | ✓             | ✓          | Line-In    |
+| Asus K53SJ Mod        | alcid=93    | ✓            | ✓             | 𐄂          | Mic-Switch |
 
-As Asus A45A 269VB1 has the closest result to UX32VD `alcid=45` is used. In `config.plist` -> `DeviceProperties` add:
+As `Asus A45A 269VB1` has the closest result to UX32VD `alcid=45` is used for this Hackintosh.  
+In `config.plist` -> `DeviceProperties` add:
 
 - Device: PciRoot(0x0)/Pci(0x1B,0x0)
   - layout-id: 45 (NUMBER)
+
+**USB Mapping**
+
+Per default USB ist working, but not for the port besides AC-Input. Therefore an USB-Mapping is created following the [Dortania USB-Mapping Guide](https://dortania.github.io/OpenCore-Post-Install/usb/#macos-and-the-15-port-limit). First the necessary ACPI-renames need to be determined by [checking-what-renames-you-need](https://dortania.github.io/OpenCore-Post-Install/usb/system-preparation.html#checking-what-renames-you-need). With `MacBookAir5,x and older` the SMBIOS needs renames for `XHC1`, `EHC1` and `EHC2`.
+
+1. In `config.plist` -> `ACPI` -> `Patch` add following renames:
+
+   - XHC1 to SHCI (find `58484331` replace `53484349`)
+   - EHC1 to EH01 (find `45484331` replace `45483031`)
+   - EHC1 to EH02 (find `45484332` replace `45483032`)
+
+2. Enable USB Port-Limit patch with `config.plist` -> `Kernel` -> `Quirks` -> `XhciPortLimit` -> `True`
+3. Add [USBInjectAll.kext](https://github.com/RehabMan/OS-X-USB-Inject-All) from [Config/USB](/Config/USB) folder to OpenCore (`EFI/OC/kexts` and `config.plist`)
+4. Reboot an check the USB renaming works with [Hackintool](https://github.com/headkaze/Hackintool) -> `USB` tab
+
+In the next step the [Intel USB Mapping](https://dortania.github.io/OpenCore-Post-Install/usb/intel-mapping/intel.html#intel-usb-mapping) method is used to determine all USB ports with help of [corpnewt/USBMap](https://github.com/corpnewt/USBMap) tool:
+
+1. Plug the following into every port once and give it a name:
+   - `USB2-Stick`
+   - `USB3-Stick`
+2. Set all internal adapters to: `255`
+3. Set all external adapters to: `3`
+4. Export `USBMap.kext`
+
+The last steps for a working USB-Mapping are:
+
+1. Replace `USBInjectAll.kext` with `USBMap.kext` in OpenCore (`EFI/OC/kexts` and `config.plist`)
+2. Disable the USB Port-Limit patch: `config.plist` -> `Kernel` -> `Quirks` -> `XhciPortLimit` -> `False`
+3. Reboot, all USB-Ports should work as expected
 
 ---
 
@@ -377,6 +409,18 @@ To manually add kexts do the following
   - (Optional: set `MinKernel` and `MaxKernel`)
   - Select `Enabled`
 
+**PCI Entries**
+
+This is most of all a cosmetic step, adding PCI-entries will list the internal devices in `SystemInformation` -> `PCI` section. But it helps to verify which devices have a working driver installed and which don't.
+
+- Open `Hackintool` and export PCI entries with tab `PCIe` -> `Refresh` -> `Export`
+- It creates 4 `pcidevices` files in different formats (.dsl, .json, .plist, .txt)
+- Open `pcidevices.plist` and OpenCore `config.plist` with a code-editor
+- Update fields of already existing devices (iGPA, AppleALC) in `DeviceProperties` -> `Add`
+- Add all other devices as new entries in `DeviceProperties` -> `Add`
+- Rename (e.g. shorten) `model` field of each entry type (e.g. iGPU name is used in `About this Mac`)
+- After reboot all PCI-devices show up in `SystemInformation` -> `PCI` including their driver status
+  
 ---
 
 #### Kexts
@@ -474,6 +518,11 @@ To manually add kexts do the following
 **ACPI**
 
 - [Neues DSDT oder auch mit nur SSDT lösbar?](https://www.hackintosh-forum.de/forum/thread/33622-neues-dsdt-oder-auch-mit-nur-ssdt-l%C3%B6sbar/)
+
+**PCI**
+
+- [OpenCore no keyboard/touchpad/gpu accelleration](https://www.olarila.com/topic/6730-opencore-no-keyboardtouchpadgpu-accelleration/?tab=comments#comment-86076)
+- [How to add in device properties for OpenCore](https://www.youtube.com/watch?v=hD0kpsQHIIc)
 
 **Sleep**
 
