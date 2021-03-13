@@ -10,8 +10,8 @@ This Hackintosh was build with help of [danieleds/Asus-UX32VD-Hackintosh](https:
 
 As OpenCore requires to move from static DSDT patching to dynamic SSDT patching the Hackintosh was rebuilt from scratch with a lot of time and effort.
 
-- macOS: Big Sur 11.1
-- bootloader: OpenCore 0.6.6
+- macOS: Big Sur 11.2
+- bootloader: OpenCore 0.6.7
 
 ---
 
