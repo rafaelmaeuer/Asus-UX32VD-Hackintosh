@@ -10,7 +10,7 @@ This Hackintosh was build with help of [danieleds/Asus-UX32VD-Hackintosh](https:
 
 As OpenCore requires to move from static DSDT patching to dynamic SSDT patching the Hackintosh was rebuilt from scratch with a lot of time and effort.
 
-- macOS: Big Sur 11.2
+- macOS: Big Sur 11.2.3
 - bootloader: OpenCore 0.6.7
 
 ---
@@ -245,21 +245,21 @@ __Note:__ Unless Asix ethernet adapters are [unsupported](https://plugable.com/b
 
 ### Update macOS
 
-- Make a full backup with time machine or similar
+- Make a full backup with `Time Machine` or similar software
 - Check the official update-guide: [OpenCore-Post-Install/update](https://dortania.github.io/OpenCore-Post-Install/universal/update.html)
 - Download latest version of OpenCore
 - Download updates for all installed kexts
 - Update OpenCore Drive for testing purpose
   - Use latest OpenCore, kexts and drivers
 - Boot from OpenCore Drive
-- If system boots
-  - Start macOS Update
-  - (Select `Install macOS ...` partition on reboot)
-  - After the update select macOS HDD
-- If system boots
+- If the system boots
   - Mount EFI partition of macOS HDD
   - Replace EFI from OpenCore Drive
   - Don't forget `Microsoft` or `Ubuntu` folder (Windows/Ubuntu bootloader)
+- If the system boots
+  - Start macOS Update from `System Settings` -> `Software Update`
+  - With OpenCore the update process should work automatically
+    - If `Software Update` shows `Mac version is up to date`, download macOS Installer from AppStore and initialize the update manually
 - If system doesn't boot on one of these steps
   - Try to fix the problem or revert to the latest backup
 
@@ -354,6 +354,8 @@ With Clover most of the ACPI patches are applied in main DSDT (Differentiated Sy
 
 Check out the [ACPI Patching](/ACPI) section for more details about DSDT, SSDT and their creation process.
 
+---
+
 #### Device Properties
 
 Setting the correct [device properties](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html#deviceproperties) is necessary for tha hardware to work as expected.
@@ -382,6 +384,8 @@ In `config.plist` -> `DeviceProperties` add:
 
 - Device: PciRoot(0x0)/Pci(0x1B,0x0)
   - layout-id: 45 (NUMBER)
+
+---
 
 #### Advanced Config
 
@@ -528,8 +532,6 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 - [UGREEN AX88179 178A](https://www.ugreen.com/pages/download) -> 20256 -> Driver
 
----
-
 **Hackintosh Tools**
 
 - [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
@@ -541,7 +543,7 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 - [Piker-Alpha/ssdtPRGen](https://github.com/Piker-Alpha/ssdtPRGen.sh)
 - [corpnewt/SSDTTime](https://github.com/corpnewt/SSDTTime)
-- [MaciASL](https://github.com/acidanthera/MaciASL)
+- [acidanthera/MaciASL](https://github.com/acidanthera/MaciASL)
 
 ---
 
@@ -564,6 +566,7 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 - [OpenCore 0.6.6 will require you to jump through a few more hoops](https://www.reddit.com/r/hackintosh/comments/lb2456/psa_opencore_066_will_require_you_to_jump_through/)
 - [Bootstrap causes BIOS corruption on Gigabyte Z87 if to make reset CMOS](https://github.com/acidanthera/bugtracker/issues/1222#issuecomment-739241310)
+- [r/hackintosh: 11.1 update not showing?](https://www.reddit.com/r/hackintosh/comments/ke63zl/111_update_not_showing/)
 
 **ACPI**
 
