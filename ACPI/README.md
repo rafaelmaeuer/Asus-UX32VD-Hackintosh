@@ -128,27 +128,27 @@ Getting FN-Keys and Keyboard-Backlight to work with OpenCore was a bit [tricky](
 
 In order to find out which FN-keys need to be patched, the following key-table was created:
 
-| Key    | Symbol             | Current              | Wanted             | Action  |
-| ------ | ------------------ | -------------------- | ------------------ | ------- |
-| F1     | Sleep              | sleep -> wake -> off | sleep              | patch   |
-| F2     | WiFi               | nothing              | WiFi on/off        | patch   |
-| F3     | Key-Dim-Down       | key light down       | key light down     | nothing |
-| F4     | Key-Dim-Up         | key light up         | key light up       | nothing |
-| F5     | Brightness-Down    | nothing              | display light down | patch   |
-| F6     | Brightness-Up      | nothing              | display light up   | patch   |
-| F7     | Display on/off     | display instant off  | display dim off    | patch   |
-| F8     | External Display   | print (cmd + p)      | mission control    | patch   |
-| F9     | Trackpad on/off    | Trackpad on/off      | Trackpad on/off    | nothing |
-| F10    | Volume on/off      | Volume on/off        | Volume on/off      | nothing |
-| F11    | Volume down        | Volume down          | Volume down        | nothing |
-| F12    | Volume up          | Volume up            | Volume up          | nothing |
-| Pause  | Pause              | display light up     | nothing            | patch   |
-| Druck  | Druck              | nothing              | print (cmd + p)    | patch   |
-| A      | ALS-Sensor on/off  | nothing              | ALS-Sensor on/off  | patch   |
-| C      | Screen             | previous track       | previous track     | nothing |
-| V      | Camera             | next track           | next track         | nothing |
-| Space  | Speed-Mode         | play/pause           | play/pause         | nothing |
-| Arrows | Left/Up/Down/Right | Left/Up/Down/Right   | Left/Up/Down/Right | nothing |
+| Key    | Symbol             | Current              | Wanted             | Action   |
+| ------ | ------------------ | -------------------- | ------------------ | -------- |
+| F1     | Sleep              | sleep -> wake -> off | sleep              | patch    |
+| F2     | WiFi               | nothing              | wifi on/off        | patch    |
+| F3     | Key-Dim-Down       | key light down       | key light down     | no patch |
+| F4     | Key-Dim-Up         | key light up         | key light up       | no patch |
+| F5     | Brightness-Down    | nothing              | display light down | patch    |
+| F6     | Brightness-Up      | nothing              | display light up   | patch    |
+| F7     | Display on/off     | display instant off  | display dim off    | patch    |
+| F8     | External Display   | print (cmd + p)      | mission control    | patch    |
+| F9     | Trackpad on/off    | trackpad on/off      | trackpad on/off    | no patch |
+| F10    | Volume on/off      | volume on/off        | volume on/off      | no patch |
+| F11    | Volume down        | volume down          | volume down        | no patch |
+| F12    | Volume up          | volume up            | volume up          | no patch |
+| Pause  | Pause              | display light up     | nothing            | patch    |
+| Druck  | Druck              | nothing              | print (cmd + p)    | patch    |
+| A      | ALS-Sensor on/off  | nothing              | als-sensor on/off  | patch    |
+| C      | Screen             | previous track       | previous track     | no patch |
+| V      | Camera             | next track           | next track         | no patch |
+| Space  | Speed-Mode         | play/pause           | play/pause         | no patch |
+| Arrows | Left/Up/Down/Right | left/up/down/right   | left/up/down/right | no patch |
 
 Regarding the table, the Keys `F1-F2`, `F5-F8` and `A` were patched. As finding the correct key codes for `Pause (F15)` and `Druck (F13)` was not possible using [RehabMan/OS-X-ACPI-Debug](https://github.com/RehabMan/OS-X-ACPI-Debug) or [VoodooPS2/Debug](https://github.com/acidanthera/VoodooPS2/blob/master/VoodooPS2Controller/VoodooPS2Controller.cpp#L463), their key-function is suppressed with Karabiner.
 
