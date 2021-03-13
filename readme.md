@@ -4,7 +4,7 @@ Guide about installing macOS Big Sur on ASUS UX32VD Laptop
 
 ![UX32VD Hackintosh](Images/UX32VD-banner.jpg)
 
-### Info
+### Information
 
 This Hackintosh was build with help of [danieleds/Asus-UX32VD-Hackintosh](https://github.com/danieleds/Asus-UX32VD-Hackintosh) repository and OpenCore guide [Laptop Ivy Bridge](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html) as base.
 
@@ -15,10 +15,10 @@ As OpenCore requires to move from static DSDT patching to dynamic SSDT patching 
 
 ---
 
-**Overview**
+**Table of Contents**
 
 - [ASUS UX32VD Hackintosh](#asus-ux32vd-hackintosh)
-  - [Info](#info)
+  - [Information](#information)
     - [BIOS](#bios)
     - [Hardware](#hardware)
     - [Restrictions](#restrictions)
@@ -28,13 +28,15 @@ As OpenCore requires to move from static DSDT patching to dynamic SSDT patching 
     - [3. Install macOS](#3-install-macos)
     - [4. Post Installation](#4-post-installation)
   - [Update macOS](#update-macos)
+  - [OpenCore Config](#opencore-config)
   - [Troubleshooting](#troubleshooting)
   - [Resources](#resources)
-    - [Config](#config)
-    - [Kexts](#kexts)
-    - [Driver](#driver)
-    - [Tools](#tools)
-    - [Links](#links)
+    - [ACPI Patches](#acpi-patches)
+    - [Device Properties](#device-properties)
+    - [Advanced Config](#advanced-config)
+    - [Kexts in use](#kexts-in-use)
+    - [Driver and Tools](#driver-and-tools)
+    - [Useful Links](#useful-links)
 
 ---
 
@@ -89,9 +91,10 @@ The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](htt
 
 #### Restrictions
 
-The following features are not working or disabled:
+The following devices or features are not working or disabled:
 
 - NVIDIA GeForce GT 620M
+- Realtek SD Card Reader
 - F2 Status-Indicator LED
 
 ---
@@ -262,13 +265,45 @@ __Note:__ Unless Asix ethernet adapters are [unsupported](https://plugable.com/b
 
 ---
 
-### Troubleshooting
+### OpenCore Config
 
-Tips and tricks to solve already known problems
+For adding your SSDTs, Kexts and Firmware Drivers to create snapshots of your populated EFI folder ([link](https://dortania.github.io/OpenCore-Install-Guide/config.plist/#adding-your-ssdts-kexts-and-firmware-drivers)) use [corpnewt/ProperTree](https://github.com/corpnewt/ProperTree).
+
+**Add ACPI patches**
+
+To manually add ACPI patches do the following
+
+- Copy `{name}.aml` into `EFI/OC/ACPI`
+- Open `config.plist` in OCC
+- Add new entry in `ACPI` -> `Add`
+  - Add `{name}.aml` as Path
+  - Add a meaningful `Comment`
+  - Select `Enabled`
+
+**Add kexts**
+
+To manually add kexts do the following
+
+- Copy `{name}.kext` into `EFI/OC/Kexts`
+- Open `config.plist` in OCC
+- Add new entry in `Kernel` -> `Add`
+  - Add `x86_64` as Arch
+  - Add `{name}.kext` as BundlePath
+  - Add a meaningful `Comment`
+  - If kext isn't codeless add `{name}` as ExecutablePath
+  - Add `Contents/Info.plist` as PlistPath
+  - (Optional: set `MinKernel` and `MaxKernel`)
+  - Select `Enabled`
 
 **Sanity Checker**
 
 The OpenCore configuration can be validated by uploading the `config.plist` to [OpenCore Sanity Checker](https://opencore.slowgeek.com/) in order to perform a sanity check. It helps to find problems in the configuration and to optimize the setup.
+
+---
+
+### Troubleshooting
+
+Tips and tricks to solve already known problems
 
 **Graphics Glitch**
 
@@ -313,13 +348,13 @@ The display resolution during boot is very low, full display resolution (1080p) 
 
 Useful information, tips and tutorials used to create this Hackintosh
 
-**ACPI Patches**
+#### ACPI Patches
 
 With Clover most of the ACPI patches are applied in main DSDT (Differentiated System Description Table) with a `static` patching method (extract DSDT -> decompile -> apply patches -> compile -> use patched DSDT). With OpenCore `dynamic` ACPI-patching is the preferred method (all changes are applied on the fly with current system-DSDT). Therefore all patches must be served as SSDT (Secondary System Description Table). Read more in [Getting started with ACPI](https://dortania.github.io/Getting-Started-With-ACPI/).
 
-See [ACPI Patching](./ACPI/README.md) for more details about DSDT and SSDT creation.
+Check out the [ACPI Patching](./ACPI/README.md) section for more details about DSDT, SSDT and their creation process.
 
-**Device Properties**
+#### Device Properties
 
 Setting the correct [device properties](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html#deviceproperties) is necessary for tha hardware to work as expected.
 
@@ -347,6 +382,10 @@ In `config.plist` -> `DeviceProperties` add:
 
 - Device: PciRoot(0x0)/Pci(0x1B,0x0)
   - layout-id: 45 (NUMBER)
+
+#### Advanced Config
+
+The following configurations are not essential for the Hackintosh to work, but they improve functionality to get as close to a real MacBook as possible.
 
 **USB Mapping**
 
@@ -377,38 +416,6 @@ The last steps for a working USB-Mapping are:
 2. Disable the USB Port-Limit patch: `config.plist` -> `Kernel` -> `Quirks` -> `XhciPortLimit` -> `False`
 3. Reboot, all USB-Ports should work as expected
 
----
-
-#### Config
-
-For adding your SSDTs, Kexts and Firmware Drivers to create snapshots of your populated EFI folder ([link](https://dortania.github.io/OpenCore-Install-Guide/config.plist/#adding-your-ssdts-kexts-and-firmware-drivers)) use [corpnewt/ProperTree](https://github.com/corpnewt/ProperTree)
-
-**Add ACPI patches**
-
-To manually add ACPI patches do the following
-
-- Copy `{name}.aml` into `EFI/OC/ACPI`
-- Open `config.plist` in OCC
-- Add new entry in `ACPI` -> `Add`
-  - Add `{name}.aml` as Path
-  - Add a meaningful `Comment`
-  - Select `Enabled`
-
-**Add kexts**
-
-To manually add kexts do the following
-
-- Copy `{name}.kext` into `EFI/OC/Kexts`
-- Open `config.plist` in OCC
-- Add new entry in `Kernel` -> `Add`
-  - Add `x86_64` as Arch
-  - Add `{name}.kext` as BundlePath
-  - Add a meaningful `Comment`
-  - If kext isn't codeless add `{name}` as ExecutablePath
-  - Add `Contents/Info.plist` as PlistPath
-  - (Optional: set `MinKernel` and `MaxKernel`)
-  - Select `Enabled`
-
 **PCI Entries**
 
 This is most of all a cosmetic step, adding PCI-entries will list the internal devices in `SystemInformation` -> `PCI` section. But it helps to verify which devices have a working driver installed and which don't.
@@ -420,10 +427,51 @@ This is most of all a cosmetic step, adding PCI-entries will list the internal d
 - Add all other devices as new entries in `DeviceProperties` -> `Add`
 - Rename (e.g. shorten) `model` field of each entry type (e.g. iGPU name is used in `About this Mac`)
 - After reboot all PCI-devices show up in `SystemInformation` -> `PCI` including their driver status
+
+**FileVault**
+
+As UX32VD is a portable device, sensitive data can be stored on it, which should be protected. Enabling FileVault is a good step towards better security and privacy of stored data. Read the [Dortania/FileVault](https://dortania.github.io/OpenCore-Post-Install/universal/security/filevault.html) guide to get started with all required settings in `config.plist` for FileVault ot work as expected.
+
+Before starting with FileVault activation, make sure that:
+
+- All necessary FileVault settings from Dortania guide are applied and working
+- There is no Bootcamp or Windows partiton so macOS can access the whole SSD/HDD
+
+Make a backup of your system first, then follow the official [Turn on and set up FileVault](https://support.apple.com/en-us/HT204837) guide from Apple. If there is an `Internal Error` on FileVault activation, do the following:
+
+- Reboot and enter your Password on new appearing pre-boot login window
+- Open up `System-Settings` -> `Security` -> `FileVault` and wait for encryption to complete
+
+If the system gets stuck with an `Encryption paused` message after a few minutes, continue with the following steps:
+
+- (might be optional): Download and install the [SilentKnight](https://eclecticlight.co/lockrattler-systhist/) app
+- (might be optional): Run `SilentKnight` app and select `Download Updates`
+- Open `DiskUtility` -> `Visibility` -> `Show all Devices`
+- Select root entry of macOS SSD/HDD and run `First Aid` (should complete with `code 0`)
+- Go to `System-Settings` -> `Security` -> `FileVault` and wait for encryption to complete
+
+**HiDPI**
+
+As the native 1080p resolution can result in too small UI, enabling `HiDPI`-mode can solve/change this problem. As macOS doesn't support [flexible UI scaling](https://apple.stackexchange.com/questions/193723/scaling-all-ui-elements-when-using-an-external-monitor/193726#193726) like Windows (e.g. 125%), the only option is to force maximum graphic card resolution and use half of the resolution in `HiDPI`-mode.
+
+- The [maximum resolution](https://community.intel.com/t5/Graphics/Intel-HD-4000-HDMI-2560x1440-resolution/td-p/375068) of Intel HD4000 is `2560x1440`
+- The maximum `HiDPI`-resolution results in `1280x720`
+
+As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear quite big, so the perfect step between is missing. But every other configuration will result in unsharp or pixelized resolutions. To enable `1280x720` in `HiDPI`-resolution:
+
+1. Follow instructions from [How To Enable HiDPI Mode In MacOS](https://www.techjunkie.com/hidpi-mode-os-x/):
+
+    ```sh
+    sudo defaults write /Library/Preferences/com.apple.windowserver.plist DisplayResolutionEnabled -bool true
+    ```
+
+2. Download and Install [SwitchResX](https://www.madrau.com/srx_download/download.html) and open `System Preferences` -> `SwitchResX`
+3. Select `Integrated Display` -> `Available Resolutions` -> `1280 x 720, 60 Hz (HiDPI)`
+4. The display resolution should change immediately, close `SwitchResX` and save settings
   
 ---
 
-#### Kexts
+#### Kexts in use
 
 **Patch Engine**: [acidanthera/Lilu](https://github.com/acidanthera/Lilu)
 
@@ -472,7 +520,9 @@ This is most of all a cosmetic step, adding PCI-entries will list the internal d
 
 ---
 
-#### Driver
+#### Driver and Tools
+
+**Driver**
 
 - [ASIX AX88772B](https://www.asix.com.tw/en/support/download) -> Software & Tools -> AX88772B - Low-Power USB 2.0 to 10/100M Fast Ethernet Controller -> Apple macOS 11 Drivers Installer(Beta)
 
@@ -480,14 +530,14 @@ This is most of all a cosmetic step, adding PCI-entries will list the internal d
 
 ---
 
-#### Tools
+**Hackintosh Tools**
 
 - [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
 - [Intel Power Gadget](https://software.intel.com/content/www/us/en/develop/articles/intel-power-gadget.html)
 - [OpenCore Configurator](https://mackie100projects.altervista.org/download-opencore-configurator/)
 - [headkaze/Hackintool](https://github.com/headkaze/Hackintool/)
 
-**ACPI-Patching**
+**ACPI-Patching Tools**
 
 - [Piker-Alpha/ssdtPRGen](https://github.com/Piker-Alpha/ssdtPRGen.sh)
 - [corpnewt/SSDTTime](https://github.com/corpnewt/SSDTTime)
@@ -495,7 +545,7 @@ This is most of all a cosmetic step, adding PCI-entries will list the internal d
 
 ---
 
-#### Links
+#### Useful Links
 
 **Guides**
 
@@ -518,6 +568,9 @@ This is most of all a cosmetic step, adding PCI-entries will list the internal d
 **ACPI**
 
 - [Neues DSDT oder auch mit nur SSDT lösbar?](https://www.hackintosh-forum.de/forum/thread/33622-neues-dsdt-oder-auch-mit-nur-ssdt-l%C3%B6sbar/)
+- [Patching DSDT/SSDT for LAPTOP backlight control](https://www.tonymacx86.com/threads/guide-patching-dsdt-ssdt-for-laptop-backlight-control.152659/)
+- [Fix Keyboard Hot keys / Functional Keys](https://www.insanelymac.com/forum/topic/330440-beginners-guide-fix-keyboard-hot-keys-functional-keys/)
+- [RehabMan/OS-X-ACPI-Debug](https://github.com/RehabMan/OS-X-ACPI-Debug)
 
 **PCI**
 

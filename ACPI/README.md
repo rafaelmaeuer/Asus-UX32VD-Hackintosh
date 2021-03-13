@@ -1,5 +1,23 @@
 ### ACPI Patching
 
+This guide explains how to create all necessary and additional SSDTs that are required to get UX32VD Hackintosh working with OpenCore.
+
+**Table of Contents**
+
+- [ACPI Patching](#acpi-patching)
+  - [Necessary SSDTs](#necessary-ssdts)
+    - [Embedded Controller](#embedded-controller)
+    - [Display Backlight](#display-backlight)
+    - [IRQ Conflicts](#irq-conflicts)
+    - [IMEI Device](#imei-device)
+    - [nVidia GPU](#nvidia-gpu)
+    - [SMBUS Controller](#smbus-controller)
+  - [Additional SSDTs](#additional-ssdts)
+    - [Battery](#battery)
+    - [Fixing Sleep](#fixing-sleep)
+    - [CPU Power-Management](#cpu-power-management)
+    - [ALS & Keys (FN/Backlight)](#als--keys-fnbacklight)
+
 #### Necessary SSDTs
 
 Find necessary SSDT-patches for `Ivy Brigde Laptops` on [What SSDTs do each platform need?](https://dortania.github.io/Getting-Started-With-ACPI/ssdt-platform.html#laptop)  
@@ -44,29 +62,6 @@ To fix the AppleSMBus support in macOS read [Fixing SMBus support (SSDT-SBUS-MCH
 
 #### Additional SSDTs
 
-##### CPU Power-Management
-
-For correct CPU Power-Management (turbo mode and speed stepping) read [Fixing Power Management (SSDT-PLUG)](https://dortania.github.io/Getting-Started-With-ACPI/Universal/plug.html). As `MacBookAir5,2` is the closest SMBIOS to UX32VD ([link](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html#platforminfo)), it is used to generate SSDT for power-management. As `SSDT-PLUG` is only compatible with Intel's Haswell and newer CPUs ([link](https://dortania.github.io/Getting-Started-With-ACPI/Universal/plug.html)), Ivy Bridge needs to follow the [ssdtPRgen](https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#sandy-and-ivy-bridge-power-management) method.
-
-- OpenCore Configurator Paths
-  - Drop ACPI: `ACPI` -> `Delete`
-  - SMBIOS: `PlatformInfo` -> `SMBIOS` -> `Button Up/Down`
-  - Boot-Args: `NVRAM` -> `UUID` -> `7C4...F82` -> `boot-args`
-
-1. Select SMBIOS `MacBookAir5,2` (CPU: Ivy Bridge i5 3427U)
-   - Set `1796` as `ProcessorType` (CPU: Ivy Bridge i7 3667U)
-   - Add `-no_compat_check` boot-flag
-   - Drop `CpuPm` and `Cpu0Ist` tables
-   - Reboot with new SMBIOS
-
-2. Use [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh) from [Tools](/Tools) folder to generate `SSDTs`
-   - [Ignore](https://github.com/Piker-Alpha/ssdtPRGen.sh/issues/183#issuecomment-171089689) warning about improperly 'cpu-type' ([0x0704](https://docs.google.com/spreadsheets/d/1x09b5-DGh8ozNwN5ZjAi7TMnOp4TDm6DbmrKu86i_bQ/edit#gid=0&range=E88) instead of 0x0604)
-   - Output folder: `~/Library/ssdtPRGen/`
-   - Rename `SSDT.aml` to `SSDT-PM.aml`
-   - Add to `EFI/OC/ACPI` and `config.plist`
-
-- SSDT-PM.aml
-
 ##### Battery
 
 [Battery Patching](https://dortania.github.io/OpenCore-Post-Install/laptop-specific/battery.html) is a very advanced process and requires static DSDT patching as a first step. In a second step hot-patches can be created by extracting differences from an unpatched and a patched DSDT using a [diff-tool](https://kaleidoscope.app/) following RehabMan's [Battery Status Hotpatch](https://www.tonymacx86.com/threads/guide-using-clover-to-hotpatch-acpi.200137/#post-1308261) guide.
@@ -94,12 +89,35 @@ For correct CPU Power-Management (turbo mode and speed stepping) read [Fixing Po
 - SSDT-BATT.aml
 - ACPI-renames
 
-##### Fix Sleep
+##### Fixing Sleep
 
 In order to fix instant wake on sleep, read [GPRW/UPRW/LANC Instant Wake Patch](https://dortania.github.io/OpenCore-Post-Install/usb/misc/instant-wake.html). After checking the DSDT for occurrences, the GPRW method is applicable: Download prebuild [SSDT-GPRW.aml](https://github.com/dortania/OpenCore-Post-Install/blob/master/extra-files/SSDT-GPRW.aml) and apply [GPRW-Patch.plist](https://github.com/dortania/OpenCore-Post-Install/blob/master/extra-files/GPRW-Patch.plist) to `config.plist`:
 
 - SSDT-GPRW.aml
 - ACPI-rename
+
+##### CPU Power-Management
+
+For correct CPU Power-Management (turbo mode and speed stepping) read [Fixing Power Management (SSDT-PLUG)](https://dortania.github.io/Getting-Started-With-ACPI/Universal/plug.html). As `MacBookAir5,2` is the closest SMBIOS to UX32VD ([link](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/ivy-bridge.html#platforminfo)), it is used to generate SSDT for power-management. As `SSDT-PLUG` is only compatible with Intel's Haswell and newer CPUs ([link](https://dortania.github.io/Getting-Started-With-ACPI/Universal/plug.html)), Ivy Bridge needs to follow the [ssdtPRgen](https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#sandy-and-ivy-bridge-power-management) method.
+
+- OpenCore Configurator Paths
+  - Drop ACPI: `ACPI` -> `Delete`
+  - SMBIOS: `PlatformInfo` -> `SMBIOS` -> `Button Up/Down`
+  - Boot-Args: `NVRAM` -> `UUID` -> `7C4...F82` -> `boot-args`
+
+1. Select SMBIOS `MacBookAir5,2` (CPU: Ivy Bridge i5 3427U)
+   - Set `1796` as `ProcessorType` (CPU: Ivy Bridge i7 3667U)
+   - Add `-no_compat_check` boot-flag
+   - Drop `CpuPm` and `Cpu0Ist` tables
+   - Reboot with new SMBIOS
+
+2. Use [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh) from [Tools](/Tools) folder to generate `SSDTs`
+   - [Ignore](https://github.com/Piker-Alpha/ssdtPRGen.sh/issues/183#issuecomment-171089689) warning about improperly 'cpu-type' ([0x0704](https://docs.google.com/spreadsheets/d/1x09b5-DGh8ozNwN5ZjAi7TMnOp4TDm6DbmrKu86i_bQ/edit#gid=0&range=E88) instead of 0x0604)
+   - Output folder: `~/Library/ssdtPRGen/`
+   - Rename `SSDT.aml` to `SSDT-PM.aml`
+   - Add to `EFI/OC/ACPI` and `config.plist`
+
+- SSDT-PM.aml
 
 ##### ALS & Keys (FN/Backlight)
 
@@ -107,3 +125,31 @@ Getting FN-Keys and Keyboard-Backlight to work with OpenCore was a bit [tricky](
 
 - SSDT-ATK.aml
 - AsusSMCDeamon
+
+In order to find out which FN-keys need to be patched, the following key-table was created:
+
+| Key    | Symbol             | Current              | Wanted             | Action  |
+| ------ | ------------------ | -------------------- | ------------------ | ------- |
+| F1     | Sleep              | sleep -> wake -> off | sleep              | patch   |
+| F2     | WiFi               | nothing              | WiFi on/off        | patch   |
+| F3     | Key-Dim-Down       | key light down       | key light down     | nothing |
+| F4     | Key-Dim-Up         | key light up         | key light up       | nothing |
+| F5     | Brightness-Down    | nothing              | display light down | patch   |
+| F6     | Brightness-Up      | nothing              | display light up   | patch   |
+| F7     | Display on/off     | display instant off  | display dim off    | patch   |
+| F8     | External Display   | print (cmd + p)      | mission control    | patch   |
+| F9     | Trackpad on/off    | Trackpad on/off      | Trackpad on/off    | nothing |
+| F10    | Volume on/off      | Volume on/off        | Volume on/off      | nothing |
+| F11    | Volume down        | Volume down          | Volume down        | nothing |
+| F12    | Volume up          | Volume up            | Volume up          | nothing |
+| Pause  | Pause              | display light up     | nothing            | patch   |
+| Druck  | Druck              | nothing              | print (cmd + p)    | patch   |
+| A      | ALS-Sensor on/off  | nothing              | ALS-Sensor on/off  | patch   |
+| C      | Screen             | previous track       | previous track     | nothing |
+| V      | Camera             | next track           | next track         | nothing |
+| Space  | Speed-Mode         | play/pause           | play/pause         | nothing |
+| Arrows | Left/Up/Down/Right | Left/Up/Down/Right   | Left/Up/Down/Right | nothing |
+
+Regarding the table, the Keys `F1-F2`, `F5-F8` and `A` were patched. As finding the correct key codes for `Pause (F15)` and `Druck (F13)` was not possible using [RehabMan/OS-X-ACPI-Debug](https://github.com/RehabMan/OS-X-ACPI-Debug) or [VoodooPS2/Debug](https://github.com/acidanthera/VoodooPS2/blob/master/VoodooPS2Controller/VoodooPS2Controller.cpp#L463), their key-function is suppressed with Karabiner.
+
+The complex Karabiner-modification [Fn + Backspace to Forward Delete](https://ke-complex-modifications.pqrs.org/?q=FN%20delete) doesn't had the wanted effect, but the `Entf`-key next to the power-button can be used for this purpose.
