@@ -11,7 +11,7 @@ This Hackintosh was build with help of [danieleds/Asus-UX32VD-Hackintosh](https:
 As OpenCore requires to move from static DSDT patching to dynamic SSDT patching the Hackintosh was rebuilt from scratch with a lot of time and effort.
 
 - macOS: Big Sur 11.2.3
-- bootloader: OpenCore 0.6.7
+- bootloader: OpenCore 0.7.1
 
 ---
 
@@ -256,6 +256,7 @@ __Note:__ Unless Asix ethernet adapters are [unsupported](https://plugable.com/b
   - Mount EFI partition of macOS HDD
   - Replace EFI from OpenCore Drive
   - Don't forget `Microsoft` or `Ubuntu` folder (Windows/Ubuntu bootloader)
+  - Reset NVRAM if OpenCore version doesn't change
 - If the system boots
   - Start macOS Update from `System Settings` -> `Software Update`
   - With OpenCore the update process should work automatically
