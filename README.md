@@ -480,11 +480,11 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 **Patch Engine**: [acidanthera/Lilu](https://github.com/acidanthera/Lilu)
 
-- Lilu.kext (v1.5.4)
+- Lilu.kext (v1.5.6)
 
 **Graphics**: [acidanthera/WhateverGreen](https://github.com/acidanthera/WhateverGreen)
 
-- WhateverGreen.kext (v1.5.1)
+- WhateverGreen.kext (v1.5.)
 
 **WiFi**: [acidanthera/AirportBrcmFixup](https://github.com/acidanthera/AirportBrcmFixup)
 
@@ -498,18 +498,18 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 **Sensors**: [acidanthera/VirtualSMC](https://github.com/acidanthera/VirtualSMC)
 
-- VirtualSMC.kext (v1.2.5)
-- SMCBatteryManager.kext (v1.2.5)
-- SMCProcessor.kext (v1.2.5)
-- SMCSuperIO.kext (v1.2.5)
+- VirtualSMC.kext (v1.2.7)
+- SMCBatteryManager.kext (v1.2.7)
+- SMCProcessor.kext (v1.2.7)
+- SMCSuperIO.kext (v1.2.7)
 
 **Audio**: [acidanthera/AppleALC](https://github.com/acidanthera/AppleALC/)
 
-- AppleALC.kext (v1.6.2)
+- AppleALC.kext (v1.6.5)
 
 **TouchPad**: [BAndysc/VoodooPS2](https://github.com/BAndysc/VoodooPS2)
 
-- VoodooPS2Controller.kext (v2.2.4)
+- VoodooPS2Controller.kext (v2.2.6)
 
 **ALS/FN-Keys**: [hieplpvip/AsusSMC](https://github.com/hieplpvip/AsusSMC)
 
