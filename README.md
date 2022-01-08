@@ -482,11 +482,11 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 **Patch Engine**: [acidanthera/Lilu](https://github.com/acidanthera/Lilu)
 
-- Lilu.kext (v1.5.6)
+- Lilu.kext (v1.5.8)
 
 **Graphics**: [acidanthera/WhateverGreen](https://github.com/acidanthera/WhateverGreen)
 
-- WhateverGreen.kext (v1.5.)
+- WhateverGreen.kext (v1.5.5)
 
 **WiFi**: [acidanthera/AirportBrcmFixup](https://github.com/acidanthera/AirportBrcmFixup)
 
@@ -494,24 +494,24 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 
 **Bluetooth**: [acidanthera/BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM)
 
-- BrcmBluetoothInjector.kext (v2.6.0)
-- BrcmFirmwareData.kext (v2.6.0)
-- BrcmPatchRAM3.kext (v2.6.0)
+- BrcmBluetoothInjector.kext (v2.6.1)
+- BrcmFirmwareData.kext (v2.6.1)
+- BrcmPatchRAM3.kext (v2.6.1)
 
 **Sensors**: [acidanthera/VirtualSMC](https://github.com/acidanthera/VirtualSMC)
 
-- VirtualSMC.kext (v1.2.7)
-- SMCBatteryManager.kext (v1.2.7)
-- SMCProcessor.kext (v1.2.7)
-- SMCSuperIO.kext (v1.2.7)
+- VirtualSMC.kext (v1.2.8)
+- SMCBatteryManager.kext (v1.2.8)
+- SMCProcessor.kext (v1.2.8)
+- SMCSuperIO.kext (v1.2.8)
 
 **Audio**: [acidanthera/AppleALC](https://github.com/acidanthera/AppleALC/)
 
-- AppleALC.kext (v1.6.5)
+- AppleALC.kext (v1.6.7)
 
 **TouchPad**: [BAndysc/VoodooPS2](https://github.com/BAndysc/VoodooPS2)
 
-- VoodooPS2Controller.kext (v2.2.6)
+- VoodooPS2Controller.kext (v2.2.7)
 
 **ALS/FN-Keys**: [hieplpvip/AsusSMC](https://github.com/hieplpvip/AsusSMC)
 
