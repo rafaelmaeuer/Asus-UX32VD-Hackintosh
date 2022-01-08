@@ -1894,9 +1894,9 @@
 				<key>boot-args</key>
 				<string>darkwake=0 nv_disable=1 -wegnoegpu -no_compat_check</string>
 				<key>csr-active-config</key>
-				<data>AAAAAA==</data>
+				<string>0x0</string>
 				<key>prev-lang:kbd</key>
-				<data>ZGU6MA==</data>
+				<string>de:0</string>
 				<key>run-efi-updater</key>
 				<string>No</string>
 			</dict>
