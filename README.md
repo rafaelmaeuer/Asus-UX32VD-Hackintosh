@@ -96,7 +96,7 @@ The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](htt
 The following devices or features are not working or disabled:
 
 - NVIDIA GeForce GT 620M
-- Realtek SD Card Reader
+- Realtek SD Card Reader (???)
 - F2 Status-Indicator LED
 
 ---
@@ -524,6 +524,11 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 **USB-Ethernet**
 
 - AX88179_178A.kext (v2.0.0)
+
+**Card-Reader**
+
+- RealtekCardReader.kext (v0.9.6) [0xFireWolf/RealtekCardReader](https://github.com/0xFireWolf/RealtekCardReader)
+- RealtekCardReaderFriend.kext (v1.0.2) [0xFireWolf/RealtekCardReaderFriend](https://github.com/0xFireWolf/RealtekCardReaderFriend)
 
 ---
 
