@@ -96,8 +96,11 @@ The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](htt
 The following devices or features are not working or disabled:
 
 - NVIDIA GeForce GT 620M
-- Realtek SD Card Reader (???)
 - F2 Status-Indicator LED
+
+The following devices are working, depending on used software
+
+- Realtek SD Card Reader (is blocked by `Bitdefender Shield`)
 
 ---
 
@@ -620,3 +623,9 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 - [Fix Keyboard Hot keys / Functional Keys](https://www.insanelymac.com/forum/topic/330440-beginners-guide-fix-keyboard-hot-keys-functional-keys/)
 - [GUIDE: How to Fix Brightness hotkeys in DSDT](https://www.insanelymac.com/forum/topic/305030-guide-how-to-fix-brightness-hotkeys-in-dsdt/)
 - [Patching DSDT/SSDT for LAPTOP backlight control](https://www.tonymacx86.com/threads/guide-patching-dsdt-ssdt-for-laptop-backlight-control.152659/)
+
+**Card-Reader**
+
+- [Try RealtekCardReader(+Friend).kext](https://github.com/rafaelmaeuer/Asus-UX32VD-Hackintosh/issues/36)
+- [Problem with RTS5139](https://github.com/0xFireWolf/RealtekCardReader/issues/21)
+- [How do I dump the log produced by the driver?](https://github.com/0xFireWolf/RealtekCardReader/blob/main/Docs/FAQ.md#how-do-i-dump-the-log-produced-by-the-driver )
