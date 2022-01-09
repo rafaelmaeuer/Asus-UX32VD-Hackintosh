@@ -30,6 +30,7 @@ As OpenCore requires to move from static DSDT patching to dynamic SSDT patching 
     - [3. Install macOS](#3-install-macos)
     - [4. Post Installation](#4-post-installation)
   - [Update macOS](#update-macos)
+  - [Dualboot Ubuntu](#dualboot-ubuntu)
   - [OpenCore Config](#opencore-config)
   - [Troubleshooting](#troubleshooting)
   - [Resources](#resources)
@@ -271,6 +272,36 @@ __Note:__ Unless Asix ethernet adapters are [unsupported](https://plugable.com/b
 
 ---
 
+### Dualboot Ubuntu
+
+A minimal Ubuntu 20.04 can be installed on the internal 24GB SSD:
+
+- [Download](https://ubuntu.com/download/desktop) latest Ubuntu Desktop Image
+- Flash ISO to USB drive with [balena.io/etcher](https://www.balena.io/etcher/)
+- Boot from USB drive and select `Installation`
+- Select `Manual Install` to avoid EFI generation
+  - Format internal SSD with EXT4
+  - Set `/` as drive Root
+  - Set EFI to same drive
+- After Install remove from EFI (use OpenCore boot)
+  - EFI/ubuntu/
+  - EFI/BOOT/fbx64.efi
+  - EFI/BOOT/mmx64.efi
+- Install Wifi Driver  
+  (Connect Ethernet-USB-Dongle for Internet access)
+  ```sh
+  sudo apt-get update
+  sudo apt-get install bcmwl-kernel-source -y
+  sudo modprobe wl
+  ```
+- Update Linux System
+    ```sh
+    sudo apt-get update
+    sudo apt-get upgrade -y
+    ```
+
+---
+
 ### OpenCore Config
 
 For adding your SSDTs, Kexts and Firmware Drivers to create snapshots of your populated EFI folder ([link](https://dortania.github.io/OpenCore-Install-Guide/config.plist/#adding-your-ssdts-kexts-and-firmware-drivers)) use [corpnewt/ProperTree](https://github.com/corpnewt/ProperTree).
@@ -347,6 +378,22 @@ To add boot entry for OpenCore enter bios (F2 on post)
 The display resolution during boot is very low, full display resolution (1080p) is only reached on the last boot stage
 
 - Default options `TextRenderer` set to `BuiltinGraphics` and `Resolution` set to `Max` ([macos-decluttering](https://dortania.github.io/OpenCore-Post-Install/cosmetic/verbose.html#macos-decluttering)) deliver best results (1280x960 or similar)
+
+**Boot Theme**
+
+As the best possible boot resolution with 1280x800 has a width distortion of 1.28 (1024/800) a custom boot theme is used with inverse distorted images to compensate. Modify Images:
+
+- Open `.icns` file with apple preview
+- Drag and Drop `.tiff` images to folder
+- Resize Image width to 78,125% (1024/800)
+- Resize Image area to original width
+- Save Images as .png
+- Create `.icns` image bundle
+  ```sh
+  cd /OpenCore/Utilities/icnspack/
+  ./icnspack image.icns image.png image@2x.png
+  ```
+- Replace original image bundle
 
 ---
 
