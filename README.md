@@ -676,3 +676,9 @@ As `1280x720` is the highest possible `HiDPI`-resolution, the UI will appear qui
 - [Try RealtekCardReader(+Friend).kext](https://github.com/rafaelmaeuer/Asus-UX32VD-Hackintosh/issues/36)
 - [Problem with RTS5139](https://github.com/0xFireWolf/RealtekCardReader/issues/21)
 - [How do I dump the log produced by the driver?](https://github.com/0xFireWolf/RealtekCardReader/blob/main/Docs/FAQ.md#how-do-i-dump-the-log-produced-by-the-driver )
+
+**Linux**
+
+- [Run Ubuntu 20.04 from USB Stick](https://linuxhint.com/run_ubuntu_usb_stick/)
+- [OpenCore Multiboot - Dualbooting with Linux](https://dortania.github.io/OpenCore-Multiboot/oc/linux.html#dualbooting-with-linux)
+- [How can I install Broadcom Wireless Adapter BCM4352 802.11ac](https://askubuntu.com/questions/590442/how-can-i-install-broadcom-wireless-adapter-bcm4352-802-11ac-pcid-14e443b1-r/590450#590450)
