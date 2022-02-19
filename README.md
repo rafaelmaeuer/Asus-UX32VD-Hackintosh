@@ -77,7 +77,7 @@ This Hackintosh is based on an [ASUS UX32VD-R4002V](https://www.asus.com/de/supp
 
 **RAM**
 
-The default 2GB of RAM were replaced with an equivalent [8GB DDR3](https://www.speicher.de/arbeitsspeicher-8gb-ddr3-asus-zenbook-ux32vd-r4002v-ram-so-dimm-sp247073.html) module to get 10GB of RAM.
+The default 2GB of RAM were replaced with an equivalent [8GB DDR3](https://re-link.info/hackintosh/phs-memory) module to get 10GB of RAM.
 
 **Graphics**
 
@@ -86,11 +86,11 @@ The NVIDIA GeForce GT 620M was disabled in favour of the Ivy Bridge Intel HD 400
 **WIFI / Bluetooth**
 
 As the default WiFi/BT card is not supported by macOS, it is replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).  
-Notice that antenna-adapters are needed when replacing the default card due to different connector sizes ([link](http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/)).
+Notice that antenna-adapters are needed when replacing the default card due to different connector sizes: [Upgrading ASUS UX32VD Wireless Card - Antenna Connector](https://web.archive.org/web/20220125215510/http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/).
 
 **Ethernet**
 
-The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](https://www.ugreen.com/product/UGREEN_Network_Adapter_USB_to_Ethernet_RJ45_Lan_Gigabit_Adapter_for_Ethernet_Black-en.html) after it stopped working. Benefits of the new adapter are USB3 and Gigabit speed.
+The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](https://re-link.info/hackintosh/ugreen) after it stopped working. Benefits of the new adapter are USB3 and Gigabit speed.
 
 #### Restrictions
 
