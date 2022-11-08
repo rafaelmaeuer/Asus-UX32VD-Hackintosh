@@ -85,7 +85,7 @@ The NVIDIA GeForce GT 620M was disabled in favour of the Ivy Bridge Intel HD 400
 
 **WIFI / Bluetooth**
 
-As the default WiFi/BT card is not supported by macOS, it is replaced by a [Broadcom BCM4352 Combo card](https://osxlatitude.com/forums/topic/2767-broadcom-bcm4352-80211-ac-wifi-and-bluetooth-combo-card/).  
+As the default WiFi/BT card is not supported by macOS, it is replaced by a [Broadcom BCM4352 Combo card](https://re-link.info/hackintosh/bcm4352).  
 Notice that antenna-adapters are needed when replacing the default card due to different connector sizes: [Upgrading ASUS UX32VD Wireless Card - Antenna Connector](https://web.archive.org/web/20220125215510/http://forum.notebookreview.com/threads/upgrading-asus-ux32vd-wireless-card-antenna-connector-problem-help.731735/).
 
 **Ethernet**
