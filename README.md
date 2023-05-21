@@ -77,7 +77,7 @@ This Hackintosh is based on an [ASUS UX32VD-R4002V](https://www.asus.com/de/supp
 
 **RAM**
 
-The default 2GB of RAM were replaced with an equivalent [8GB DDR3](https://re-link.info/hackintosh/phs-memory) module to get 10GB of RAM.
+The default 2GB of RAM were replaced with an equivalent [8GB DDR3](https://amzn.to/43do4n4) module to get 10GB of RAM.
 
 **Graphics**
 
@@ -90,7 +90,7 @@ Notice that antenna-adapters are needed when replacing the default card due to d
 
 **Ethernet**
 
-The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](https://re-link.info/hackintosh/ugreen) after it stopped working. Benefits of the new adapter are USB3 and Gigabit speed.
+The default USB-ethernet adapter was replaced with an [UGREEN 20256 Adapter](https://amzn.to/3Iwo4qa) after it stopped working. Benefits of the new adapter are USB3 and Gigabit speed.
 
 #### Restrictions
 
